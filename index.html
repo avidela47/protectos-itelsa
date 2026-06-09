@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ITELSA Lighting — Tablero</title>
+<title>ITELSA Lighting - Tablero</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#fff;--bg2:#f5f5f4;--bg3:#f0efed;--tx:#1a1a18;--tx2:#6b6b67;--tx3:#9b9b96;--br:rgba(0,0,0,0.1);--r:8px;--rl:12px}
+:root{--bg:#fff;--bg2:#f5f5f4;--bg3:#f0efed;--br:rgba(0,0,0,0.1);--r:8px;--rl:12px}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);min-height:100vh}
 .ls{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .lc{background:#fff;border:1px solid var(--br);border-radius:16px;padding:32px 28px;width:340px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.07)}
@@ -15,7 +15,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .lb{font-size:12px;font-weight:600;color:#374151;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px}
 .ls2{font-size:13px;color:#9ca3af;margin-bottom:20px}
 .mg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mb{background:#f9f9f8;border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all 0.15s}
+.mb{background:#f9f9f8;border:1px solid var(--br);border-radius:8px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all 0.15s}
 .mb:hover{border-color:#9ca3af}
 .mb.sel{border-color:#1D9E75;background:#f0fdf8}
 .mav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
@@ -23,29 +23,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .be{width:100%;background:#1D6B54;border:none;border-radius:8px;padding:11px;font-size:13px;color:#fff;cursor:pointer;font-weight:600;margin-top:16px}
 .be:hover{background:#16543f}
 .be:disabled{background:#d1d5db;cursor:default}
+.sync-bar{background:#1D6B54;color:#fff;font-size:12px;text-align:center;padding:6px;display:none}
 .app{display:none;min-height:100vh;flex-direction:column}
-.tb{background:#fff;border-bottom:1px solid rgba(0,0,0,0.1);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.tb{background:#fff;border-bottom:1px solid var(--br);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .tbl{display:flex;align-items:center;gap:9px}
 .tbl img{width:38px;height:38px;object-fit:contain}
 .tin{font-size:14px;font-weight:700;color:#1f2937;letter-spacing:0.06em}
 .tli{font-size:9px;color:#1D9E75;letter-spacing:0.12em;text-transform:uppercase}
 .tbr{display:flex;align-items:center;gap:10px}
 .si{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px;opacity:0.6}
+.si.syncing{color:#1D9E75;opacity:1}
 .tr{display:flex;gap:4px}
 .av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s}
 .av:hover{border-color:#9ca3af}
 .av.af{border-color:#1D9E75}
 .av1{background:#ede9fe;color:#5b21b6}.av2{background:#d1fae5;color:#065f46}.av3{background:#fef3c7;color:#92400e}.av4{background:#fee2e2;color:#991b1b}.av5{background:#dbeafe;color:#1e40af}
-.cu{display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;background:#f9f9f8;padding:5px 11px;border-radius:20px;border:1px solid rgba(0,0,0,0.1);cursor:pointer}
+.cu{display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;background:#f9f9f8;padding:5px 11px;border-radius:20px;border:1px solid var(--br);cursor:pointer}
 .bl{display:flex;flex:1;min-height:calc(100vh - 58px)}
-.sb{width:225px;background:#fff;border-right:1px solid rgba(0,0,0,0.1);padding:12px 0;flex-shrink:0;overflow-y:auto}
-.nt{display:flex;gap:2px;padding:0 12px;margin-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.1);padding-bottom:10px}
+.sb{width:225px;background:#fff;border-right:1px solid var(--br);padding:12px 0;flex-shrink:0;overflow-y:auto}
+.nt{display:flex;gap:2px;padding:0 12px;margin-bottom:12px;border-bottom:1px solid var(--br);padding-bottom:10px}
 .nt button{flex:1;padding:6px 2px;font-size:11px;text-align:center;background:transparent;border:1px solid transparent;border-radius:8px;cursor:pointer;color:#9ca3af;white-space:nowrap}
-.nt button.act{background:#f3f4f6;border-color:rgba(0,0,0,0.1);color:#374151;font-weight:500}
+.nt button.act{background:#f3f4f6;border-color:var(--br);color:#374151;font-weight:500}
 .ss{padding:0 12px;margin-bottom:14px}
 .sl{font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px;font-weight:600;display:flex;align-items:center;gap:5px}
 .sd{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.sdv{height:1px;background:rgba(0,0,0,0.1);margin:10px 12px}
+.sdv{height:1px;background:var(--br);margin:10px 12px}
 .pi{padding:7px 9px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:2px;transition:background 0.1s}
 .pi:hover{background:#f3f4f6}
 .pi.act{background:#f3f4f6;font-weight:500}
@@ -71,7 +73,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btnr{border-color:#fca5a5;color:#b91c1c}
 .btnr:hover{background:#fef2f2}
 .fb{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;font-size:12px;color:#166534}
-.bx{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.bx{background:#fff;border:1px solid var(--br);border-radius:12px;padding:14px 16px;margin-bottom:14px}
 .bxt{font-size:11px;font-weight:600;color:#9ca3af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em}
 .mr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
 .mi label{font-size:11px;color:#9ca3af;display:block;margin-bottom:4px;font-weight:500}
@@ -95,11 +97,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .na{width:100%;min-height:90px;font-size:13px;padding:10px;border-radius:8px;border:1px solid #d1d5db;background:#f9f9f8;color:#374151;resize:vertical;line-height:1.6;font-family:inherit}
 .na:focus{outline:none;border-color:#1D9E75}
 .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.col{background:#f9f9f8;border-radius:8px;padding:11px;min-height:180px;border:1px solid rgba(0,0,0,0.1)}
+.col{background:#f9f9f8;border-radius:8px;padding:11px;min-height:180px;border:1px solid var(--br)}
 .clh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .clt{font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em}
-.clb{font-size:10px;background:#fff;border:1px solid rgba(0,0,0,0.1);color:#9ca3af;padding:1px 6px;border-radius:8px}
-.tc{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:box-shadow 0.15s,border-color 0.15s}
+.clb{font-size:10px;background:#fff;border:1px solid var(--br);color:#9ca3af;padding:1px 6px;border-radius:8px}
+.tc{background:#fff;border:1px solid var(--br);border-radius:8px;padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:box-shadow 0.15s,border-color 0.15s}
 .tc:hover{border-color:#9ca3af;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
 .tt{font-size:12px;color:#374151;margin-bottom:7px;line-height:1.4}
 .tm{display:flex;align-items:center;justify-content:space-between}
@@ -109,7 +111,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .td{font-size:10px;color:#9ca3af;display:flex;align-items:center;gap:3px}
 .ih{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .ig{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.ic{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:13px 15px;display:flex;flex-direction:column;gap:6px}
+.ic{background:#fff;border:1px solid var(--br);border-radius:12px;padding:13px 15px;display:flex;flex-direction:column;gap:6px}
 .ict{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .icn{font-size:13px;font-weight:600;color:#374151;line-height:1.3}
 .icd{font-size:11px;color:#9ca3af;line-height:1.4}
@@ -118,7 +120,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .icx{background:transparent;border:none;cursor:pointer;color:#9ca3af;font-size:13px;padding:0;flex-shrink:0}
 .icx:hover{color:#b91c1c}
 .itg{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:600;background:#f3f4f6;color:#6b7280;align-self:flex-start}
-.gw{overflow-x:auto;border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:16px;background:#fff}
+.gw{overflow-x:auto;border:1px solid var(--br);border-radius:12px;padding:16px;background:#fff}
 .gn{min-width:560px}
 .ghr{display:flex;margin-bottom:8px;border-bottom:1px solid #e5e7eb;padding-bottom:8px}
 .glc{width:170px;flex-shrink:0;font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em}
@@ -138,7 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gli{display:flex;align-items:center;gap:5px;font-size:11px;color:#6b7280}
 .gld{width:8px;height:8px;border-radius:50%}
 .glt{width:10px;height:2px;background:#ef4444;border-radius:1px}
-.dp{width:280px;background:#fff;border-left:1px solid rgba(0,0,0,0.1);padding:16px;flex-shrink:0;display:none;flex-direction:column;gap:12px;overflow-y:auto}
+.dp{width:280px;background:#fff;border-left:1px solid var(--br);padding:16px;flex-shrink:0;display:none;flex-direction:column;gap:12px;overflow-y:auto}
 .dp.op{display:flex}
 .dph{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .dpc{background:transparent;border:none;cursor:pointer;color:#9ca3af;font-size:16px;padding:0}
@@ -152,7 +154,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .aw{font-weight:600;color:#6b7280}
 .mo{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;z-index:200}
 .mo.op{display:flex}
-.md{background:#fff;border-radius:12px;border:1px solid rgba(0,0,0,0.1);padding:20px;width:390px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.md{background:#fff;border-radius:12px;border:1px solid var(--br);padding:20px;width:390px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
 .mt{font-size:15px;font-weight:600;margin-bottom:14px;color:#1f2937}
 .fg{margin-bottom:10px}
 .fg label{font-size:11px;color:#6b7280;margin-bottom:4px;display:block;font-weight:500}
@@ -171,7 +173,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mo2{display:flex;gap:6px;flex-wrap:wrap}
 .mo2 .mop{padding:5px 9px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:11px;color:#6b7280;display:flex;align-items:center;gap:4px}
 .mo2 .mop.sel{border-color:#1D9E75;color:#374151;background:#f0fdf8}
-.cm{background:#fff;border-radius:12px;border:1px solid rgba(0,0,0,0.1);padding:24px;width:320px;max-width:95vw;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.cm{background:#fff;border-radius:12px;border:1px solid var(--br);padding:24px;width:320px;max-width:95vw;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
 .cmi{font-size:30px;margin-bottom:10px}
 .cmt{font-size:15px;font-weight:600;color:#1f2937;margin-bottom:8px}
 .cms{font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.5}
@@ -185,9 +187,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="lc">
     <img src="data:image/png;base64,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" alt="ITELSA Lighting">
     <div class="lb">ITELSA Lighting</div>
-    <div class="ls2">Quién sos?</div>
+    <div class="ls2">Quien sos?</div>
     <div class="mg" id="member-grid"></div>
-    <button class="be" id="btn-enter" disabled onclick="">Ingresar</button>
+    <button class="be" id="btn-enter" disabled>Ingresar</button>
   </div>
 </div>
 
@@ -198,7 +200,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div><div class="tin">ITELSA</div><div class="tli">Lighting</div></div>
     </div>
     <div class="tbr">
-      <div class="si" id="save-ind"><i class="ti ti-check" style="font-size:11px"></i><span id="save-txt">Guardado</span></div>
+      <div class="si" id="save-ind"><i class="ti ti-check" style="font-size:11px"></i><span id="save-txt">Sincronizado</span></div>
       <div class="tr" id="team-avs"></div>
       <div class="cu" id="cu-btn" onclick="logout()" title="Cambiar usuario"></div>
     </div>
@@ -296,7 +298,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<script>
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, onSnapshot, setDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyB0kfu3MR2AaC9rnP3c3bIa60nfxQ6R9RA",
+  authDomain: "tablero-itelsa.firebaseapp.com",
+  projectId: "tablero-itelsa",
+  storageBucket: "tablero-itelsa.firebasestorage.app",
+  messagingSenderId: "1070045066685",
+  appId: "1:1070045066685:web:ceaa3d92c300451c148ed4"
+};
+
+var fbApp = initializeApp(firebaseConfig);
+var db = getFirestore(fbApp);
+
 var TEAM = [
   {id:"t1", name:"Sofia",  initials:"SO", cls:"av1"},
   {id:"t2", name:"Camila", initials:"CA", cls:"av2"},
@@ -306,75 +324,82 @@ var TEAM = [
 ];
 var COLORS = ["#378ADD","#1D9E75","#D85A30","#BA7517","#D4537E","#639922","#7F77DD"];
 var MN = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-var CL = [{id:"dialux",label:"DIALux"},{id:"luminarias",label:"Cantidad de luminarias"},{id:"pdf",label:"PDF presentacion"},{id:"video",label:"VIDEO presentacion"}];
+var CL = [
+  {id:"dialux",    label:"DIALux"},
+  {id:"luminarias",label:"Cantidad de luminarias"},
+  {id:"pdf",       label:"PDF presentacion"},
+  {id:"video",     label:"VIDEO presentacion"}
+];
+
 var D = {projects:[], tasks:[], links:[]};
 var selProj=null, selTask=null, filterMember=null, curView="board";
-var nPC=COLORS[0], nPM=[], nPS="proyectos", saveTimer=null, currentUser=null;
+var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
 
-function ft(ts) {
-  var d = new Date(ts);
-  return d.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit"}) + " " + d.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
-}
-
-function loadData() {
-  try {
-    var s = localStorage.getItem("itelsa_t");
-    if (s) {
-      D = JSON.parse(s);
-      if (!D.links) D.links = [];
-      for (var i=0;i<D.projects.length;i++) {
-        var p = D.projects[i];
-        if (!p.priority) p.priority="media";
-        if (!p.status) p.status="activo";
-        if (!p.checklist) p.checklist={};
-        if (p.dropbox===undefined) p.dropbox=false;
-      }
-      return;
-    }
-  } catch(e) {}
-  D = {
-    projects:[
-      {id:"p1",name:"Senaletica Biofarma",color:"#378ADD",members:["t1","t2"],start:"2026-06-01",end:"2026-07-15",notes:"",section:"proyectos",priority:"alta",status:"activo",checklist:{dialux:true,luminarias:true},dropbox:false},
-      {id:"p2",name:"Iluminacion local centro",color:"#1D9E75",members:["t1","t4"],start:"2026-06-10",end:"2026-08-01",notes:"",section:"proyectos",priority:"media",status:"activo",checklist:{},dropbox:false},
-      {id:"p3",name:"Redes sociales Q3",color:"#D4537E",members:["t1","t3"],start:"2026-07-01",end:"2026-09-30",notes:"",section:"marketing",priority:"media",status:"activo",checklist:{},dropbox:false},
-      {id:"p4",name:"Catalogo de productos",color:"#7F77DD",members:["t1","t5"],start:"2026-06-15",end:"2026-07-31",notes:"",section:"marketing",priority:"baja",status:"activo",checklist:{pdf:true},dropbox:true}
-    ],
-    tasks:[
-      {id:"ta1",projId:"p1",title:"Relevar dimensiones del cartel",desc:"",assignee:"t2",priority:"alta",status:"terminado",due:"2026-06-10",activity:[{who:"t2",action:"Creo la tarea",ts:Date.now()-259200000}]},
-      {id:"ta2",projId:"p1",title:"Diseno plano en DIALux",desc:"",assignee:"t1",priority:"alta",status:"en-curso",due:"2026-06-15",activity:[{who:"t1",action:"Creo la tarea",ts:Date.now()-172800000}]},
-      {id:"ta3",projId:"p1",title:"Compra de artefactos",desc:"",assignee:"t2",priority:"media",status:"pendiente",due:"2026-06-20",activity:[{who:"t1",action:"Creo la tarea",ts:Date.now()-86400000}]},
-      {id:"ta4",projId:"p2",title:"Visita tecnica",desc:"",assignee:"t4",priority:"alta",status:"terminado",due:"2026-06-05",activity:[{who:"t4",action:"Creo la tarea",ts:Date.now()-345600000}]},
-      {id:"ta5",projId:"p3",title:"Definir calendario editorial",desc:"",assignee:"t1",priority:"alta",status:"pendiente",due:"2026-07-05",activity:[{who:"t1",action:"Creo la tarea",ts:Date.now()-18000000}]}
-    ],
-    links:[
-      {id:"i1",name:"Catalogo OSRAM LED",desc:"Linea de interiores 2026",url:"https://www.osram.com",cat:"Catalogo"},
-      {id:"i2",name:"DIALux",desc:"Software de simulacion luminica",url:"https://www.dialux.com",cat:"Herramienta"}
-    ]
-  };
-  persist();
+// ── FIRESTORE LISTENERS ──────────────────────────────────────────
+function startListeners() {
+  onSnapshot(collection(db,"projects"), function(snap) {
+    D.projects = [];
+    snap.forEach(function(d) { D.projects.push(d.data()); });
+    renderProjList();
+    renderBoard();
+    renderGantt();
+  });
+  onSnapshot(collection(db,"tasks"), function(snap) {
+    D.tasks = [];
+    snap.forEach(function(d) { D.tasks.push(d.data()); });
+    renderBoard();
+  });
+  onSnapshot(collection(db,"links"), function(snap) {
+    D.links = [];
+    snap.forEach(function(d) { D.links.push(d.data()); });
+    if (curView === "info") renderInfoGrid();
+  });
 }
 
-function persist() {
-  try { localStorage.setItem("itelsa_t", JSON.stringify(D)); } catch(e) {}
-  showSaved();
+function saveProject(p) {
+  showSyncing();
+  setDoc(doc(db,"projects",p.id), p).then(showSynced);
 }
-function scheduleSave() {
-  clearTimeout(saveTimer);
-  document.getElementById("save-txt").textContent = "Guardando...";
-  saveTimer = setTimeout(function(){ persist(); }, 800);
+function saveTask(t) {
+  showSyncing();
+  setDoc(doc(db,"tasks",t.id), t).then(showSynced);
 }
-function showSaved() {
-  document.getElementById("save-txt").textContent = "Guardado";
-  document.getElementById("save-ind").style.opacity = "1";
-  setTimeout(function(){ document.getElementById("save-ind").style.opacity = "0.6"; }, 2000);
+function saveLink(l) {
+  showSyncing();
+  setDoc(doc(db,"links",l.id), l).then(showSynced);
 }
-function nid(p) { return p + Date.now(); }
+function deleteProject(id) {
+  showSyncing();
+  deleteDoc(doc(db,"projects",id)).then(showSynced);
+}
+function deleteTask(id) {
+  deleteDoc(doc(db,"tasks",id));
+}
+function deleteLink(id) {
+  showSyncing();
+  deleteDoc(doc(db,"links",id)).then(showSynced);
+}
 
+function showSyncing() {
+  var el = document.getElementById("save-ind");
+  var tx = document.getElementById("save-txt");
+  el.classList.add("syncing");
+  tx.textContent = "Guardando...";
+}
+function showSynced() {
+  var el = document.getElementById("save-ind");
+  var tx = document.getElementById("save-txt");
+  tx.textContent = "Sincronizado";
+  setTimeout(function(){ el.classList.remove("syncing"); }, 1500);
+}
+
+function nid(p) { return p + Date.now() + Math.floor(Math.random()*1000); }
+
+// ── LOGIN ────────────────────────────────────────────────────────
 function buildLogin() {
   var g = document.getElementById("member-grid");
   g.innerHTML = "";
   for (var i=0; i<TEAM.length; i++) {
-    var m = TEAM[i];
     (function(member) {
       var b = document.createElement("button");
       b.className = "mb";
@@ -384,51 +409,40 @@ function buildLogin() {
       var nm = document.createElement("span");
       nm.className = "mn";
       nm.textContent = member.name;
-      b.appendChild(av);
-      b.appendChild(nm);
+      b.appendChild(av); b.appendChild(nm);
       b.onclick = function() {
-        var btns = document.querySelectorAll(".mb");
-        for (var j=0; j<btns.length; j++) btns[j].classList.remove("sel");
+        document.querySelectorAll(".mb").forEach(function(x){ x.classList.remove("sel"); });
         b.classList.add("sel");
         var btn = document.getElementById("btn-enter");
         btn.disabled = false;
         btn.onclick = function() { enterApp(member.id); };
       };
       g.appendChild(b);
-    })(m);
+    })(TEAM[i]);
   }
 }
 
 function enterApp(id) {
   currentUser = id;
-  try { localStorage.setItem("itelsa_t_user", id); } catch(e) {}
+  try { localStorage.setItem("itelsa_user", id); } catch(e) {}
   document.getElementById("login-screen").style.display = "none";
   document.getElementById("app").style.display = "flex";
   renderCurrentUser();
   renderTeam();
-  renderProjList();
-  var first = null;
-  for (var i=0; i<D.projects.length; i++) {
-    if (D.projects[i].status === "activo") { first = D.projects[i]; break; }
-  }
-  selProj = first ? first.id : null;
-  renderProjList();
-  renderBoard();
+  startListeners();
 }
 
 function logout() {
-  try { localStorage.removeItem("itelsa_t_user"); } catch(e) {}
+  try { localStorage.removeItem("itelsa_user"); } catch(e) {}
   currentUser = null; selProj = null; selTask = null; filterMember = null;
   document.getElementById("app").style.display = "none";
   document.getElementById("login-screen").style.display = "flex";
-  var btns = document.querySelectorAll(".mb");
-  for (var i=0; i<btns.length; i++) btns[i].classList.remove("sel");
+  document.querySelectorAll(".mb").forEach(function(x){ x.classList.remove("sel"); });
   document.getElementById("btn-enter").disabled = true;
 }
 
 function renderCurrentUser() {
-  var m = null;
-  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === currentUser) { m = TEAM[i]; break; } }
+  var m = getMember(currentUser);
   if (!m) return;
   var el = document.getElementById("cu-btn");
   el.innerHTML = "";
@@ -438,336 +452,199 @@ function renderCurrentUser() {
   av.textContent = m.initials;
   var nm = document.createElement("span");
   nm.textContent = m.name;
-  el.appendChild(av);
-  el.appendChild(nm);
+  el.appendChild(av); el.appendChild(nm);
 }
 
+function getMember(id) {
+  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id===id) return TEAM[i]; }
+  return null;
+}
+
+function ft(ts) {
+  var d = new Date(ts);
+  return d.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit"}) + " " + d.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+}
+
+// ── VIEWS ────────────────────────────────────────────────────────
 function switchView(v) {
   curView = v;
-  var views = ["board","calendar","info"];
-  for (var i=0; i<views.length; i++) {
-    var el = document.getElementById("view-" + views[i]);
-    var tab = document.getElementById("tab-" + (views[i]==="board"?"board":views[i]==="calendar"?"cal":"info"));
-    if (el) el.classList.toggle("act", v === views[i]);
-    if (tab) tab.classList.toggle("act", v === views[i]);
-  }
-  if (v === "calendar") renderGantt();
-  if (v === "info") renderInfoGrid();
-  if (v === "board") renderBoard();
+  ["board","calendar","info"].forEach(function(x) {
+    var el = document.getElementById("view-" + x);
+    var tab = document.getElementById("tab-" + (x==="board"?"board":x==="calendar"?"cal":"info"));
+    if (el) el.classList.toggle("act", v===x);
+    if (tab) tab.classList.toggle("act", v===x);
+  });
+  if (v==="calendar") renderGantt();
+  if (v==="info") renderInfoGrid();
+  if (v==="board") renderBoard();
 }
+window.switchView = switchView;
 
 function renderTeam() {
   var c = document.getElementById("team-avs");
   c.innerHTML = "";
-  for (var i=0; i<TEAM.length; i++) {
-    (function(m) {
+  TEAM.forEach(function(m) {
+    (function(member) {
       var a = document.createElement("div");
-      a.className = "av " + m.cls + (filterMember === m.id ? " af" : "");
-      a.title = m.name;
-      a.textContent = m.initials;
+      a.className = "av " + member.cls + (filterMember===member.id?" af":"");
+      a.title = member.name; a.textContent = member.initials;
       a.onclick = function() {
-        filterMember = (filterMember === m.id) ? null : m.id;
+        filterMember = (filterMember===member.id) ? null : member.id;
         renderTeam(); renderBoard();
       };
       c.appendChild(a);
-    })(TEAM[i]);
-  }
+    })(m);
+  });
 }
 
-function getProjBySection(sec) {
-  var result = [];
-  for (var i=0; i<D.projects.length; i++) {
-    var p = D.projects[i];
-    if (p.section === sec && p.status === "activo") result.push(p);
-  }
-  return result;
-}
-
-function getTaskCount(projId) {
-  var count = 0;
-  for (var i=0; i<D.tasks.length; i++) {
-    if (D.tasks[i].projId === projId) count++;
-  }
-  return count;
-}
-
+// ── PROJECTS ─────────────────────────────────────────────────────
 function renderProjList() {
-  var secs = ["proyectos","marketing"];
-  for (var s=0; s<secs.length; s++) {
-    var sec = secs[s];
+  ["proyectos","marketing"].forEach(function(sec) {
     var c = document.getElementById("pl-" + sec);
     c.innerHTML = "";
-    var projs = getProjBySection(sec);
-    for (var i=0; i<projs.length; i++) {
-      (function(p) {
-        var cnt = getTaskCount(p.id);
+    D.projects.filter(function(p){ return p.section===sec && p.status==="activo"; }).forEach(function(p) {
+      (function(proj) {
+        var cnt = D.tasks.filter(function(t){ return t.projId===proj.id; }).length;
         var div = document.createElement("div");
-        div.className = "pi" + (selProj === p.id ? " act" : "");
-        var dot = document.createElement("span");
-        dot.className = "pd";
-        dot.style.background = p.color;
-        var nm = document.createElement("span");
-        nm.className = "pn";
-        nm.textContent = p.name;
-        var pr = document.createElement("span");
-        pr.className = "pp pp" + p.priority[0];
-        pr.textContent = p.priority;
-        var ct = document.createElement("span");
-        ct.className = "pc";
-        ct.textContent = cnt;
+        div.className = "pi" + (selProj===proj.id?" act":"");
+        var dot = document.createElement("span"); dot.className="pd"; dot.style.background=proj.color;
+        var nm = document.createElement("span"); nm.className="pn"; nm.textContent=proj.name;
+        var pr = document.createElement("span"); pr.className="pp pp"+proj.priority[0]; pr.textContent=proj.priority;
+        var ct = document.createElement("span"); ct.className="pc"; ct.textContent=cnt;
         div.appendChild(dot); div.appendChild(nm); div.appendChild(pr); div.appendChild(ct);
-        div.onclick = function() {
-          selProj = p.id; selTask = null; closeDetail();
-          renderProjList(); switchView("board");
-        };
+        div.onclick = function() { selProj=proj.id; selTask=null; closeDetail(); renderProjList(); switchView("board"); };
         c.appendChild(div);
-      })(projs[i]);
-    }
-  }
-  var fins = [];
-  for (var i=0; i<D.projects.length; i++) {
-    if (D.projects[i].status === "finalizado") fins.push(D.projects[i]);
-  }
-  var fc = document.getElementById("pl-fin");
-  fc.innerHTML = "";
-  document.getElementById("fin-empty").style.display = fins.length ? "none" : "block";
-  for (var i=0; i<fins.length; i++) {
-    (function(p) {
+      })(p);
+    });
+  });
+  var fins = D.projects.filter(function(p){ return p.status==="finalizado"; });
+  var fc = document.getElementById("pl-fin"); fc.innerHTML="";
+  document.getElementById("fin-empty").style.display = fins.length?"none":"block";
+  fins.forEach(function(p) {
+    (function(proj) {
       var div = document.createElement("div");
-      div.className = "pi" + (selProj === p.id ? " act" : "");
-      var dot = document.createElement("span");
-      dot.className = "pd";
-      dot.style.background = p.color;
-      dot.style.opacity = "0.5";
-      var nm = document.createElement("span");
-      nm.className = "pn";
-      nm.style.opacity = "0.6";
-      nm.textContent = p.name;
-      var ic = document.createElement("i");
-      ic.className = "ti ti-circle-check";
-      ic.style.cssText = "font-size:11px;color:#16a34a";
+      div.className = "pi" + (selProj===proj.id?" act":"");
+      var dot = document.createElement("span"); dot.className="pd"; dot.style.background=proj.color; dot.style.opacity="0.5";
+      var nm = document.createElement("span"); nm.className="pn"; nm.style.opacity="0.6"; nm.textContent=proj.name;
+      var ic = document.createElement("i"); ic.className="ti ti-circle-check"; ic.style.cssText="font-size:11px;color:#16a34a";
       div.appendChild(dot); div.appendChild(nm); div.appendChild(ic);
-      div.onclick = function() {
-        selProj = p.id; selTask = null; closeDetail();
-        renderProjList(); switchView("board");
-      };
+      div.onclick = function() { selProj=proj.id; selTask=null; closeDetail(); renderProjList(); switchView("board"); };
       fc.appendChild(div);
-    })(fins[i]);
-  }
+    })(p);
+  });
 }
 
 function getProj() {
-  for (var i=0; i<D.projects.length; i++) {
-    if (D.projects[i].id === selProj) return D.projects[i];
-  }
+  for (var i=0; i<D.projects.length; i++) { if (D.projects[i].id===selProj) return D.projects[i]; }
   return null;
 }
 
-function getMember(id) {
-  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === id) return TEAM[i]; }
-  return null;
-}
-
+// ── BOARD ────────────────────────────────────────────────────────
 function renderBoard() {
   var c = document.getElementById("board-inner");
-  if (!selProj) {
-    c.innerHTML = "<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>";
-    return;
-  }
+  if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
-  var isFin = proj.status === "finalizado";
-  var secLabel = isFin ? "Finalizado" : (proj.section === "marketing" ? "Marketing" : "Proyectos");
-  var secCls = isFin ? "sbf" : (proj.section === "marketing" ? "sbm" : "sbp");
-  var prioCls = "pp" + proj.priority[0];
+  if (!proj) return;
+  var isFin = proj.status==="finalizado";
+  var secLabel = isFin?"Finalizado":(proj.section==="marketing"?"Marketing":"Proyectos");
+  var secCls = isFin?"sbf":(proj.section==="marketing"?"sbm":"sbp");
 
-  var tasks = [];
-  for (var i=0; i<D.tasks.length; i++) {
-    if (D.tasks[i].projId === selProj) {
-      if (!filterMember || D.tasks[i].assignee === filterMember) tasks.push(D.tasks[i]);
-    }
-  }
+  var tasks = D.tasks.filter(function(t){ return t.projId===selProj && (!filterMember||t.assignee===filterMember); });
   var cols = {pendiente:[], "en-curso":[], terminado:[]};
-  for (var i=0; i<tasks.length; i++) cols[tasks[i].status].push(tasks[i]);
+  tasks.forEach(function(t){ if(cols[t.status]) cols[t.status].push(t); });
 
-  // Build header
   c.innerHTML = "";
 
-  var header = document.createElement("div");
-  header.className = "ch";
-  var left = document.createElement("div");
-  left.style.cssText = "display:flex;align-items:center;gap:8px;flex-wrap:wrap";
-  var dot = document.createElement("span");
-  dot.style.cssText = "width:10px;height:10px;border-radius:50%;background:" + proj.color + ";display:inline-block;flex-shrink:0";
-  var title = document.createElement("span");
-  title.style.cssText = "font-size:17px;font-weight:600;color:#1f2937";
-  title.textContent = proj.name;
-  var badge = document.createElement("span");
-  badge.className = "sb2 " + secCls;
-  badge.textContent = secLabel;
-  var prio = document.createElement("span");
-  prio.className = "pp " + prioCls;
-  prio.style.cssText = "font-size:11px;padding:2px 8px";
-  prio.textContent = proj.priority;
-  left.appendChild(dot); left.appendChild(title); left.appendChild(badge); left.appendChild(prio);
+  // Header
+  var hdr = document.createElement("div"); hdr.className="ch";
+  var left = document.createElement("div"); left.style.cssText="display:flex;align-items:center;gap:8px;flex-wrap:wrap";
+  var dot = document.createElement("span"); dot.style.cssText="width:10px;height:10px;border-radius:50%;background:"+proj.color+";display:inline-block;flex-shrink:0";
+  var ttl = document.createElement("span"); ttl.style.cssText="font-size:17px;font-weight:600;color:#1f2937"; ttl.textContent=proj.name;
+  var bdg = document.createElement("span"); bdg.className="sb2 "+secCls; bdg.textContent=secLabel;
+  var pri = document.createElement("span"); pri.className="pp pp"+proj.priority[0]; pri.style.cssText="font-size:11px;padding:2px 8px"; pri.textContent=proj.priority;
+  left.appendChild(dot); left.appendChild(ttl); left.appendChild(bdg); left.appendChild(pri);
 
-  var actions = document.createElement("div");
-  actions.className = "ha";
+  var acts = document.createElement("div"); acts.className="ha";
   if (!isFin) {
-    var btnTask = document.createElement("button");
-    btnTask.className = "btn";
-    btnTask.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Nueva tarea";
-    btnTask.onclick = openNewTask;
-    var btnFin = document.createElement("button");
-    btnFin.className = "btn btng";
-    btnFin.innerHTML = "<i class='ti ti-circle-check' style='font-size:12px'></i> Finalizar";
-    btnFin.onclick = confirmFinalizar;
-    actions.appendChild(btnTask); actions.appendChild(btnFin);
+    var bt = document.createElement("button"); bt.className="btn"; bt.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Nueva tarea"; bt.onclick=openNewTask;
+    var bf = document.createElement("button"); bf.className="btn btng"; bf.innerHTML="<i class='ti ti-circle-check' style='font-size:12px'></i> Finalizar"; bf.onclick=confirmFinalizar;
+    acts.appendChild(bt); acts.appendChild(bf);
   } else {
-    var btnReopen = document.createElement("button");
-    btnReopen.className = "btn";
-    btnReopen.innerHTML = "<i class='ti ti-refresh' style='font-size:12px'></i> Reabrir";
-    btnReopen.onclick = reabrirProyecto;
-    actions.appendChild(btnReopen);
+    var br2 = document.createElement("button"); br2.className="btn"; br2.innerHTML="<i class='ti ti-refresh' style='font-size:12px'></i> Reabrir"; br2.onclick=reabrirProyecto;
+    acts.appendChild(br2);
   }
-  var btnDel = document.createElement("button");
-  btnDel.className = "btn btnr";
-  btnDel.innerHTML = "<i class='ti ti-trash' style='font-size:13px'></i>";
-  btnDel.title = "Eliminar proyecto";
-  btnDel.onclick = confirmEliminar;
-  actions.appendChild(btnDel);
-  header.appendChild(left); header.appendChild(actions);
-  c.appendChild(header);
+  var bd2 = document.createElement("button"); bd2.className="btn btnr"; bd2.innerHTML="<i class='ti ti-trash'></i>"; bd2.title="Eliminar"; bd2.onclick=confirmEliminar;
+  acts.appendChild(bd2);
+  hdr.appendChild(left); hdr.appendChild(acts); c.appendChild(hdr);
 
-  if (isFin) {
-    var banner = document.createElement("div");
-    banner.className = "fb";
-    banner.innerHTML = "<i class='ti ti-circle-check' style='font-size:16px'></i> Proyecto finalizado - solo lectura.";
-    c.appendChild(banner);
-  }
+  if (isFin) { var ban=document.createElement("div"); ban.className="fb"; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> Proyecto finalizado - solo lectura."; c.appendChild(ban); }
 
   // Info box
-  var box = document.createElement("div");
-  box.className = "bx";
-  var bxt = document.createElement("div");
-  bxt.className = "bxt";
-  bxt.textContent = "Informacion del proyecto";
-  box.appendChild(bxt);
+  var box = document.createElement("div"); box.className="bx";
+  var bxt = document.createElement("div"); bxt.className="bxt"; bxt.textContent="Informacion del proyecto"; box.appendChild(bxt);
 
-  var mrow = document.createElement("div");
-  mrow.className = "mr";
-
-  var fi1 = document.createElement("div"); fi1.className = "mi";
-  var l1 = document.createElement("label"); l1.textContent = "Fecha de inicio";
-  var i1 = document.createElement("input"); i1.type = "date"; i1.value = proj.start || "";
-  if (isFin) i1.disabled = true;
-  i1.onchange = function() { updateProjMeta("start", this.value); };
-  fi1.appendChild(l1); fi1.appendChild(i1);
-
-  var fi2 = document.createElement("div"); fi2.className = "mi";
-  var l2 = document.createElement("label"); l2.textContent = "Fecha de fin";
-  var i2 = document.createElement("input"); i2.type = "date"; i2.value = proj.end || "";
-  if (isFin) i2.disabled = true;
-  i2.onchange = function() { updateProjMeta("end", this.value); };
-  fi2.appendChild(l2); fi2.appendChild(i2);
-
-  var fi3 = document.createElement("div"); fi3.className = "mi";
-  var l3 = document.createElement("label"); l3.textContent = "Prioridad";
-  var sel3 = document.createElement("select");
-  if (isFin) sel3.disabled = true;
-  ["alta","media","baja"].forEach(function(v) {
-    var o = document.createElement("option"); o.value = v; o.textContent = v.charAt(0).toUpperCase()+v.slice(1);
-    if (proj.priority === v) o.selected = true;
-    sel3.appendChild(o);
-  });
-  sel3.onchange = function() { updateProjMeta("priority", this.value); };
+  var mr = document.createElement("div"); mr.className="mr";
+  function mkDateField(lbl, val, field) {
+    var fi = document.createElement("div"); fi.className="mi";
+    var l = document.createElement("label"); l.textContent=lbl;
+    var inp = document.createElement("input"); inp.type="date"; inp.value=val||""; if(isFin) inp.disabled=true;
+    inp.onchange = function(){ var p=getProj(); if(p){p[field]=this.value; saveProject(p);} };
+    fi.appendChild(l); fi.appendChild(inp); return fi;
+  }
+  var fi3 = document.createElement("div"); fi3.className="mi";
+  var l3 = document.createElement("label"); l3.textContent="Prioridad";
+  var sel3 = document.createElement("select"); if(isFin) sel3.disabled=true;
+  ["alta","media","baja"].forEach(function(v){ var o=document.createElement("option"); o.value=v; o.textContent=v.charAt(0).toUpperCase()+v.slice(1); if(proj.priority===v) o.selected=true; sel3.appendChild(o); });
+  sel3.onchange = function(){ var p=getProj(); if(p){p.priority=this.value; saveProject(p); renderProjList();} };
   fi3.appendChild(l3); fi3.appendChild(sel3);
-  mrow.appendChild(fi1); mrow.appendChild(fi2); mrow.appendChild(fi3);
-  box.appendChild(mrow);
+  mr.appendChild(mkDateField("Fecha de inicio", proj.start, "start"));
+  mr.appendChild(mkDateField("Fecha de fin", proj.end, "end"));
+  mr.appendChild(fi3); box.appendChild(mr);
 
   // Checklist
-  var clt = document.createElement("div");
-  clt.className = "bxt";
-  clt.style.marginBottom = "9px";
-  clt.textContent = "Entregables del proyecto";
-  box.appendChild(clt);
-
-  var clg = document.createElement("div");
-  clg.className = "cl";
-  var checklist = proj.checklist || {};
+  var cxt = document.createElement("div"); cxt.className="bxt"; cxt.style.marginBottom="9px"; cxt.textContent="Entregables del proyecto"; box.appendChild(cxt);
+  var clg = document.createElement("div"); clg.className="cl";
+  var checklist = proj.checklist||{};
   CL.forEach(function(ci) {
     (function(item) {
       var done = !!checklist[item.id];
-      var row = document.createElement("div");
-      row.className = "ci" + (done ? " ck" : "");
-      if (!isFin) row.onclick = function() { toggleCheck(item.id); };
-      var cb = document.createElement("div");
-      cb.className = "cb";
-      if (done) { var ic = document.createElement("i"); ic.className="ti ti-check"; ic.style.cssText="font-size:10px;color:#fff"; cb.appendChild(ic); }
-      var lbl = document.createElement("span");
-      lbl.className = "cil";
-      lbl.textContent = item.label;
-      row.appendChild(cb); row.appendChild(lbl);
-      clg.appendChild(row);
+      var row = document.createElement("div"); row.className="ci"+(done?" ck":"");
+      if (!isFin) row.onclick = function(){ var p=getProj(); if(!p) return; if(!p.checklist) p.checklist={}; p.checklist[item.id]=!p.checklist[item.id]; saveProject(p); };
+      var cb = document.createElement("div"); cb.className="cb";
+      if (done){ var ic=document.createElement("i"); ic.className="ti ti-check"; ic.style.cssText="font-size:10px;color:#fff"; cb.appendChild(ic); }
+      var lbl = document.createElement("span"); lbl.className="cil"; lbl.textContent=item.label;
+      row.appendChild(cb); row.appendChild(lbl); clg.appendChild(row);
     })(ci);
   });
   box.appendChild(clg);
 
-  // Dropbox row
+  // Dropbox
   var dbDone = !!proj.dropbox;
-  var dr = document.createElement("div");
-  dr.className = "dr" + (dbDone ? " ck" : "");
-  if (!isFin) dr.onclick = function() { toggleDropbox(); };
-  var drb = document.createElement("div");
-  drb.className = "drb";
-  if (dbDone) { var dic = document.createElement("i"); dic.className="ti ti-check"; dic.style.cssText="font-size:10px;color:#fff"; drb.appendChild(dic); }
-  var drl = document.createElement("span");
-  drl.className = "drl";
-  drl.textContent = dbDone ? "Proyecto subido a Dropbox" : "Confirmar subida a Dropbox";
-  var dri = document.createElement("i");
-  dri.className = "ti ti-brand-dropbox";
-  dri.style.cssText = "font-size:16px;color:#2563eb;flex-shrink:0";
-  dr.appendChild(drb); dr.appendChild(drl); dr.appendChild(dri);
-  box.appendChild(dr);
+  var dr = document.createElement("div"); dr.className="dr"+(dbDone?" ck":"");
+  if (!isFin) dr.onclick = function(){ var p=getProj(); if(!p) return; p.dropbox=!p.dropbox; saveProject(p); };
+  var drb = document.createElement("div"); drb.className="drb";
+  if (dbDone){ var dic=document.createElement("i"); dic.className="ti ti-check"; dic.style.cssText="font-size:10px;color:#fff"; drb.appendChild(dic); }
+  var drl = document.createElement("span"); drl.className="drl"; drl.textContent=dbDone?"Proyecto subido a Dropbox":"Confirmar subida a Dropbox";
+  var dri = document.createElement("i"); dri.className="ti ti-brand-dropbox"; dri.style.cssText="font-size:16px;color:#2563eb;flex-shrink:0";
+  dr.appendChild(drb); dr.appendChild(drl); dr.appendChild(dri); box.appendChild(dr);
 
   // Notes
-  var nl = document.createElement("label");
-  nl.style.cssText = "font-size:11px;color:#9ca3af;display:block;margin-bottom:5px;font-weight:500";
-  nl.textContent = "Notas adicionales";
-  var ta = document.createElement("textarea");
-  ta.className = "na";
-  ta.placeholder = "Informacion adicional, contactos, observaciones...";
-  ta.value = proj.notes || "";
-  if (isFin) ta.disabled = true;
-  ta.onchange = function() { updateProjMeta("notes", this.value); };
-  box.appendChild(nl); box.appendChild(ta);
-  c.appendChild(box);
+  var nl = document.createElement("label"); nl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:5px;font-weight:500"; nl.textContent="Notas adicionales";
+  var ta = document.createElement("textarea"); ta.className="na"; ta.placeholder="Informacion adicional..."; ta.value=proj.notes||""; if(isFin) ta.disabled=true;
+  ta.onchange = function(){ var p=getProj(); if(p){p.notes=this.value; saveProject(p);} };
+  box.appendChild(nl); box.appendChild(ta); c.appendChild(box);
 
   // Columns
-  var colsDiv = document.createElement("div");
-  colsDiv.className = "cols";
-  var colNames = ["pendiente","en-curso","terminado"];
-  var colLabels = {pendiente:"Pendiente","en-curso":"En curso",terminado:"Terminado"};
+  var colsDiv = document.createElement("div"); colsDiv.className="cols";
+  var colNames=["pendiente","en-curso","terminado"]; var colLabels={pendiente:"Pendiente","en-curso":"En curso",terminado:"Terminado"};
   colNames.forEach(function(st) {
-    var col = document.createElement("div");
-    col.className = "col";
-    var ch = document.createElement("div");
-    ch.className = "clh";
-    var ct = document.createElement("span");
-    ct.className = "clt";
-    ct.textContent = colLabels[st];
-    var cb2 = document.createElement("span");
-    cb2.className = "clb";
-    cb2.textContent = cols[st].length;
-    ch.appendChild(ct); ch.appendChild(cb2);
-    col.appendChild(ch);
-    if (cols[st].length === 0) {
-      var empty = document.createElement("div");
-      empty.style.cssText = "font-size:12px;color:#9ca3af;text-align:center;padding:18px 0";
-      empty.textContent = "Sin tareas";
-      col.appendChild(empty);
-    } else {
-      cols[st].forEach(function(t) { col.appendChild(buildTaskCard(t)); });
-    }
+    var col=document.createElement("div"); col.className="col";
+    var ch2=document.createElement("div"); ch2.className="clh";
+    var ct2=document.createElement("span"); ct2.className="clt"; ct2.textContent=colLabels[st];
+    var cb2=document.createElement("span"); cb2.className="clb"; cb2.textContent=cols[st].length;
+    ch2.appendChild(ct2); ch2.appendChild(cb2); col.appendChild(ch2);
+    if (!cols[st].length) { var e=document.createElement("div"); e.style.cssText="font-size:12px;color:#9ca3af;text-align:center;padding:18px 0"; e.textContent="Sin tareas"; col.appendChild(e); }
+    else { cols[st].forEach(function(t){ col.appendChild(buildTaskCard(t)); }); }
     colsDiv.appendChild(col);
   });
   c.appendChild(colsDiv);
@@ -775,406 +652,259 @@ function renderBoard() {
 
 function buildTaskCard(t) {
   var m = getMember(t.assignee);
-  var card = document.createElement("div");
-  card.className = "tc";
-  card.onclick = function() { openDetail(t.id); };
-  var tt = document.createElement("div");
-  tt.className = "tt";
-  tt.textContent = t.title;
-  var tm = document.createElement("div");
-  tm.className = "tm";
-  var pr = document.createElement("span");
-  pr.className = "tpr pr" + t.priority[0];
-  pr.textContent = t.priority;
-  var right = document.createElement("div");
-  right.style.cssText = "display:flex;align-items:center;gap:5px";
-  if (t.due) {
-    var due = document.createElement("span");
-    due.className = "td";
-    due.innerHTML = "<i class='ti ti-calendar' style='font-size:10px'></i>" + t.due.slice(5).replace("-","/");
-    right.appendChild(due);
-  }
-  if (m) {
-    var av = document.createElement("div");
-    av.className = "tav " + m.cls;
-    av.title = m.name;
-    av.textContent = m.initials;
-    right.appendChild(av);
-  }
-  tm.appendChild(pr); tm.appendChild(right);
-  card.appendChild(tt); card.appendChild(tm);
+  var card = document.createElement("div"); card.className="tc";
+  card.onclick = function(){ openDetail(t.id); };
+  var tt = document.createElement("div"); tt.className="tt"; tt.textContent=t.title;
+  var tm = document.createElement("div"); tm.className="tm";
+  var pr = document.createElement("span"); pr.className="tpr pr"+t.priority[0]; pr.textContent=t.priority;
+  var right = document.createElement("div"); right.style.cssText="display:flex;align-items:center;gap:5px";
+  if (t.due){ var due=document.createElement("span"); due.className="td"; due.innerHTML="<i class='ti ti-calendar' style='font-size:10px'></i>"+t.due.slice(5).replace("-","/"); right.appendChild(due); }
+  if (m){ var av=document.createElement("div"); av.className="tav "+m.cls; av.title=m.name; av.textContent=m.initials; right.appendChild(av); }
+  tm.appendChild(pr); tm.appendChild(right); card.appendChild(tt); card.appendChild(tm);
   return card;
 }
 
-function toggleCheck(itemId) {
-  var p = getProj();
-  if (!p || p.status === "finalizado") return;
-  if (!p.checklist) p.checklist = {};
-  p.checklist[itemId] = !p.checklist[itemId];
-  scheduleSave(); renderBoard();
-}
-
-function toggleDropbox() {
-  var p = getProj();
-  if (!p || p.status === "finalizado") return;
-  p.dropbox = !p.dropbox;
-  scheduleSave(); renderBoard();
-}
-
-function updateProjMeta(f, v) {
-  var p = getProj();
-  if (p) {
-    p[f] = v;
-    scheduleSave();
-    if (f === "start" || f === "end") renderGantt();
-    if (f === "priority") renderProjList();
-  }
-}
-
-function confirmFinalizar() {
-  document.getElementById("conf-icon").innerHTML = "<i class='ti ti-circle-check' style='color:#16a34a;font-size:28px'></i>";
-  document.getElementById("conf-title").textContent = "Finalizar este proyecto?";
-  document.getElementById("conf-sub").textContent = "El proyecto pasara a Finalizados y sus tareas quedaran en modo solo lectura.";
-  var btn = document.getElementById("conf-btn");
-  btn.className = "bs";
-  btn.textContent = "Finalizar";
-  btn.onclick = function() {
-    var p = getProj();
-    if (p) { p.status = "finalizado"; persist(); renderProjList(); renderBoard(); }
-    closeModal("mo-confirm");
-  };
-  document.getElementById("mo-confirm").classList.add("op");
-}
-
-function reabrirProyecto() {
-  var p = getProj();
-  if (p) { p.status = "activo"; persist(); renderProjList(); renderBoard(); }
-}
-
-function confirmEliminar() {
-  var p = getProj();
-  document.getElementById("conf-icon").innerHTML = "<i class='ti ti-trash' style='color:#b91c1c;font-size:28px'></i>";
-  document.getElementById("conf-title").textContent = "Eliminar este proyecto?";
-  document.getElementById("conf-sub").textContent = p.name + " y todas sus tareas se eliminaran permanentemente.";
-  var btn = document.getElementById("conf-btn");
-  btn.className = "bd";
-  btn.textContent = "Eliminar";
-  btn.onclick = function() {
-    var pid = selProj;
-    D.tasks = D.tasks.filter(function(t){ return t.projId !== pid; });
-    D.projects = D.projects.filter(function(pr){ return pr.id !== pid; });
-    selProj = null; persist(); renderProjList(); renderBoard();
-    closeModal("mo-confirm");
-  };
-  document.getElementById("mo-confirm").classList.add("op");
-}
-
+// ── DETAIL PANEL ─────────────────────────────────────────────────
 function openDetail(id) {
-  var proj = getProj();
-  if (proj && proj.status === "finalizado") return;
-  selTask = id;
-  var t = null;
-  for (var i=0;i<D.tasks.length;i++) { if (D.tasks[i].id===id) { t=D.tasks[i]; break; } }
-  var m = getMember(t.assignee);
-  document.getElementById("dp-title").textContent = t.title;
-  document.getElementById("dp-status").value = t.status;
-  var pp = document.getElementById("dp-priority");
-  pp.textContent = t.priority; pp.className = "tpr pr" + t.priority[0];
-  var da = document.getElementById("dp-assignee");
-  da.innerHTML = "";
-  if (m) {
-    var av = document.createElement("div"); av.className="tav "+m.cls; av.textContent=m.initials; da.appendChild(av);
-    var nm = document.createElement("span"); nm.textContent=m.name; da.appendChild(nm);
-  } else {
-    da.innerHTML = "<span style='color:#9ca3af'>Sin asignar</span>";
-  }
-  document.getElementById("dp-due").textContent = t.due || "Sin fecha";
-  document.getElementById("dp-desc").textContent = t.desc || "Sin descripcion.";
-  renderActivity(t.activity || []);
+  var proj=getProj(); if(proj&&proj.status==="finalizado") return;
+  selTask=id;
+  var t=null; for(var i=0;i<D.tasks.length;i++){if(D.tasks[i].id===id){t=D.tasks[i];break;}}
+  if(!t) return;
+  var m=getMember(t.assignee);
+  document.getElementById("dp-title").textContent=t.title;
+  document.getElementById("dp-status").value=t.status;
+  var pp=document.getElementById("dp-priority"); pp.textContent=t.priority; pp.className="tpr pr"+t.priority[0];
+  var da=document.getElementById("dp-assignee"); da.innerHTML="";
+  if(m){var av=document.createElement("div");av.className="tav "+m.cls;av.textContent=m.initials;da.appendChild(av);var nm=document.createElement("span");nm.textContent=m.name;da.appendChild(nm);}
+  else da.innerHTML="<span style='color:#9ca3af'>Sin asignar</span>";
+  document.getElementById("dp-due").textContent=t.due||"Sin fecha";
+  document.getElementById("dp-desc").textContent=t.desc||"Sin descripcion.";
+  renderActivity(t.activity||[]);
   document.getElementById("detail-panel").classList.add("op");
 }
+window.openDetail = openDetail;
 
 function renderActivity(log) {
-  var c = document.getElementById("dp-act");
-  c.innerHTML = "";
-  if (!log || !log.length) {
-    c.innerHTML = "<span style='font-size:11px;color:#9ca3af'>Sin actividad</span>"; return;
-  }
-  var sorted = log.slice().reverse();
-  for (var i=0;i<sorted.length;i++) {
-    var a = sorted[i];
-    var who = getMember(a.who);
-    var row = document.createElement("div"); row.className="ai";
-    var dot = document.createElement("span"); dot.className="ad";
-    var txt = document.createElement("span");
-    var b = document.createElement("span"); b.className="aw"; b.textContent = who ? who.name : "Alguien";
-    txt.appendChild(b);
-    txt.appendChild(document.createTextNode(" " + a.action + " - " + ft(a.ts)));
-    row.appendChild(dot); row.appendChild(txt);
-    c.appendChild(row);
-  }
+  var c=document.getElementById("dp-act"); c.innerHTML="";
+  if(!log||!log.length){c.innerHTML="<span style='font-size:11px;color:#9ca3af'>Sin actividad</span>";return;}
+  log.slice().reverse().forEach(function(a){
+    var who=getMember(a.who);
+    var row=document.createElement("div");row.className="ai";
+    var dot=document.createElement("span");dot.className="ad";
+    var txt=document.createElement("span");
+    var b=document.createElement("span");b.className="aw";b.textContent=who?who.name:"Alguien";
+    txt.appendChild(b);txt.appendChild(document.createTextNode(" "+a.action+" - "+ft(a.ts)));
+    row.appendChild(dot);row.appendChild(txt);c.appendChild(row);
+  });
 }
 
-function closeDetail() { document.getElementById("detail-panel").classList.remove("op"); selTask=null; }
+function closeDetail(){ document.getElementById("detail-panel").classList.remove("op"); selTask=null; }
+window.closeDetail=closeDetail;
 
 function updateStatus(v) {
-  if (!selTask || !currentUser) return;
-  var t = null;
-  for (var i=0;i<D.tasks.length;i++) { if (D.tasks[i].id===selTask) { t=D.tasks[i]; break; } }
-  if (!t || t.status===v) return;
-  t.status = v;
-  if (!t.activity) t.activity=[];
-  t.activity.push({who:currentUser, action:"Cambio estado a "+v, ts:Date.now()});
-  persist(); renderBoard(); renderActivity(t.activity);
+  if(!selTask||!currentUser) return;
+  var t=null; for(var i=0;i<D.tasks.length;i++){if(D.tasks[i].id===selTask){t=D.tasks[i];break;}}
+  if(!t||t.status===v) return;
+  t.status=v; if(!t.activity) t.activity=[];
+  t.activity.push({who:currentUser,action:"Cambio estado a "+v,ts:Date.now()});
+  saveTask(t); renderActivity(t.activity);
 }
+window.updateStatus=updateStatus;
 
+// ── PROJECT ACTIONS ──────────────────────────────────────────────
+function confirmFinalizar() {
+  document.getElementById("conf-icon").innerHTML="<i class='ti ti-circle-check' style='color:#16a34a;font-size:28px'></i>";
+  document.getElementById("conf-title").textContent="Finalizar este proyecto?";
+  document.getElementById("conf-sub").textContent="El proyecto pasara a Finalizados y sus tareas quedaran en modo solo lectura.";
+  var btn=document.getElementById("conf-btn"); btn.className="bs"; btn.textContent="Finalizar";
+  btn.onclick=function(){ var p=getProj(); if(p){p.status="finalizado"; saveProject(p);} closeModal("mo-confirm"); };
+  document.getElementById("mo-confirm").classList.add("op");
+}
+window.confirmFinalizar=confirmFinalizar;
+
+function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p);} }
+window.reabrirProyecto=reabrirProyecto;
+
+function confirmEliminar() {
+  var p=getProj();
+  document.getElementById("conf-icon").innerHTML="<i class='ti ti-trash' style='color:#b91c1c;font-size:28px'></i>";
+  document.getElementById("conf-title").textContent="Eliminar este proyecto?";
+  document.getElementById("conf-sub").textContent=p.name+" y todas sus tareas se eliminaran permanentemente.";
+  var btn=document.getElementById("conf-btn"); btn.className="bd"; btn.textContent="Eliminar";
+  btn.onclick=function(){
+    var pid=selProj;
+    D.tasks.filter(function(t){return t.projId===pid;}).forEach(function(t){deleteTask(t.id);});
+    deleteProject(pid); selProj=null; closeModal("mo-confirm");
+  };
+  document.getElementById("mo-confirm").classList.add("op");
+}
+window.confirmEliminar=confirmEliminar;
+
+// ── INFO UTIL ────────────────────────────────────────────────────
 function renderInfoGrid() {
-  var g = document.getElementById("info-grid");
-  g.innerHTML = "";
-  if (!D.links || !D.links.length) {
-    g.innerHTML = "<div style='grid-column:1/-1;text-align:center;padding:48px;color:#9ca3af;font-size:13px'><i class='ti ti-link' style='font-size:28px;margin-bottom:10px;display:block'></i>Todavia no hay links.</div>";
-    return;
-  }
-  D.links.forEach(function(l) {
-    (function(link) {
-      var card = document.createElement("div"); card.className="ic";
-      var top = document.createElement("div"); top.className="ict";
-      var left = document.createElement("div");
-      var nm = document.createElement("div"); nm.className="icn"; nm.textContent=link.name;
-      left.appendChild(nm);
-      if (link.desc) { var dc=document.createElement("div"); dc.className="icd"; dc.textContent=link.desc; left.appendChild(dc); }
-      var del = document.createElement("button"); del.className="icx"; del.innerHTML="<i class='ti ti-x'></i>";
-      del.onclick = function() { deleteInfo(link.id); };
-      top.appendChild(left); top.appendChild(del);
-      var tag = document.createElement("span"); tag.className="itg"; tag.textContent=link.cat;
-      card.appendChild(top); card.appendChild(tag);
-      if (link.url) {
-        var a = document.createElement("a"); a.className="icl"; a.href=link.url; a.target="_blank"; a.rel="noopener";
-        a.innerHTML = "<i class='ti ti-external-link' style='font-size:11px;flex-shrink:0'></i>" + link.url;
-        card.appendChild(a);
-      }
+  var g=document.getElementById("info-grid"); g.innerHTML="";
+  if(!D.links||!D.links.length){g.innerHTML="<div style='grid-column:1/-1;text-align:center;padding:48px;color:#9ca3af;font-size:13px'><i class='ti ti-link' style='font-size:28px;margin-bottom:10px;display:block'></i>Todavia no hay links.</div>";return;}
+  D.links.forEach(function(l){
+    (function(link){
+      var card=document.createElement("div");card.className="ic";
+      var top=document.createElement("div");top.className="ict";
+      var left=document.createElement("div");
+      var nm=document.createElement("div");nm.className="icn";nm.textContent=link.name;left.appendChild(nm);
+      if(link.desc){var dc=document.createElement("div");dc.className="icd";dc.textContent=link.desc;left.appendChild(dc);}
+      var del=document.createElement("button");del.className="icx";del.innerHTML="<i class='ti ti-x'></i>";
+      del.onclick=function(){deleteLink(link.id);};
+      top.appendChild(left);top.appendChild(del);
+      var tag=document.createElement("span");tag.className="itg";tag.textContent=link.cat;
+      card.appendChild(top);card.appendChild(tag);
+      if(link.url){var a=document.createElement("a");a.className="icl";a.href=link.url;a.target="_blank";a.rel="noopener";a.innerHTML="<i class='ti ti-external-link' style='font-size:11px;flex-shrink:0'></i>"+link.url;card.appendChild(a);}
       g.appendChild(card);
     })(l);
   });
 }
+window.renderInfoGrid=renderInfoGrid;
 
-function openNewInfo() {
-  document.getElementById("in-name").value="";
-  document.getElementById("in-desc").value="";
-  document.getElementById("in-url").value="";
-  document.getElementById("in-cat").value="Ficha tecnica";
+function openNewInfo(){
+  document.getElementById("in-name").value=""; document.getElementById("in-desc").value="";
+  document.getElementById("in-url").value=""; document.getElementById("in-cat").value="Ficha tecnica";
   document.getElementById("mo-info").classList.add("op");
-  setTimeout(function(){ document.getElementById("in-name").focus(); }, 50);
+  setTimeout(function(){document.getElementById("in-name").focus();},50);
 }
+window.openNewInfo=openNewInfo;
 
-function saveInfo() {
-  var name = document.getElementById("in-name").value.trim();
-  if (!name) return;
-  if (!D.links) D.links=[];
-  D.links.push({id:nid("i"), name:name, desc:document.getElementById("in-desc").value.trim(), url:document.getElementById("in-url").value.trim(), cat:document.getElementById("in-cat").value});
-  persist(); closeModal("mo-info"); renderInfoGrid();
+function saveInfo(){
+  var name=document.getElementById("in-name").value.trim(); if(!name) return;
+  var link={id:nid("l"),name:name,desc:document.getElementById("in-desc").value.trim(),url:document.getElementById("in-url").value.trim(),cat:document.getElementById("in-cat").value};
+  saveLink(link); closeModal("mo-info");
 }
+window.saveInfo=saveInfo;
 
-function deleteInfo(id) {
-  D.links = D.links.filter(function(l){ return l.id!==id; });
-  persist(); renderInfoGrid();
-}
-
+// ── GANTT ────────────────────────────────────────────────────────
 function renderGantt() {
-  var c = document.getElementById("gantt-ct");
-  var all = D.projects.filter(function(p){ return p.start && p.end; });
-  if (!all.length) {
-    c.innerHTML = "<div style='text-align:center;padding:40px;color:#9ca3af;font-size:13px'><i class='ti ti-calendar' style='font-size:28px;margin-bottom:10px;display:block'></i>Agrega fechas a los proyectos para ver el cronograma</div>";
-    return;
-  }
-  var dates = [];
-  all.forEach(function(p){ dates.push(new Date(p.start)); dates.push(new Date(p.end)); });
-  var minD = new Date(Math.min.apply(null,dates));
-  var maxD = new Date(Math.max.apply(null,dates));
-  minD = new Date(minD.getFullYear(), minD.getMonth(), 1);
-  maxD = new Date(maxD.getFullYear(), maxD.getMonth()+1, 0);
-  var tMs = maxD - minD;
-  var months = []; var cur = new Date(minD);
-  while (cur <= maxD) { months.push(new Date(cur)); cur = new Date(cur.getFullYear(), cur.getMonth()+1, 1); }
-  var today = new Date();
-  var todayPct = Math.min(100, Math.max(0, (today-minD)/tMs*100)).toFixed(2);
-
-  var wrap = document.createElement("div"); wrap.className="gw";
-  var gn = document.createElement("div"); gn.className="gn";
-
-  // Header row
-  var hrow = document.createElement("div"); hrow.className="ghr";
-  var hlc = document.createElement("div"); hlc.className="glc"; hlc.textContent="Proyecto";
-  var hmr = document.createElement("div"); hmr.className="gmr";
-  months.forEach(function(m) {
-    var gm = document.createElement("div"); gm.className="gm";
-    gm.textContent = MN[m.getMonth()] + " " + m.getFullYear();
-    hmr.appendChild(gm);
-  });
-  hrow.appendChild(hlc); hrow.appendChild(hmr);
-  gn.appendChild(hrow);
-
-  var sections = [
-    {label:"Proyectos",color:"#378ADD",filter:function(p){ return p.section==="proyectos"&&p.status==="activo"; }},
-    {label:"Marketing",color:"#D4537E",filter:function(p){ return p.section==="marketing"&&p.status==="activo"; }},
-    {label:"Finalizados",color:"#16a34a",filter:function(p){ return p.status==="finalizado"; }}
+  var c=document.getElementById("gantt-ct");
+  var all=D.projects.filter(function(p){return p.start&&p.end;});
+  if(!all.length){c.innerHTML="<div style='text-align:center;padding:40px;color:#9ca3af;font-size:13px'><i class='ti ti-calendar' style='font-size:28px;margin-bottom:10px;display:block'></i>Agrega fechas a los proyectos para ver el cronograma</div>";return;}
+  var dates=[]; all.forEach(function(p){dates.push(new Date(p.start));dates.push(new Date(p.end));});
+  var minD=new Date(Math.min.apply(null,dates)),maxD=new Date(Math.max.apply(null,dates));
+  minD=new Date(minD.getFullYear(),minD.getMonth(),1); maxD=new Date(maxD.getFullYear(),maxD.getMonth()+1,0);
+  var tMs=maxD-minD,months=[],cur=new Date(minD);
+  while(cur<=maxD){months.push(new Date(cur));cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);}
+  var today=new Date(),todayPct=Math.min(100,Math.max(0,(today-minD)/tMs*100)).toFixed(2);
+  var wrap=document.createElement("div");wrap.className="gw";
+  var gn=document.createElement("div");gn.className="gn";
+  var hrow=document.createElement("div");hrow.className="ghr";
+  var hlc=document.createElement("div");hlc.className="glc";hlc.textContent="Proyecto";
+  var hmr=document.createElement("div");hmr.className="gmr";
+  months.forEach(function(m){var gm=document.createElement("div");gm.className="gm";gm.textContent=MN[m.getMonth()]+" "+m.getFullYear();hmr.appendChild(gm);});
+  hrow.appendChild(hlc);hrow.appendChild(hmr);gn.appendChild(hrow);
+  var secs=[
+    {label:"Proyectos",color:"#378ADD",filter:function(p){return p.section==="proyectos"&&p.status==="activo";}},
+    {label:"Marketing",color:"#D4537E",filter:function(p){return p.section==="marketing"&&p.status==="activo";}},
+    {label:"Finalizados",color:"#16a34a",filter:function(p){return p.status==="finalizado";}}
   ];
-
-  sections.forEach(function(sec) {
-    var ps = all.filter(sec.filter);
-    if (!ps.length) return;
-    var sr = document.createElement("div"); sr.className="gsr";
-    var sl = document.createElement("div"); sl.className="gsl"; sl.style.color=sec.color; sl.textContent=sec.label;
-    var line = document.createElement("div"); line.style.cssText="flex:1;height:1px;background:#e5e7eb;margin-left:8px";
-    sr.appendChild(sl); sr.appendChild(line);
-    gn.appendChild(sr);
-
-    ps.forEach(function(p) {
-      var s = new Date(p.start), e = new Date(p.end);
-      var lp = Math.max(0,(s-minD)/tMs*100).toFixed(2);
-      var wp = Math.max(0.5,(e-s)/tMs*100).toFixed(2);
-      var done=0, total=0;
-      D.tasks.forEach(function(t){ if(t.projId===p.id){total++;if(t.status==="terminado")done++;} });
-      var progPct = total ? Math.round(done/total*100) : 0;
-      var op = p.status==="finalizado" ? "0.45" : "0.88";
-
-      var row = document.createElement("div"); row.className="gr";
-      var lbl = document.createElement("div"); lbl.className="gpl";
-      var dot = document.createElement("span"); dot.className="gpd"; dot.style.background=p.color;
-      var nm = document.createElement("span"); nm.className="gpn"; nm.textContent=p.name;
-      var pr = document.createElement("span");
-      pr.className = "pp pp" + p.priority[0];
-      pr.style.cssText="font-size:9px;padding:1px 5px;border-radius:4px;font-weight:600;flex-shrink:0";
-      pr.textContent=p.priority;
-      lbl.appendChild(dot); lbl.appendChild(nm); lbl.appendChild(pr);
-
-      var ba = document.createElement("div"); ba.className="gba";
-      var tl = document.createElement("div"); tl.className="gtl"; tl.style.left=todayPct+"%";
-      var bar = document.createElement("div"); bar.className="gb";
-      bar.style.cssText="left:"+lp+"%;width:"+wp+"%;background:"+p.color+";opacity:"+op;
-      bar.title = p.start + " - " + p.end;
-      var pg = document.createElement("div"); pg.className="gpg"; pg.style.width=progPct+"%";
-      bar.appendChild(pg);
-      bar.appendChild(document.createTextNode(p.name+" ("+done+"/"+total+")"));
-      ba.appendChild(tl); ba.appendChild(bar);
-      row.appendChild(lbl); row.appendChild(ba);
-      gn.appendChild(row);
+  secs.forEach(function(sec){
+    var ps=all.filter(sec.filter); if(!ps.length) return;
+    var sr=document.createElement("div");sr.className="gsr";
+    var sl=document.createElement("div");sl.className="gsl";sl.style.color=sec.color;sl.textContent=sec.label;
+    var line=document.createElement("div");line.style.cssText="flex:1;height:1px;background:#e5e7eb;margin-left:8px";
+    sr.appendChild(sl);sr.appendChild(line);gn.appendChild(sr);
+    ps.forEach(function(p){
+      var s=new Date(p.start),e=new Date(p.end);
+      var lp=Math.max(0,(s-minD)/tMs*100).toFixed(2),wp=Math.max(0.5,(e-s)/tMs*100).toFixed(2);
+      var done=0,total=0; D.tasks.forEach(function(t){if(t.projId===p.id){total++;if(t.status==="terminado")done++;}});
+      var op=p.status==="finalizado"?"0.45":"0.88";
+      var row=document.createElement("div");row.className="gr";
+      var lbl=document.createElement("div");lbl.className="gpl";
+      var dot=document.createElement("span");dot.className="gpd";dot.style.background=p.color;
+      var nm=document.createElement("span");nm.className="gpn";nm.textContent=p.name;
+      var pr=document.createElement("span");pr.className="pp pp"+p.priority[0];pr.style.cssText="font-size:9px;padding:1px 5px;border-radius:4px;font-weight:600;flex-shrink:0";pr.textContent=p.priority;
+      lbl.appendChild(dot);lbl.appendChild(nm);lbl.appendChild(pr);
+      var ba=document.createElement("div");ba.className="gba";
+      var tl=document.createElement("div");tl.className="gtl";tl.style.left=todayPct+"%";
+      var bar=document.createElement("div");bar.className="gb";bar.style.cssText="left:"+lp+"%;width:"+wp+"%;background:"+p.color+";opacity:"+op;bar.title=p.start+" - "+p.end;
+      var pg=document.createElement("div");pg.className="gpg";pg.style.width=Math.round(done/Math.max(total,1)*100)+"%";
+      bar.appendChild(pg);bar.appendChild(document.createTextNode(p.name+" ("+done+"/"+total+")"));
+      ba.appendChild(tl);ba.appendChild(bar);row.appendChild(lbl);row.appendChild(ba);gn.appendChild(row);
     });
   });
-
-  // Legend
-  var leg = document.createElement("div"); leg.className="gl";
+  var leg=document.createElement("div");leg.className="gl";
   [{color:"#378ADD",label:"Proyectos"},{color:"#D4537E",label:"Marketing"},{color:"#16a34a",label:"Finalizados",op:"0.5"}].forEach(function(item){
-    var li = document.createElement("div"); li.className="gli";
-    var d = document.createElement("div"); d.className="gld"; d.style.background=item.color;
-    if(item.op) d.style.opacity=item.op;
-    var t = document.createElement("span"); t.textContent=item.label;
-    li.appendChild(d); li.appendChild(t); leg.appendChild(li);
+    var li=document.createElement("div");li.className="gli";var d=document.createElement("div");d.className="gld";d.style.background=item.color;if(item.op)d.style.opacity=item.op;var t=document.createElement("span");t.textContent=item.label;li.appendChild(d);li.appendChild(t);leg.appendChild(li);
   });
-  var li2 = document.createElement("div"); li2.className="gli";
-  var gt = document.createElement("div"); gt.className="glt";
-  var lt = document.createElement("span"); lt.textContent="Hoy";
-  li2.appendChild(gt); li2.appendChild(lt); leg.appendChild(li2);
-
-  wrap.appendChild(gn); wrap.appendChild(leg);
-  c.innerHTML=""; c.appendChild(wrap);
+  var li2=document.createElement("div");li2.className="gli";var gt=document.createElement("div");gt.className="glt";var lt=document.createElement("span");lt.textContent="Hoy";li2.appendChild(gt);li2.appendChild(lt);leg.appendChild(li2);
+  wrap.appendChild(gn);wrap.appendChild(leg);c.innerHTML="";c.appendChild(wrap);
 }
+window.renderGantt=renderGantt;
 
+// ── NEW PROJECT ──────────────────────────────────────────────────
 function openNewProj(sec) {
   nPS=sec; nPC=(sec==="marketing")?COLORS[4]:COLORS[0]; nPM=[];
-  document.getElementById("pn-name").value="";
-  document.getElementById("pn-start").value="";
-  document.getElementById("pn-end").value="";
-  document.getElementById("pn-prio").value="media";
-  document.getElementById("mo-proj-title").textContent = sec==="marketing"?"Nuevo proyecto de marketing":"Nuevo proyecto";
-  var cp = document.getElementById("pn-colors"); cp.innerHTML="";
-  COLORS.forEach(function(cl) {
-    var d = document.createElement("div");
-    d.className = "cd" + (cl===nPC?" sel":"");
-    d.style.background = cl;
-    d.onclick = function() {
-      nPC=cl;
-      document.querySelectorAll(".cd").forEach(function(x){ x.classList.remove("sel"); });
-      d.classList.add("sel");
-    };
+  document.getElementById("pn-name").value=""; document.getElementById("pn-start").value="";
+  document.getElementById("pn-end").value=""; document.getElementById("pn-prio").value="media";
+  document.getElementById("mo-proj-title").textContent=sec==="marketing"?"Nuevo proyecto de marketing":"Nuevo proyecto";
+  var cp=document.getElementById("pn-colors"); cp.innerHTML="";
+  COLORS.forEach(function(cl){
+    var d=document.createElement("div"); d.className="cd"+(cl===nPC?" sel":""); d.style.background=cl;
+    d.onclick=function(){nPC=cl;document.querySelectorAll(".cd").forEach(function(x){x.classList.remove("sel");});d.classList.add("sel");};
     cp.appendChild(d);
   });
-  var mp = document.getElementById("pn-members"); mp.innerHTML="";
-  TEAM.forEach(function(m) {
-    (function(member) {
-      var d = document.createElement("div"); d.className="mop"; d.id="mop-"+member.id;
-      var av = document.createElement("div"); av.className="tav "+member.cls; av.style.cssText="width:16px;height:16px;font-size:9px"; av.textContent=member.initials;
-      var nm = document.createElement("span"); nm.textContent=member.name;
-      d.appendChild(av); d.appendChild(nm);
-      d.onclick = function() {
-        var idx = nPM.indexOf(member.id);
-        if (idx>=0) { nPM.splice(idx,1); d.classList.remove("sel"); }
-        else { nPM.push(member.id); d.classList.add("sel"); }
-      };
+  var mp=document.getElementById("pn-members"); mp.innerHTML="";
+  TEAM.forEach(function(m){
+    (function(member){
+      var d=document.createElement("div");d.className="mop";
+      var av=document.createElement("div");av.className="tav "+member.cls;av.style.cssText="width:16px;height:16px;font-size:9px";av.textContent=member.initials;
+      var nm=document.createElement("span");nm.textContent=member.name;
+      d.appendChild(av);d.appendChild(nm);
+      d.onclick=function(){var idx=nPM.indexOf(member.id);if(idx>=0){nPM.splice(idx,1);d.classList.remove("sel");}else{nPM.push(member.id);d.classList.add("sel");}};
       mp.appendChild(d);
     })(m);
   });
   document.getElementById("mo-proj").classList.add("op");
-  setTimeout(function(){ document.getElementById("pn-name").focus(); }, 50);
+  setTimeout(function(){document.getElementById("pn-name").focus();},50);
 }
+window.openNewProj=openNewProj;
 
-function saveProj() {
-  var name = document.getElementById("pn-name").value.trim();
-  if (!name) return;
-  D.projects.push({
-    id:nid("p"), name:name, color:nPC, members:nPM.slice(),
-    start:document.getElementById("pn-start").value,
-    end:document.getElementById("pn-end").value,
-    notes:"", section:nPS,
-    priority:document.getElementById("pn-prio").value,
-    status:"activo", checklist:{}, dropbox:false
-  });
-  persist(); closeModal("mo-proj"); renderProjList();
+function saveProj(){
+  var name=document.getElementById("pn-name").value.trim(); if(!name) return;
+  var p={id:nid("p"),name:name,color:nPC,members:nPM.slice(),start:document.getElementById("pn-start").value,end:document.getElementById("pn-end").value,notes:"",section:nPS,priority:document.getElementById("pn-prio").value,status:"activo",checklist:{},dropbox:false};
+  saveProject(p); closeModal("mo-proj");
 }
+window.saveProj=saveProj;
 
-function openNewTask() {
-  document.getElementById("tn-title").value="";
-  document.getElementById("tn-desc").value="";
-  document.getElementById("tn-due").value="";
-  document.getElementById("tn-priority").value="media";
+// ── NEW TASK ─────────────────────────────────────────────────────
+function openNewTask(){
+  document.getElementById("tn-title").value=""; document.getElementById("tn-desc").value="";
+  document.getElementById("tn-due").value=""; document.getElementById("tn-priority").value="media";
   document.getElementById("tn-status").value="pendiente";
-  var sel = document.getElementById("tn-assign");
-  sel.innerHTML="<option value=''>Sin asignar</option>";
-  TEAM.forEach(function(m) {
-    var o = document.createElement("option"); o.value=m.id; o.textContent=m.name; sel.appendChild(o);
-  });
+  var sel=document.getElementById("tn-assign"); sel.innerHTML="<option value=''>Sin asignar</option>";
+  TEAM.forEach(function(m){var o=document.createElement("option");o.value=m.id;o.textContent=m.name;sel.appendChild(o);});
   document.getElementById("mo-task").classList.add("op");
-  setTimeout(function(){ document.getElementById("tn-title").focus(); }, 50);
+  setTimeout(function(){document.getElementById("tn-title").focus();},50);
 }
+window.openNewTask=openNewTask;
 
-function saveTask() {
-  var title = document.getElementById("tn-title").value.trim();
-  if (!title || !selProj) return;
-  D.tasks.push({
-    id:nid("ta"), projId:selProj, title:title,
-    desc:document.getElementById("tn-desc").value.trim(),
-    assignee:document.getElementById("tn-assign").value,
-    priority:document.getElementById("tn-priority").value,
-    status:document.getElementById("tn-status").value,
-    due:document.getElementById("tn-due").value,
-    activity:[{who:currentUser, action:"Creo la tarea", ts:Date.now()}]
-  });
-  persist(); closeModal("mo-task"); renderProjList(); renderBoard();
+function saveTask2(){
+  var title=document.getElementById("tn-title").value.trim(); if(!title||!selProj) return;
+  var t={id:nid("ta"),projId:selProj,title:title,desc:document.getElementById("tn-desc").value.trim(),assignee:document.getElementById("tn-assign").value,priority:document.getElementById("tn-priority").value,status:document.getElementById("tn-status").value,due:document.getElementById("tn-due").value,activity:[{who:currentUser,action:"Creo la tarea",ts:Date.now()}]};
+  saveTask(t); closeModal("mo-task");
 }
+window.saveTask2=saveTask2;
 
-function closeModal(id) { document.getElementById(id).classList.remove("op"); }
-var overlays = document.querySelectorAll(".mo");
-for (var i=0;i<overlays.length;i++) {
-  (function(o){ o.addEventListener("click", function(e){ if(e.target===o) o.classList.remove("op"); }); })(overlays[i]);
-}
+function closeModal(id){ document.getElementById(id).classList.remove("op"); }
+window.closeModal=closeModal;
+document.querySelectorAll(".mo").forEach(function(o){ o.addEventListener("click",function(e){if(e.target===o)o.classList.remove("op");}); });
 
-loadData();
-var su = localStorage.getItem("itelsa_t_user");
-if (su) {
-  var found = false;
-  for (var i=0;i<TEAM.length;i++) { if (TEAM[i].id===su) { found=true; break; } }
-  if (found) enterApp(su); else buildLogin();
-} else { buildLogin(); }
+// ── INIT ─────────────────────────────────────────────────────────
+buildLogin();
+var su=localStorage.getItem("itelsa_user");
+if(su){var found=false;for(var i=0;i<TEAM.length;i++){if(TEAM[i].id===su){found=true;break;}}if(found)enterApp(su);}
+
+</script>
+<!-- Fix saveTask button conflict -->
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var btn=document.querySelector("#mo-task .bs");
+  if(btn) btn.onclick=function(){window.saveTask2();};
+});
 </script>
 </body>
 </html>
