@@ -179,6 +179,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cms{font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.5}
 .cma{display:flex;gap:8px;justify-content:center}
 .em{text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px}
+.ni-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;transition:all 0.15s;background:#f9f9f8;margin-bottom:0}
+.ni-row:hover{border-color:#9ca3af}
+.nec-on{background:#f0fdf4;border-color:#86efac}
+.nec-off{background:#fff7ed;border-color:#fed7aa}
+.ni-tog{width:32px;height:18px;border-radius:9px;flex-shrink:0;position:relative;transition:background 0.2s}
+.nec-on .ni-tog{background:#1D9E75}
+.nec-off .ni-tog{background:#d1d5db}
+.ni-knob{position:absolute;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:left 0.2s}
+.nec-on .ni-knob{left:16px}
+.nec-off .ni-knob{left:2px}
+.ni-lbl{font-size:12px;color:#374151;flex:1}
+.ni-badge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:600;flex-shrink:0}
+.nec-on .ni-badge{background:#d1fae5;color:#065f46}
+.nec-off .ni-badge{background:#ffedd5;color:#9a3412}
+.carpeta-row{margin-bottom:14px}
+.carp-input{width:100%;font-size:12px;padding:7px 10px;border-radius:8px;border:1px solid #d1d5db;background:#f9f9f8;color:#374151}
+.carp-input:focus{outline:none;border-color:#1D9E75}
+.carp-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:#1D9E75;text-decoration:none}
+.carp-link:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -326,9 +345,15 @@ var COLORS = ["#378ADD","#1D9E75","#D85A30","#BA7517","#D4537E","#639922","#7F77
 var MN = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 var CL = [
   {id:"dialux",    label:"DIALux"},
-  {id:"luminarias",label:"Cantidad de luminarias"},
+  {id:"luminarias",label:"Recuento de luminarias"},
   {id:"pdf",       label:"PDF presentacion"},
-  {id:"video",     label:"VIDEO presentacion"}
+  {id:"video",     label:"Video presentacion"}
+];
+var NECESARIOS = [
+  {id:"n_dialux",    label:"DIALux"},
+  {id:"n_luminarias",label:"Recuento de luminarias"},
+  {id:"n_pdf",       label:"PDF presentacion"},
+  {id:"n_video",     label:"Video presentacion"}
 ];
 
 var D = {projects:[], tasks:[], links:[]};
@@ -601,7 +626,27 @@ function renderBoard() {
   mr.appendChild(mkDateField("Fecha de fin", proj.end, "end"));
   mr.appendChild(fi3); box.appendChild(mr);
 
-  // Checklist
+  // Necesario del proyecto
+  var nxt = document.createElement("div"); nxt.className="bxt"; nxt.style.marginBottom="9px"; nxt.textContent="Necesario del proyecto"; box.appendChild(nxt);
+  var nlg = document.createElement("div"); nlg.className="cl";
+  var necesario = proj.necesario||{};
+  NECESARIOS.forEach(function(ni) {
+    (function(item) {
+      var isNec = necesario[item.id] !== false; // default true
+      var row = document.createElement("div"); row.className="ni-row"+(isNec?" nec-on":" nec-off");
+      if (!isFin) row.onclick = function(){ var p=getProj(); if(!p) return; if(!p.necesario) p.necesario={}; p.necesario[item.id]=!isNec; saveProject(p); };
+      var tog = document.createElement("div"); tog.className="ni-tog";
+      var toginr = document.createElement("div"); toginr.className="ni-knob";
+      tog.appendChild(toginr);
+      var lbl = document.createElement("span"); lbl.className="ni-lbl"; lbl.textContent=item.label;
+      var badge = document.createElement("span"); badge.className="ni-badge"; badge.textContent=isNec?"Necesario":"No necesario";
+      row.appendChild(tog); row.appendChild(lbl); row.appendChild(badge);
+      nlg.appendChild(row);
+    })(ni);
+  });
+  box.appendChild(nlg);
+
+  // Checklist - Entregables
   var cxt = document.createElement("div"); cxt.className="bxt"; cxt.style.marginBottom="9px"; cxt.textContent="Entregables del proyecto"; box.appendChild(cxt);
   var clg = document.createElement("div"); clg.className="cl";
   var checklist = proj.checklist||{};
@@ -627,6 +672,23 @@ function renderBoard() {
   var drl = document.createElement("span"); drl.className="drl"; drl.textContent=dbDone?"Proyecto subido a Dropbox":"Confirmar subida a Dropbox";
   var dri = document.createElement("i"); dri.className="ti ti-brand-dropbox"; dri.style.cssText="font-size:16px;color:#2563eb;flex-shrink:0";
   dr.appendChild(drb); dr.appendChild(drl); dr.appendChild(dri); box.appendChild(dr);
+
+  // Carpeta del proyecto
+  var carp = document.createElement("div"); carp.className="carpeta-row";
+  var carp_lbl = document.createElement("label"); carp_lbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:5px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em";
+  carp_lbl.innerHTML="<i class='ti ti-folder' style='font-size:12px;margin-right:4px'></i>Link carpeta del proyecto";
+  var carp_inp = document.createElement("input"); carp_inp.type="url"; carp_inp.className="carp-input";
+  carp_inp.placeholder="https://drive.google.com/... o link de Dropbox";
+  carp_inp.value=proj.carpeta||"";
+  if(isFin) carp_inp.disabled=true;
+  carp_inp.onchange=function(){ var p=getProj(); if(p){p.carpeta=this.value; saveProject(p);} };
+  carp.appendChild(carp_lbl); carp.appendChild(carp_inp);
+  if(proj.carpeta){
+    var carp_a=document.createElement("a"); carp_a.href=proj.carpeta; carp_a.target="_blank"; carp_a.rel="noopener";
+    carp_a.className="carp-link"; carp_a.innerHTML="<i class='ti ti-external-link' style='font-size:11px'></i> Abrir carpeta";
+    carp.appendChild(carp_a);
+  }
+  box.appendChild(carp);
 
   // Notes
   var nl = document.createElement("label"); nl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:5px;font-weight:500"; nl.textContent="Notas adicionales";
