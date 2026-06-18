@@ -448,18 +448,15 @@ function sendNotification(tipo, proj) {
   // Un solo mail: primer email como destinatario, resto en CC
   emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
     to_email:           ALL_EMAILS[0],
-    cc_emails:          ALL_EMAILS.slice(1).join(", "),
     proyecto_nombre:    proj.name,
     proyecto_seccion:   proj.section === "marketing" ? "Marketing" : "Proyectos",
     proyecto_prioridad: proj.priority,
-    quien:              quien ? quien.name : "Alguien",
-    tipo_accion:        tipo
+    quien:              quien ? quien.name : "Alguien"
   }).catch(function(err) {
     console.warn("EmailJS error:", err);
   });
 }
 function sendNewProjectNotification(proj) { sendNotification("Nuevo proyecto creado", proj); }
-function sendUpdateNotification(proj)     { sendNotification("Proyecto actualizado", proj); }
 
 // ── LOGIN ────────────────────────────────────────────────────────
 function buildLogin() {
@@ -811,8 +808,6 @@ function updateStatus(v) {
   t.status=v; if(!t.activity) t.activity=[];
   t.activity.push({who:currentUser,action:"Cambio estado a "+v,ts:Date.now()});
   saveTask(t); renderActivity(t.activity);
-  var proy = getProj();
-  if (proy && proy.section === "proyectos") sendUpdateNotification(proy, "tarea '"+t.title+"' cambio a "+v);
 }
 window.updateStatus=updateStatus;
 
@@ -822,12 +817,12 @@ function confirmFinalizar() {
   document.getElementById("conf-title").textContent="Finalizar este proyecto?";
   document.getElementById("conf-sub").textContent="El proyecto pasara a Finalizados y sus tareas quedaran en modo solo lectura.";
   var btn=document.getElementById("conf-btn"); btn.className="bs"; btn.textContent="Finalizar";
-  btn.onclick=function(){ var p=getProj(); if(p){p.status="finalizado"; saveProject(p); if(p.section==="proyectos") sendUpdateNotification(p,"proyecto finalizado");} closeModal("mo-confirm"); };
+  btn.onclick=function(){ var p=getProj(); if(p){p.status="finalizado"; saveProject(p);} closeModal("mo-confirm"); };
   document.getElementById("mo-confirm").classList.add("op");
 }
 window.confirmFinalizar=confirmFinalizar;
 
-function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p); sendUpdateNotification(p);} }
+function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p);} }
 window.reabrirProyecto=reabrirProyecto;
 
 function confirmEliminar() {
@@ -993,8 +988,6 @@ function saveTask2(){
   var title=document.getElementById("tn-title").value.trim(); if(!title||!selProj) return;
   var t={id:nid("ta"),projId:selProj,title:title,desc:document.getElementById("tn-desc").value.trim(),assignee:document.getElementById("tn-assign").value,priority:document.getElementById("tn-priority").value,status:document.getElementById("tn-status").value,due:document.getElementById("tn-due").value,activity:[{who:currentUser,action:"Creo la tarea",ts:Date.now()}]};
   saveTask(t);
-  var proy = getProj();
-  if (proy && proy.section === "proyectos") sendUpdateNotification(proy, "nueva tarea agregada: '"+t.title+"'");
   closeModal("mo-task");
 }
 window.saveTask2=saveTask2;
