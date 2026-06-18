@@ -199,6 +199,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .carp-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:#1D9E75;text-decoration:none}
 .carp-link:hover{text-decoration:underline}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -247,6 +249,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="sl"><span class="sd" style="background:#16a34a"></span>Finalizados</div>
         <div id="pl-fin"></div>
         <div class="fe" id="fin-empty">Sin proyectos finalizados</div>
+        <button class="nb" onclick="exportFinalizados()" style="margin-top:6px;border-color:#16a34a;color:#16a34a"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
       </div>
     </div>
     <div class="ct">
@@ -336,10 +339,10 @@ var db = getFirestore(fbApp);
 
 var TEAM = [
   {id:"t1", name:"Sofia",  initials:"SO", cls:"av1"},
-  {id:"t2", name:"Camila", initials:"CA", cls:"av2"},
-  {id:"t3", name:"Cande",  initials:"CN", cls:"av3"},
+  {id:"t2", name:"Mayra",  initials:"MA", cls:"av2"},
+  {id:"t3", name:"Camila", initials:"CA", cls:"av3"},
   {id:"t4", name:"Ruben",  initials:"RU", cls:"av4"},
-  {id:"t5", name:"Mayra",  initials:"MA", cls:"av5"}
+  {id:"t5", name:"Cande",  initials:"CN", cls:"av5"}
 ];
 var COLORS = ["#378ADD","#1D9E75","#D85A30","#BA7517","#D4537E","#639922","#7F77DD"];
 var MN = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
@@ -349,6 +352,23 @@ var CL = [
   {id:"pdf",       label:"PDF presentacion"},
   {id:"video",     label:"Video presentacion"}
 ];
+var EMAILJS_SERVICE  = "service_iiezjat";
+var EMAILJS_TEMPLATE = "template_2a3f9an";
+var EMAILJS_KEY      = "vxumSVBkPuWUz8sy8";
+var TEAM_EMAILS = {
+  "t1": "sofiagcastex@gmail.com",
+  "t2": "camilae53@gmail.com",
+  "t3": "mcsotgiu@itelsasas.com",
+  "t4": "mcsotgiu@itelsasas.com",
+  "t5": "mcieri.arq@gmail.com"
+};
+var ALL_EMAILS = [
+  "sofiagcastex@gmail.com",
+  "mcieri.arq@gmail.com",
+  "camilae53@gmail.com",
+  "mcsotgiu@itelsasas.com"
+];
+
 var NECESARIOS = [
   {id:"n_dialux",    label:"DIALux"},
   {id:"n_luminarias",label:"Recuento de luminarias"},
@@ -419,6 +439,35 @@ function showSynced() {
 }
 
 function nid(p) { return p + Date.now() + Math.floor(Math.random()*1000); }
+
+// ── NOTIFICATIONS ───────────────────────────────────────────────
+function sendNotification(tipo, proj) {
+  try { emailjs.init(EMAILJS_KEY); } catch(e) {}
+  var quien = null;
+  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === currentUser) { quien = TEAM[i]; break; } }
+  var params = {
+    proyecto_nombre:    proj.name,
+    proyecto_seccion:   proj.section === "marketing" ? "Marketing" : "Proyectos",
+    proyecto_prioridad: proj.priority,
+    quien:              quien ? quien.name : "Alguien",
+    tipo_accion:        tipo
+  };
+  ALL_EMAILS.forEach(function(email) {
+    var p = {
+      to_email:           email,
+      proyecto_nombre:    params.proyecto_nombre,
+      proyecto_seccion:   params.proyecto_seccion,
+      proyecto_prioridad: params.proyecto_prioridad,
+      quien:              params.quien,
+      tipo_accion:        params.tipo_accion
+    };
+    emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, p).catch(function(err) {
+      console.warn("EmailJS error:", err);
+    });
+  });
+}
+function sendNewProjectNotification(proj) { sendNotification("Nuevo proyecto creado", proj); }
+function sendUpdateNotification(proj)     { sendNotification("Proyecto actualizado", proj); }
 
 // ── LOGIN ────────────────────────────────────────────────────────
 function buildLogin() {
@@ -770,6 +819,8 @@ function updateStatus(v) {
   t.status=v; if(!t.activity) t.activity=[];
   t.activity.push({who:currentUser,action:"Cambio estado a "+v,ts:Date.now()});
   saveTask(t); renderActivity(t.activity);
+  var proy = getProj();
+  if (proy) sendUpdateNotification(proy, "tarea '"+t.title+"' cambio a "+v);
 }
 window.updateStatus=updateStatus;
 
@@ -779,12 +830,12 @@ function confirmFinalizar() {
   document.getElementById("conf-title").textContent="Finalizar este proyecto?";
   document.getElementById("conf-sub").textContent="El proyecto pasara a Finalizados y sus tareas quedaran en modo solo lectura.";
   var btn=document.getElementById("conf-btn"); btn.className="bs"; btn.textContent="Finalizar";
-  btn.onclick=function(){ var p=getProj(); if(p){p.status="finalizado"; saveProject(p);} closeModal("mo-confirm"); };
+  btn.onclick=function(){ var p=getProj(); if(p){p.status="finalizado"; saveProject(p); sendUpdateNotification(p,"proyecto finalizado");} closeModal("mo-confirm"); };
   document.getElementById("mo-confirm").classList.add("op");
 }
 window.confirmFinalizar=confirmFinalizar;
 
-function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p);} }
+function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p); sendUpdateNotification(p);} }
 window.reabrirProyecto=reabrirProyecto;
 
 function confirmEliminar() {
@@ -928,7 +979,9 @@ window.openNewProj=openNewProj;
 function saveProj(){
   var name=document.getElementById("pn-name").value.trim(); if(!name) return;
   var p={id:nid("p"),name:name,color:nPC,members:nPM.slice(),start:document.getElementById("pn-start").value,end:document.getElementById("pn-end").value,notes:"",section:nPS,priority:document.getElementById("pn-prio").value,status:"activo",checklist:{},dropbox:false};
-  saveProject(p); closeModal("mo-proj");
+  saveProject(p);
+  sendNewProjectNotification(p);
+  closeModal("mo-proj");
 }
 window.saveProj=saveProj;
 
@@ -947,13 +1000,50 @@ window.openNewTask=openNewTask;
 function saveTask2(){
   var title=document.getElementById("tn-title").value.trim(); if(!title||!selProj) return;
   var t={id:nid("ta"),projId:selProj,title:title,desc:document.getElementById("tn-desc").value.trim(),assignee:document.getElementById("tn-assign").value,priority:document.getElementById("tn-priority").value,status:document.getElementById("tn-status").value,due:document.getElementById("tn-due").value,activity:[{who:currentUser,action:"Creo la tarea",ts:Date.now()}]};
-  saveTask(t); closeModal("mo-task");
+  saveTask(t);
+  var proy = getProj();
+  if (proy) sendUpdateNotification(proy, "nueva tarea agregada: '"+t.title+"'");
+  closeModal("mo-task");
 }
 window.saveTask2=saveTask2;
+
 
 function closeModal(id){ document.getElementById(id).classList.remove("op"); }
 window.closeModal=closeModal;
 document.querySelectorAll(".mo").forEach(function(o){ o.addEventListener("click",function(e){if(e.target===o)o.classList.remove("op");}); });
+
+// ── EXPORT EXCEL ────────────────────────────────────────────────
+function exportFinalizados() {
+  var fins = D.projects.filter(function(p){ return p.status === "finalizado"; });
+  if (!fins.length) {
+    alert("No hay proyectos finalizados para exportar.");
+    return;
+  }
+  var rows = [["Nombre del proyecto", "Seccion", "Fecha de inicio", "Fecha de finalizacion", "Link carpeta"]];
+  fins.forEach(function(p) {
+    rows.push([
+      p.name || "",
+      p.section === "marketing" ? "Marketing" : "Proyectos",
+      p.start || "",
+      p.end || "",
+      p.carpeta || ""
+    ]);
+  });
+  var wb = XLSX.utils.book_new();
+  var ws = XLSX.utils.aoa_to_sheet(rows);
+  // Column widths
+  ws["!cols"] = [
+    {wch:35},
+    {wch:15},
+    {wch:20},
+    {wch:22},
+    {wch:50}
+  ];
+  XLSX.utils.book_append_sheet(wb, ws, "Proyectos Finalizados");
+  var fecha = new Date().toLocaleDateString("es-AR").replace(/\//g,"-");
+  XLSX.writeFile(wb, "ITELSA_Proyectos_Finalizados_"+fecha+".xlsx");
+}
+window.exportFinalizados = exportFinalizados;
 
 // ── INIT ─────────────────────────────────────────────────────────
 buildLogin();
