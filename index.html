@@ -632,6 +632,26 @@ function renderProjList() {
       fc.appendChild(div);
     })(p);
   });
+
+  // Vendidos
+  var vends = D.projects.filter(function(p){ return p.status === "vendido"; });
+  var vc = document.getElementById("pl-vend");
+  if (vc) {
+    vc.innerHTML = "";
+    document.getElementById("vend-empty").style.display = vends.length ? "none" : "block";
+    vends.forEach(function(p) {
+      (function(proj) {
+        var div = document.createElement("div");
+        div.className = "pi" + (selProj === proj.id ? " act" : "");
+        var dot = document.createElement("span"); dot.className = "pd"; dot.style.background = proj.color; dot.style.opacity = "0.5";
+        var nm = document.createElement("span"); nm.className = "pn"; nm.style.opacity = "0.6"; nm.textContent = proj.name;
+        var ic = document.createElement("i"); ic.className = "ti ti-tag"; ic.style.cssText = "font-size:11px;color:#f59e0b";
+        div.appendChild(dot); div.appendChild(nm); div.appendChild(ic);
+        div.onclick = function() { selProj = proj.id; selTask = null; closeDetail(); renderProjList(); switchView("board"); };
+        vc.appendChild(div);
+      })(p);
+    });
+  }
 }
 
 function getProj() {
