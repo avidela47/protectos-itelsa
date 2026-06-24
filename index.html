@@ -179,6 +179,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cms{font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.5}
 .cma{display:flex;gap:8px;justify-content:center}
 .em{text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px}
+.sbv{background:#fef3c7;color:#92400e}
+.btn-vend{background:#fffbeb;border-color:#fcd34d;color:#92400e}
+.btn-vend:hover{background:#fef3c7}
 .ni-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;transition:all 0.15s;background:#f9f9f8;margin-bottom:0}
 .ni-row:hover{border-color:#9ca3af}
 .nec-on{background:#f0fdf4;border-color:#86efac}
@@ -232,6 +235,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button id="tab-board" class="act" onclick="switchView('board')" title="Tablero"><i class="ti ti-layout-kanban" style="font-size:13px"></i></button>
         <button id="tab-cal" onclick="switchView('calendar')" title="Cronograma"><i class="ti ti-calendar" style="font-size:13px"></i></button>
         <button id="tab-info" onclick="switchView('info')" title="Info Util">Info</button>
+        <button id="tab-notif" onclick="switchView('notif')" title="Notificaciones" style="position:relative"><i class="ti ti-bell" style="font-size:13px"></i><span id="notif-badge" style="display:none;position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%"></span></button>
       </div>
       <div class="ss">
         <div class="sl"><span class="sd" style="background:#378ADD"></span>Proyectos</div>
@@ -251,6 +255,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="fe" id="fin-empty">Sin proyectos finalizados</div>
         <button class="nb" onclick="exportFinalizados()" style="margin-top:6px;border-color:#16a34a;color:#16a34a"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
       </div>
+      <div class="sdv"></div>
+      <div class="ss" style="margin-top:10px">
+        <div class="sl"><span class="sd" style="background:#f59e0b"></span>Vendidos</div>
+        <div id="pl-vend"></div>
+        <div class="fe" id="vend-empty">Sin proyectos vendidos</div>
+        <button class="nb" onclick="exportVendidos()" style="margin-top:6px;border-color:#f59e0b;color:#f59e0b"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
+      </div>
     </div>
     <div class="ct">
       <div class="vw act" id="view-board"><div id="board-inner"><div class="em"><i class="ti ti-layout-board" style="font-size:32px;margin-bottom:10px;display:block"></i>Selecciona un proyecto</div></div></div>
@@ -267,6 +278,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <button class="bs" onclick="openNewInfo()" style="display:flex;align-items:center;gap:6px;padding:8px 14px"><i class="ti ti-plus"></i> Agregar link</button>
         </div>
         <div class="ig" id="info-grid"></div>
+      </div>
+      <div class="vw" id="view-notif">
+        <div style="font-size:18px;font-weight:600;color:#1f2937;margin-bottom:4px">Actividad reciente</div>
+        <div style="font-size:13px;color:#9ca3af;margin-bottom:16px">Ultimas modificaciones del equipo</div>
+        <div id="notif-list"></div>
       </div>
     </div>
     <div class="dp" id="detail-panel">
@@ -376,7 +392,8 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {projects:[], tasks:[], links:[]};
+var D = {projects:[], tasks:[], links:[], activity:[]};
+var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
 
@@ -399,11 +416,29 @@ function startListeners() {
     snap.forEach(function(d) { D.links.push(d.data()); });
     if (curView === "info") renderInfoGrid();
   });
+  onSnapshot(collection(db,"activity"), function(snap) {
+    D.activity = [];
+    snap.forEach(function(d) { D.activity.push(d.data()); });
+    D.activity.sort(function(a,b){ return b.ts - a.ts; });
+    renderNotifBadge();
+    if (curView === "notif") renderNotifList();
+  });
 }
 
 function saveProject(p) {
   showSyncing();
   setDoc(doc(db,"projects",p.id), p).then(showSynced);
+}
+
+function logActivity(action, projName, who) {
+  var entry = {
+    id: "act" + Date.now(),
+    action: action,
+    projName: projName,
+    who: who || currentUser,
+    ts: Date.now()
+  };
+  setDoc(doc(db,"activity",entry.id), entry);
 }
 function saveTask(t) {
   showSyncing();
@@ -531,15 +566,17 @@ function ft(ts) {
 // ── VIEWS ────────────────────────────────────────────────────────
 function switchView(v) {
   curView = v;
-  ["board","calendar","info"].forEach(function(x) {
+  ["board","calendar","info","notif"].forEach(function(x) {
     var el = document.getElementById("view-" + x);
-    var tab = document.getElementById("tab-" + (x==="board"?"board":x==="calendar"?"cal":"info"));
+    var tabId = x==="board"?"board":x==="calendar"?"cal":x==="info"?"info":"notif";
+    var tab = document.getElementById("tab-" + tabId);
     if (el) el.classList.toggle("act", v===x);
     if (tab) tab.classList.toggle("act", v===x);
   });
   if (v==="calendar") renderGantt();
   if (v==="info") renderInfoGrid();
   if (v==="board") renderBoard();
+  if (v==="notif") renderNotifList();
 }
 window.switchView = switchView;
 
@@ -634,13 +671,18 @@ function renderBoard() {
     acts.appendChild(bt); acts.appendChild(bf);
   } else {
     var br2 = document.createElement("button"); br2.className="btn"; br2.innerHTML="<i class='ti ti-refresh' style='font-size:12px'></i> Reabrir"; br2.onclick=reabrirProyecto;
-    acts.appendChild(br2);
+    var bv = document.createElement("button"); bv.className="btn btn-vend"; bv.innerHTML="<i class='ti ti-tag' style='font-size:12px'></i> Marcar como vendido"; bv.onclick=marcarVendido;
+    acts.appendChild(br2); acts.appendChild(bv);
   }
   var bd2 = document.createElement("button"); bd2.className="btn btnr"; bd2.innerHTML="<i class='ti ti-trash'></i>"; bd2.title="Eliminar"; bd2.onclick=confirmEliminar;
   acts.appendChild(bd2);
   hdr.appendChild(left); hdr.appendChild(acts); c.appendChild(hdr);
 
-  if (isFin) { var ban=document.createElement("div"); ban.className="fb"; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> Proyecto finalizado - solo lectura."; c.appendChild(ban); }
+  if (isFin) {
+    var banTxt = proj.status === "vendido" ? "Proyecto marcado como vendido." : "Proyecto finalizado - solo lectura.";
+    var banColor = proj.status === "vendido" ? "background:#fffbeb;border:1px solid #fcd34d;color:#92400e;" : "";
+    var ban=document.createElement("div"); ban.className="fb"; ban.style.cssText=banColor; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> " + banTxt; c.appendChild(ban);
+  }
 
   // Info box
   var box = document.createElement("div"); box.className="bx";
@@ -808,6 +850,8 @@ function updateStatus(v) {
   t.status=v; if(!t.activity) t.activity=[];
   t.activity.push({who:currentUser,action:"Cambio estado a "+v,ts:Date.now()});
   saveTask(t); renderActivity(t.activity);
+  var projForStatus = getProj();
+  if (projForStatus) logActivity("cambio tarea '" + t.title + "' a " + v, projForStatus.name, currentUser);
 }
 window.updateStatus=updateStatus;
 
@@ -967,6 +1011,7 @@ function saveProj(){
   var name=document.getElementById("pn-name").value.trim(); if(!name) return;
   var p={id:nid("p"),name:name,color:nPC,members:nPM.slice(),start:document.getElementById("pn-start").value,end:document.getElementById("pn-end").value,notes:"",section:nPS,priority:document.getElementById("pn-prio").value,status:"activo",checklist:{},dropbox:false};
   saveProject(p);
+  logActivity("creo el proyecto", p.name, currentUser);
   if (nPS === "proyectos") sendNewProjectNotification(p);
   closeModal("mo-proj");
 }
@@ -988,10 +1033,98 @@ function saveTask2(){
   var title=document.getElementById("tn-title").value.trim(); if(!title||!selProj) return;
   var t={id:nid("ta"),projId:selProj,title:title,desc:document.getElementById("tn-desc").value.trim(),assignee:document.getElementById("tn-assign").value,priority:document.getElementById("tn-priority").value,status:document.getElementById("tn-status").value,due:document.getElementById("tn-due").value,activity:[{who:currentUser,action:"Creo la tarea",ts:Date.now()}]};
   saveTask(t);
+  var projForLog = getProj();
+  if (projForLog) logActivity("agrego una tarea: " + t.title, projForLog.name, currentUser);
   closeModal("mo-task");
 }
 window.saveTask2=saveTask2;
 
+
+function marcarVendido() {
+  var p = getProj();
+  if (!p) return;
+  document.getElementById("conf-icon").innerHTML = "<i class='ti ti-tag' style='color:#f59e0b;font-size:28px'></i>";
+  document.getElementById("conf-title").textContent = "Marcar como vendido?";
+  document.getElementById("conf-sub").textContent = p.name + " pasara a la carpeta Vendidos.";
+  var btn = document.getElementById("conf-btn"); btn.className="bs"; btn.style.background="#f59e0b"; btn.textContent="Marcar vendido";
+  btn.onclick = function() {
+    var pr = getProj();
+    if (pr) { pr.status = "vendido"; pr.fechaVenta = new Date().toISOString().slice(0,10); saveProject(pr); logActivity("marco como vendido el proyecto", pr.name, currentUser); }
+    closeModal("mo-confirm");
+  };
+  document.getElementById("mo-confirm").classList.add("op");
+}
+window.marcarVendido = marcarVendido;
+
+function renderNotifBadge() {
+  var badge = document.getElementById("notif-badge");
+  if (!badge) return;
+  var newCount = 0;
+  for (var i=0; i<D.activity.length; i++) {
+    if (D.activity[i].ts > _lastSeenNotif && D.activity[i].who !== currentUser) newCount++;
+  }
+  badge.style.display = newCount > 0 ? "block" : "none";
+}
+
+function renderNotifList() {
+  _lastSeenNotif = Date.now();
+  try { localStorage.setItem("itelsa_seen_notif", _lastSeenNotif); } catch(e) {}
+  renderNotifBadge();
+  var c = document.getElementById("notif-list");
+  if (!D.activity || !D.activity.length) {
+    c.innerHTML = "<div style='text-align:center;padding:40px;color:#9ca3af;font-size:13px'><i class='ti ti-bell' style='font-size:28px;margin-bottom:10px;display:block'></i>Sin actividad reciente</div>";
+    return;
+  }
+  c.innerHTML = "";
+  var shown = D.activity.slice(0, 50);
+  shown.forEach(function(a) {
+    var who = getMember(a.who);
+    var whoName = who ? who.name : "Alguien";
+    var isNew = a.ts > _lastSeenNotif && a.who !== currentUser;
+    var card = document.createElement("div");
+    card.style.cssText = "display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;margin-bottom:8px;border:1px solid " + (isNew ? "#fde68a" : "#e5e7eb") + ";background:" + (isNew ? "#fffbeb" : "#fff");
+    var av = document.createElement("div");
+    av.className = "tav " + (who ? who.cls : "av1");
+    av.style.cssText = "width:32px;height:32px;font-size:11px;flex-shrink:0";
+    av.textContent = who ? who.initials : "?";
+    var info = document.createElement("div");
+    info.style.flex = "1";
+    var top = document.createElement("div");
+    top.style.cssText = "font-size:13px;color:#374151;line-height:1.4";
+    top.innerHTML = "<strong>" + whoName + "</strong> " + a.action;
+    var proj = document.createElement("div");
+    proj.style.cssText = "font-size:11px;color:#1D9E75;margin-top:3px;font-weight:500";
+    proj.textContent = a.projName;
+    var time = document.createElement("div");
+    time.style.cssText = "font-size:11px;color:#9ca3af;margin-top:2px";
+    time.textContent = ft(a.ts);
+    info.appendChild(top); info.appendChild(proj); info.appendChild(time);
+    card.appendChild(av); card.appendChild(info);
+    c.appendChild(card);
+  });
+}
+window.renderNotifList = renderNotifList;
+
+function exportVendidos() {
+  var vends = D.projects.filter(function(p){ return p.status === "vendido"; });
+  if (!vends.length) { alert("No hay proyectos vendidos todavia."); return; }
+  var rows = [["Proyecto","Seccion","Fecha de inicio","Fecha de venta","Link carpeta"]];
+  vends.forEach(function(p) {
+    rows.push([
+      p.name || "",
+      p.section === "marketing" ? "Marketing" : "Proyectos",
+      p.start || "",
+      p.fechaVenta || p.end || "",
+      p.carpeta || ""
+    ]);
+  });
+  var wb = XLSX.utils.book_new();
+  var ws = XLSX.utils.aoa_to_sheet(rows);
+  ws["!cols"] = [{wch:35},{wch:12},{wch:18},{wch:18},{wch:50}];
+  XLSX.utils.book_append_sheet(wb, ws, "Vendidos");
+  XLSX.writeFile(wb, "ITELSA_Proyectos_Vendidos.xlsx");
+}
+window.exportVendidos = exportVendidos;
 
 function closeModal(id){ document.getElementById(id).classList.remove("op"); }
 window.closeModal=closeModal;
@@ -1032,6 +1165,7 @@ window.exportFinalizados = exportFinalizados;
 
 // ── INIT ─────────────────────────────────────────────────────────
 buildLogin();
+try { _lastSeenNotif = parseInt(localStorage.getItem("itelsa_seen_notif")) || 0; } catch(e) {}
 var su=localStorage.getItem("itelsa_user");
 if(su){var found=false;for(var i=0;i<TEAM.length;i++){if(TEAM[i].id===su){found=true;break;}}if(found)enterApp(su);}
 
