@@ -121,7 +121,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .icx:hover{color:#b91c1c}
 .itg{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:600;background:#f3f4f6;color:#6b7280;align-self:flex-start}
 .gw{overflow-x:auto;border:1px solid var(--br);border-radius:12px;padding:16px;background:#fff}
-.gn{min-width:560px}
+.gn{min-width:900px}
 .ghr{display:flex;margin-bottom:8px;border-bottom:1px solid #e5e7eb;padding-bottom:8px}
 .glc{width:170px;flex-shrink:0;font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em}
 .gmr{flex:1;display:flex}
@@ -522,7 +522,7 @@ function buildLogin() {
 
 function enterApp(id) {
   currentUser = id;
-  try { localStorage.setItem("itelsa_user", id); } catch(e) {}
+  // user not persisted - always shown login on open
   document.getElementById("login-screen").style.display = "none";
   document.getElementById("app").style.display = "flex";
   renderCurrentUser();
@@ -531,7 +531,7 @@ function enterApp(id) {
 }
 
 function logout() {
-  try { localStorage.removeItem("itelsa_user"); } catch(e) {}
+  // no user to remove from storage
   currentUser = null; selProj = null; selTask = null; filterMember = null;
   document.getElementById("app").style.display = "none";
   document.getElementById("login-screen").style.display = "flex";
@@ -960,6 +960,59 @@ function renderGantt() {
   var hmr=document.createElement("div");hmr.className="gmr";
   months.forEach(function(m){var gm=document.createElement("div");gm.className="gm";gm.textContent=MN[m.getMonth()]+" "+m.getFullYear();hmr.appendChild(gm);});
   hrow.appendChild(hlc);hrow.appendChild(hmr);gn.appendChild(hrow);
+
+  // Day markers row - all days with weekend shading
+  var drow = document.createElement("div"); drow.style.cssText="display:flex;margin-bottom:4px;";
+  var dlc = document.createElement("div"); dlc.style.cssText="width:170px;flex-shrink:0;";
+  var dmr = document.createElement("div"); dmr.style.cssText="flex:1;position:relative;height:16px;border-bottom:1px solid #e5e7eb;";
+
+  // First pass: weekend background bands (drawn behind everything)
+  months.forEach(function(m) {
+    var daysInMonth = new Date(m.getFullYear(), m.getMonth()+1, 0).getDate();
+    for (var day=1; day<=daysInMonth; day++) {
+      var dayDate = new Date(m.getFullYear(), m.getMonth(), day);
+      var dow = dayDate.getDay(); // 0=Sun, 6=Sat
+      if (dow === 0 || dow === 6) {
+        var dayPct = (dayDate - minD) / tMs * 100;
+        var nextDate = new Date(m.getFullYear(), m.getMonth(), day+1);
+        var nextPct = (nextDate - minD) / tMs * 100;
+        var widthPct = nextPct - dayPct;
+        if (dayPct < 0 || dayPct > 100) continue;
+        var band = document.createElement("div");
+        band.style.cssText = "position:absolute;left:" + dayPct.toFixed(3) + "%;width:" + widthPct.toFixed(3) + "%;top:0;bottom:0;background:#f0f4ff;z-index:0;";
+        dmr.appendChild(band);
+      }
+    }
+  });
+
+  // Second pass: tick lines and day numbers
+  months.forEach(function(m) {
+    var daysInMonth = new Date(m.getFullYear(), m.getMonth()+1, 0).getDate();
+    for (var day=1; day<=daysInMonth; day++) {
+      var dayDate = new Date(m.getFullYear(), m.getMonth(), day);
+      var dayPct = (dayDate - minD) / tMs * 100;
+      if (dayPct < 0 || dayPct > 100) continue;
+      var dow = dayDate.getDay();
+      var isWeekend = dow === 0 || dow === 6;
+      var isFirst = day === 1;
+
+      var tick = document.createElement("div");
+      tick.style.cssText = "position:absolute;left:" + dayPct.toFixed(3) + "%;top:0;bottom:0;width:1px;background:" + (isFirst ? "#9ca3af" : isWeekend ? "#c7d2fe" : "#f3f4f6") + ";z-index:1;";
+      dmr.appendChild(tick);
+
+      var label = document.createElement("div");
+      label.style.cssText = "position:absolute;left:" + dayPct.toFixed(3) + "%;top:1px;font-size:8px;transform:translateX(-50%);line-height:1;z-index:2;" +
+        "color:" + (isFirst ? "#374151" : isWeekend ? "#6366f1" : "#b0b7c3") + ";" +
+        "font-weight:" + (isFirst || day===15 ? "600" : "400") + ";";
+      label.textContent = day;
+      dmr.appendChild(label);
+    }
+  });
+
+  drow.appendChild(dlc); drow.appendChild(dmr); gn.appendChild(drow);
+
+  // Also add weekend shading behind the gantt bars
+  // (subtle column backgrounds for weekends in bar area)
   var secs=[
     {label:"Proyectos",color:"#378ADD",filter:function(p){return p.section==="proyectos"&&p.status==="activo";}},
     {label:"Marketing",color:"#D4537E",filter:function(p){return p.section==="marketing"&&p.status==="activo";}},
@@ -983,6 +1036,22 @@ function renderGantt() {
       var pr=document.createElement("span");pr.className="pp pp"+p.priority[0];pr.style.cssText="font-size:9px;padding:1px 5px;border-radius:4px;font-weight:600;flex-shrink:0";pr.textContent=p.priority;
       lbl.appendChild(dot);lbl.appendChild(nm);lbl.appendChild(pr);
       var ba=document.createElement("div");ba.className="gba";
+      // Weekend shading in bar area
+      months.forEach(function(m) {
+        var daysInMonth = new Date(m.getFullYear(), m.getMonth()+1, 0).getDate();
+        for (var day=1; day<=daysInMonth; day++) {
+          var dd = new Date(m.getFullYear(), m.getMonth(), day);
+          var dw = dd.getDay();
+          if (dw !== 0 && dw !== 6) continue;
+          var dp = (dd - minD) / tMs * 100;
+          var nd = new Date(m.getFullYear(), m.getMonth(), day+1);
+          var np = (nd - minD) / tMs * 100;
+          if (dp < 0 || dp > 100) continue;
+          var wb = document.createElement("div");
+          wb.style.cssText = "position:absolute;left:"+dp.toFixed(3)+"%;width:"+(np-dp).toFixed(3)+"%;top:0;bottom:0;background:rgba(99,102,241,0.07);z-index:0;pointer-events:none;";
+          ba.appendChild(wb);
+        }
+      });
       var tl=document.createElement("div");tl.className="gtl";tl.style.left=todayPct+"%";
       var bar=document.createElement("div");bar.className="gb";bar.style.cssText="left:"+lp+"%;width:"+wp+"%;background:"+p.color+";opacity:"+op;bar.title=p.start+" - "+p.end;
       var pg=document.createElement("div");pg.className="gpg";pg.style.width=Math.round(done/Math.max(total,1)*100)+"%";
@@ -1186,8 +1255,8 @@ window.exportFinalizados = exportFinalizados;
 // ── INIT ─────────────────────────────────────────────────────────
 buildLogin();
 try { _lastSeenNotif = parseInt(localStorage.getItem("itelsa_seen_notif")) || 0; } catch(e) {}
-var su=localStorage.getItem("itelsa_user");
-if(su){var found=false;for(var i=0;i<TEAM.length;i++){if(TEAM[i].id===su){found=true;break;}}if(found)enterApp(su);}
+// Always show login so user can choose who they are
+buildLogin();
 
 </script>
 <!-- Fix saveTask button conflict -->
