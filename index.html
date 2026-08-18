@@ -870,6 +870,29 @@ function notifyDateChange(proj, campoLabel, nuevoValor) {
   );
 }
 
+// Aviso fijo a liopalencia35@gmail.com con los datos de obra (fecha inicio/fin, insumos, fabricacion)
+// cada vez que la obra se marca como vendida o se completa/cambia alguno de esos datos.
+var OBRA_NOTIFY_EMAIL = "liopalencia35@gmail.com";
+function notifyObraData(proj) {
+  var obra = proj.obra || {};
+  sendEmailNotif(
+    OBRA_NOTIFY_EMAIL,
+    "Datos de obra - " + proj.name,
+    "Inicio obra: " + (obra.start || "-") + " | Fin obra: " + (obra.end || "-"),
+    "Insumos: " + (obra.insumos || "-") + " | Fabricacion: " + (obra.fabricacion || "-"),
+    "Actualizo: " + currentUserName()
+  );
+}
+
+// Mueve el proyecto a la solapa Vendidos sin bloquear la edicion de sus datos
+function moveToVendidos(p) {
+  if (p.section === "pipeline" && p.status !== "vendido") {
+    p.status = "vendido";
+    if (!p.fechaVenta) p.fechaVenta = new Date().toISOString().slice(0,10);
+    logActivity("paso a Vendidos automaticamente", p.name, currentUser);
+  }
+}
+
 function sendReminderEmail(rem) {
   var proj = rem.projectId ? findProjectById(rem.projectId) : null;
   sendEmailNotif(
@@ -1144,7 +1167,7 @@ function renderBoard() {
   var proj = getProj();
   if (!proj) return;
   var isArq = proj.section==="proyectos";
-  var isFin = proj.status !== "activo"; // activo es el unico estado "editable"; el resto queda solo lectura
+  var isFin = proj.status === "finalizado"; // "vendido" ya no bloquea: la obra sigue completandose con el proyecto vendido
   var projDept = getDept(proj.section);
   var statusLabel = proj.status==="vendido" ? "Vendido" : (proj.status==="finalizado" ? (isArq?"Terminado":"Finalizado") : "");
   var secLabel = statusLabel || (projDept.label.charAt(0)+projDept.label.slice(1).toLowerCase());
@@ -1182,9 +1205,11 @@ function renderBoard() {
   hdr.appendChild(left); hdr.appendChild(acts); c.appendChild(hdr);
 
   if (isFin) {
-    var banTxt = proj.status === "vendido" ? "Proyecto marcado como vendido." : (isArq ? "Entrega de Arquitectura completada - solo lectura." : "Proyecto finalizado - solo lectura.");
-    var banColor = proj.status === "vendido" ? "background:#fffbeb;border:1px solid #fcd34d;color:#92400e;" : "";
-    var ban=document.createElement("div"); ban.className="fb"; ban.style.cssText=banColor; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> " + banTxt + " Cambia el estado arriba para volver a editar."; c.appendChild(ban);
+    var banTxt = isArq ? "Entrega de Arquitectura completada - solo lectura." : "Proyecto finalizado - solo lectura.";
+    var ban=document.createElement("div"); ban.className="fb"; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> " + banTxt + " Cambia el estado arriba para volver a editar."; c.appendChild(ban);
+  } else if (proj.status === "vendido") {
+    var banV=document.createElement("div"); banV.className="fb"; banV.style.cssText="background:#fffbeb;border:1px solid #fcd34d;color:#92400e;";
+    banV.innerHTML="<i class='ti ti-tag' style='font-size:16px'></i> Proyecto vendido - la obra esta en curso. Podes seguir completando los datos de Obra."; c.appendChild(banV);
   }
 
   // Info box
@@ -1305,7 +1330,13 @@ function renderBoard() {
     // Obra vendida
     var vendidoOn = !!proj.vendido;
     var dro = document.createElement("div"); dro.className="dro"+(vendidoOn?" ck":"");
-    if (!isFin) dro.onclick = function(){ var p=getProj(); if(!p) return; p.vendido=!p.vendido; saveProject(p); logActivity(p.vendido?"marco la obra como vendida":"desmarco la obra vendida", p.name, currentUser); };
+    if (!isFin) dro.onclick = function(){
+      var p=getProj(); if(!p) return;
+      p.vendido=!p.vendido;
+      logActivity(p.vendido?"marco la obra como vendida":"desmarco la obra vendida", p.name, currentUser);
+      if (p.vendido) { moveToVendidos(p); saveProject(p); notifyObraData(p); }
+      else { saveProject(p); }
+    };
     var drob = document.createElement("div"); drob.className="drob";
     if (vendidoOn){ var vic=document.createElement("i"); vic.className="ti ti-check"; vic.style.cssText="font-size:10px;color:#fff"; drob.appendChild(vic); }
     var drol = document.createElement("span"); drol.className="drol"; drol.textContent=vendidoOn?"Obra vendida":"Marcar obra como vendida";
@@ -1320,7 +1351,14 @@ function renderBoard() {
         var fi = document.createElement("div"); fi.className="mi";
         var l = document.createElement("label"); l.textContent=lbl;
         var inp = document.createElement("input"); inp.type="date"; inp.value=val||""; if(isFin) inp.disabled=true;
-        inp.onchange = function(){ var p=getProj(); if(!p) return; if(!p.obra) p.obra={}; p.obra[field]=this.value; saveProject(p); };
+        inp.onchange = function(){
+          var p=getProj(); if(!p) return;
+          if(!p.obra) p.obra={};
+          p.obra[field]=this.value;
+          if ((field==="start" || field==="end") && this.value) { moveToVendidos(p); }
+          saveProject(p);
+          notifyObraData(p);
+        };
         fi.appendChild(l); fi.appendChild(inp); return fi;
       }
       var obMr1 = document.createElement("div"); obMr1.className="mr"; obMr1.style.gridTemplateColumns="1fr 1fr";
