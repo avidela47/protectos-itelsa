@@ -201,6 +201,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .carp-input:focus{outline:none;border-color:#1D9E75}
 .carp-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:#1D9E75;text-decoration:none}
 .carp-link:hover{text-decoration:underline}
+.dbar{display:flex;gap:6px;padding:9px 20px;background:#fff;border-bottom:1px solid var(--br);flex-wrap:wrap}
+.dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
+.dbtn:hover{border-color:#9ca3af;color:#374151}
+.dbtn.act{color:#fff;border-color:transparent}
+.sbg{background:#ede9fe;color:#5b21b6}
+.arq-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#378ADD;background:#eff6ff;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;margin-bottom:12px;cursor:pointer;text-decoration:none;font-weight:500}
+.arq-badge:hover{background:#dbeafe}
+.margin-box{background:#f9f9f8;border:1px solid var(--br);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.ctc-row{display:flex;gap:6px;margin-bottom:7px;align-items:center}
+.ctc-row input{flex:1;font-size:12px;padding:6px 9px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151;min-width:0}
+.ctc-row input:focus{outline:none;border-color:#1D9E75}
+.ctc-del{background:transparent;border:none;color:#9ca3af;cursor:pointer;font-size:15px;flex-shrink:0;padding:2px 4px}
+.ctc-del:hover{color:#b91c1c}
+.dro{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid #fcd34d;border-radius:8px;cursor:pointer;background:#fffbeb;margin-bottom:14px}
+.dro:hover{border-color:#fbbf24}
+.dro.ck{background:#fef3c7;border-color:#f59e0b}
+.dro.ck .drol{color:#92400e;font-weight:600}
+.drob{width:17px;height:17px;border-radius:4px;border:1px solid #fbbf24;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff}
+.dro.ck .drob{background:#f59e0b;border-color:#f59e0b}
+.drol{font-size:12px;color:#92400e;flex:1;font-weight:500}
+.obra-sub{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.statesel{font-size:12px;padding:6px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#374151;font-weight:600;cursor:pointer}
+.statesel:focus{outline:none;border-color:#1D9E75}
+.mk-month{background:#fff;border:1px solid var(--br);border-radius:12px;padding:16px 18px;margin-bottom:16px;scroll-margin-top:16px}
+.mk-month-title{font-size:15px;font-weight:700;color:#1f2937;margin-bottom:12px;text-transform:capitalize}
+.mk-item{background:#f9f9f8;border:1px solid var(--br);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.mk-item-top{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.mk-item-top input[type=date]{width:150px;flex-shrink:0;font-size:12px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mk-item-top input[type=text]{flex:1;min-width:160px;font-size:13px;padding:7px 10px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mk-prog{display:flex;align-items:center;gap:6px;font-size:11px;color:#9ca3af;cursor:pointer;padding:6px 10px;border:1px solid #d1d5db;border-radius:20px;background:#fff;flex-shrink:0;font-weight:600;white-space:nowrap}
+.mk-prog.on{background:#f0fdf4;border-color:#86efac;color:#166534}
+.mk-del{background:transparent;border:none;color:#9ca3af;cursor:pointer;font-size:15px;flex-shrink:0;padding:2px 4px}
+.mk-del:hover{color:#b91c1c}
+.mk-notes{width:100%;font-size:12px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#374151;resize:vertical;min-height:44px;font-family:inherit}
+.mk-add{width:100%;background:transparent;border:1px dashed #d1d5db;border-radius:8px;padding:8px;font-size:12px;color:#9ca3af;cursor:pointer;margin-top:2px}
+.mk-add:hover{background:#f3f4f6;color:#374151}
+.mk-task-row{display:flex;flex-direction:column;gap:7px;background:#f9f9f8;border:1px solid var(--br);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.mk-task-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mk-task-top input[type=text]{flex:1;min-width:160px;font-size:13px;padding:7px 10px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mk-task-top input[type=date]{width:145px;font-size:12px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mk-task-row input[type=url]{width:100%;font-size:12px;padding:7px 10px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mk-cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.mk-cal-head div{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;text-align:center;letter-spacing:0.04em}
+.mk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.mk-cal-day{min-height:98px;border:1px solid var(--br);border-radius:8px;padding:6px;background:#f9f9f8;display:flex;flex-direction:column;gap:3px}
+.mk-cal-day.mk-cal-pad{background:transparent;border:none}
+.mk-cal-day.mk-cal-today{border-color:#1D9E75;background:#f0fdf8}
+.mk-cal-daynum{font-size:11px;font-weight:600;color:#6b7280;margin-bottom:1px}
+.mk-cal-today .mk-cal-daynum{color:#166534}
+.mk-cal-chip{font-size:10px;padding:3px 6px;border-radius:6px;background:#fff;border:1px solid #e5e7eb;color:#374151;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mk-cal-chip:hover{border-color:#9ca3af}
+.mk-cal-chip.on{background:#f0fdf4;border-color:#86efac;color:#166534;font-weight:600}
+.mk-cal-add{margin-top:auto;align-self:flex-start;background:transparent;border:1px dashed #d1d5db;border-radius:6px;font-size:10px;color:#9ca3af;cursor:pointer;padding:2px 6px}
+.mk-cal-add:hover{background:#fff;color:#374151}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -229,6 +283,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="cu" id="cu-btn" onclick="logout()" title="Cambiar usuario"></div>
     </div>
   </div>
+  <div class="dbar" id="dept-bar">
+    <button class="dbtn" id="dbtn-pipeline" onclick="switchDept('pipeline')">PROYECTOS</button>
+    <button class="dbtn" id="dbtn-proyectos" onclick="switchDept('proyectos')">ARQUITECTURA</button>
+    <button class="dbtn" id="dbtn-marketing" onclick="switchDept('marketing')">MARKETING</button>
+  </div>
   <div class="bl">
     <div class="sb">
       <div class="nt">
@@ -237,30 +296,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button id="tab-info" onclick="switchView('info')" title="Info Util">Info</button>
         <button id="tab-notif" onclick="switchView('notif')" title="Notificaciones" style="position:relative"><i class="ti ti-bell" style="font-size:13px"></i><span id="notif-badge" style="display:none;position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%"></span></button>
       </div>
-      <div class="ss">
-        <div class="sl"><span class="sd" style="background:#378ADD"></span>Proyectos</div>
-        <div id="pl-proyectos"></div>
-        <button class="nb" onclick="openNewProj('proyectos')"><i class="ti ti-plus" style="font-size:12px"></i> Nuevo proyecto</button>
+      <div id="sidebar-projects">
+        <div class="ss">
+          <div class="sl"><span class="sd" id="sb-dept-dot" style="background:#7F77DD"></span><span id="sb-dept-label">Proyectos</span></div>
+          <div id="pl-main"></div>
+          <button class="nb" onclick="openNewProjCur()"><i class="ti ti-plus" style="font-size:12px"></i> Nuevo proyecto</button>
+          <button class="nb" id="btn-export-detalle" onclick="exportDetalleProyectos()" style="margin-top:6px;border-color:#7F77DD;color:#7F77DD;display:none"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar detalle a Excel</button>
+        </div>
+        <div class="sdv"></div>
+        <div class="ss" style="margin-top:10px">
+          <div class="sl"><span class="sd" style="background:#16a34a"></span><span id="sb-fin-label">Finalizados</span></div>
+          <div id="pl-fin"></div>
+          <div class="fe" id="fin-empty">Sin proyectos finalizados</div>
+          <button class="nb" onclick="exportFinalizados()" style="margin-top:6px;border-color:#16a34a;color:#16a34a"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
+        </div>
+        <div class="sdv" id="vend-divider"></div>
+        <div class="ss" style="margin-top:10px" id="vend-block">
+          <div class="sl"><span class="sd" style="background:#f59e0b"></span>Vendidos</div>
+          <div id="pl-vend"></div>
+          <div class="fe" id="vend-empty">Sin proyectos vendidos</div>
+          <button class="nb" onclick="exportVendidos()" style="margin-top:6px;border-color:#f59e0b;color:#f59e0b"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
+        </div>
       </div>
-      <div class="sdv"></div>
-      <div class="ss" style="margin-top:10px">
-        <div class="sl"><span class="sd" style="background:#D4537E"></span>Marketing</div>
-        <div id="pl-marketing"></div>
-        <button class="nb" onclick="openNewProj('marketing')"><i class="ti ti-plus" style="font-size:12px"></i> Nuevo proyecto</button>
-      </div>
-      <div class="sdv"></div>
-      <div class="ss" style="margin-top:10px">
-        <div class="sl"><span class="sd" style="background:#16a34a"></span>Finalizados</div>
-        <div id="pl-fin"></div>
-        <div class="fe" id="fin-empty">Sin proyectos finalizados</div>
-        <button class="nb" onclick="exportFinalizados()" style="margin-top:6px;border-color:#16a34a;color:#16a34a"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
-      </div>
-      <div class="sdv"></div>
-      <div class="ss" style="margin-top:10px">
-        <div class="sl"><span class="sd" style="background:#f59e0b"></span>Vendidos</div>
-        <div id="pl-vend"></div>
-        <div class="fe" id="vend-empty">Sin proyectos vendidos</div>
-        <button class="nb" onclick="exportVendidos()" style="margin-top:6px;border-color:#f59e0b;color:#f59e0b"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Exportar Excel</button>
+      <div id="sidebar-marketing" style="display:none">
+        <div class="ss">
+          <div class="sl"><span class="sd" style="background:#D4537E"></span>Meses</div>
+          <div id="mk-months-nav"></div>
+        </div>
+        <div class="sdv"></div>
+        <div class="ss" style="margin-top:10px">
+          <div class="sl"><span class="sd" style="background:#9ca3af"></span>General</div>
+          <div id="mk-general-nav"></div>
+        </div>
       </div>
     </div>
     <div class="ct">
@@ -320,11 +387,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="mo" id="mo-info">
   <div class="md">
     <div class="mt">Agregar a Info Util</div>
+    <div class="fe" id="in-dept-hint" style="margin-bottom:8px"></div>
     <div class="fg"><label>Nombre</label><input type="text" id="in-name" placeholder="Ej: Ficha tecnica LED panel"></div>
     <div class="fg"><label>Descripcion (opcional)</label><input type="text" id="in-desc" placeholder="Ej: Marca OSRAM, 60W"></div>
     <div class="fg"><label>Link / URL</label><input type="url" id="in-url" placeholder="https://..."></div>
     <div class="fg"><label>Categoria</label><select id="in-cat"><option value="Ficha tecnica">Ficha tecnica</option><option value="Catalogo">Catalogo</option><option value="Proveedor">Proveedor</option><option value="Herramienta">Herramienta</option><option value="Otro">Otro</option></select></div>
     <div class="ma"><button class="bc" onclick="closeModal('mo-info')">Cancelar</button><button class="bs" onclick="saveInfo()">Agregar</button></div>
+  </div>
+</div>
+<div class="mo" id="mo-daytask">
+  <div class="md">
+    <div class="mt" id="dt-title-lbl">Nueva publicacion</div>
+    <div class="fg"><label>Fecha</label><input type="text" id="dt-date" disabled></div>
+    <div class="fg"><label>Que se quiere publicar</label><input type="text" id="dt-title" placeholder="Titulo / descripcion..."></div>
+    <div class="fg"><label>Estado</label><div class="mk-prog" id="dt-prog-toggle" style="display:inline-flex"></div></div>
+    <div class="fg"><label>Anotaciones</label><textarea id="dt-notas" placeholder="Notas..."></textarea></div>
+    <div class="ma">
+      <button class="bd" id="dt-del-btn" style="display:none;margin-right:auto">Eliminar</button>
+      <button class="bc" onclick="closeModal('mo-daytask')">Cancelar</button>
+      <button class="bs" onclick="saveDayTaskModal()">Guardar</button>
+    </div>
   </div>
 </div>
 <div class="mo" id="mo-confirm">
@@ -354,11 +436,11 @@ var fbApp = initializeApp(firebaseConfig);
 var db = getFirestore(fbApp);
 
 var TEAM = [
-  {id:"t1", name:"Sofia",  initials:"SO", cls:"av1"},
-  {id:"t2", name:"Mayra",  initials:"MA", cls:"av2"},
-  {id:"t3", name:"Camila", initials:"CA", cls:"av3"},
-  {id:"t4", name:"Ruben",  initials:"RU", cls:"av4"},
-  {id:"t5", name:"Cande",  initials:"CN", cls:"av5"}
+  {id:"t1", name:"Sofia", initials:"SO", cls:"av1"},
+  {id:"t2", name:"Mayra", initials:"MA", cls:"av2"},
+  {id:"t3", name:"Fabio", initials:"FA", cls:"av3"},
+  {id:"t4", name:"Ruben", initials:"RU", cls:"av4"},
+  {id:"t5", name:"Cande", initials:"CN", cls:"av5"}
 ];
 var COLORS = ["#378ADD","#1D9E75","#D85A30","#BA7517","#D4537E","#639922","#7F77DD"];
 var MN = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
@@ -373,15 +455,16 @@ var EMAILJS_TEMPLATE = "template_2a3f9an";
 var EMAILJS_KEY      = "vxumSVBkPuWUz8sy8";
 var TEAM_EMAILS = {
   "t1": "sofiagcastex@gmail.com",
-  "t2": "camilae53@gmail.com",
-  "t3": "mcsotgiu@itelsasas.com",
-  "t4": "mcsotgiu@itelsasas.com",
-  "t5": "mcieri.arq@gmail.com"
+  "t2": "mcieri.arq@gmail.com",
+  "t3": "Fabiopalencia9@hotmail.com",
+  "t4": "rpozzo@itelsasas.com",
+  "t5": "mcsotgiu@itelsasas.com"
 };
 var ALL_EMAILS = [
   "sofiagcastex@gmail.com",
   "mcieri.arq@gmail.com",
-  "camilae53@gmail.com",
+  "Fabiopalencia9@hotmail.com",
+  "rpozzo@itelsasas.com",
   "mcsotgiu@itelsasas.com"
 ];
 
@@ -392,10 +475,250 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {projects:[], tasks:[], links:[], activity:[]};
+var D = {projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[]};
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
+
+// ── DEPARTAMENTOS ────────────────────────────────────────────────
+// "proyectos" se mantiene como valor interno (compatibilidad con datos ya
+// guardados en Firestore) pero ahora se muestra como "ARQUITECTURA".
+// "pipeline" es la nueva pestaña generica PROYECTOS.
+var DEPTS = [
+  {sec:"pipeline",  label:"PROYECTOS",    color:"#7F77DD"},
+  {sec:"proyectos", label:"ARQUITECTURA", color:"#378ADD"},
+  {sec:"marketing", label:"MARKETING",    color:"#D4537E"}
+];
+var curDept = "pipeline";
+function getDept(sec) {
+  for (var i=0; i<DEPTS.length; i++) { if (DEPTS[i].sec===sec) return DEPTS[i]; }
+  return DEPTS[0];
+}
+function findProjectById(id) {
+  for (var i=0; i<D.projects.length; i++) { if (D.projects[i].id===id) return D.projects[i]; }
+  return null;
+}
+// Devuelve el proyecto "espejo" de otro departamento (Proyectos <-> Arquitectura), si existe
+function linkedProjectFor(p) {
+  if (p.section==="pipeline" && p.arqProjectId) return findProjectById(p.arqProjectId);
+  if (p.section==="proyectos" && p.sourceProjectId) return findProjectById(p.sourceProjectId);
+  return null;
+}
+function switchDept(sec) {
+  curDept = sec; selProj=null; selTask=null; filterMember=null; closeDetail();
+  DEPTS.forEach(function(d) {
+    var b = document.getElementById("dbtn-"+d.sec);
+    if (!b) return;
+    var isAct = d.sec===sec;
+    b.classList.toggle("act", isAct);
+    b.style.background = isAct ? d.color : "";
+    b.style.borderColor = isAct ? d.color : "";
+  });
+  if (sec === "marketing") {
+    document.getElementById("sidebar-projects").style.display = "none";
+    document.getElementById("sidebar-marketing").style.display = "block";
+    renderMarketingSidebar();
+  } else {
+    document.getElementById("sidebar-marketing").style.display = "none";
+    document.getElementById("sidebar-projects").style.display = "block";
+    var vendBlock = document.getElementById("vend-block"), vendDiv = document.getElementById("vend-divider");
+    var showVend = sec === "pipeline";
+    if (vendBlock) vendBlock.style.display = showVend ? "block" : "none";
+    if (vendDiv) vendDiv.style.display = showVend ? "block" : "none";
+    var finLbl = document.getElementById("sb-fin-label");
+    if (finLbl) finLbl.textContent = sec === "proyectos" ? "Terminados" : "Finalizados";
+    var exportBtn = document.getElementById("btn-export-detalle");
+    if (exportBtn) exportBtn.style.display = sec === "pipeline" ? "block" : "none";
+    renderProjList();
+  }
+  renderBoard();
+  if (curView==="calendar") renderGantt();
+  if (curView==="info") renderInfoGrid();
+}
+window.switchDept = switchDept;
+
+// ── MARKETING: calendario de contenidos por mes + tareas generales ─
+function getRemainingMonths() {
+  var today = new Date();
+  var y = today.getFullYear();
+  var months = [];
+  for (var m = today.getMonth(); m <= 11; m++) months.push(new Date(y, m, 1));
+  if (!months.length) months.push(new Date(y, 11, 1));
+  return months;
+}
+
+function renderMarketingSidebar() {
+  var nav = document.getElementById("mk-months-nav"); nav.innerHTML = "";
+  getRemainingMonths().forEach(function(m) {
+    var a = document.createElement("a");
+    a.href = "#mk-month-" + (m.getMonth()+1) + "-" + m.getFullYear();
+    a.className = "pi"; a.style.cssText = "text-decoration:none;display:flex";
+    var nm = document.createElement("span"); nm.className = "pn";
+    nm.textContent = MN[m.getMonth()] + " " + m.getFullYear();
+    a.appendChild(nm); nav.appendChild(a);
+  });
+  var gen = document.getElementById("mk-general-nav"); gen.innerHTML = "";
+  var a2 = document.createElement("a"); a2.href = "#mk-general";
+  a2.className = "pi"; a2.style.cssText = "text-decoration:none;display:flex";
+  var nm2 = document.createElement("span"); nm2.className = "pn"; nm2.textContent = "Tareas generales";
+  a2.appendChild(nm2); gen.appendChild(a2);
+}
+
+function renderMarketingBoard() {
+  var c = document.getElementById("board-inner");
+  c.innerHTML = "";
+  getRemainingMonths().forEach(function(m) {
+    var monthKey = m.getFullYear() + "-" + (m.getMonth()+1 < 10 ? "0"+(m.getMonth()+1) : (m.getMonth()+1));
+    var sec = document.createElement("div"); sec.className = "mk-month";
+    sec.id = "mk-month-" + (m.getMonth()+1) + "-" + m.getFullYear();
+    var title = document.createElement("div"); title.className = "mk-month-title";
+    title.textContent = MN[m.getMonth()] + " " + m.getFullYear();
+    sec.appendChild(title);
+    sec.appendChild(buildMonthCalendar(m, monthKey));
+    c.appendChild(sec);
+  });
+
+  var genSec = document.createElement("div"); genSec.className = "mk-month"; genSec.id = "mk-general";
+  var genTitle = document.createElement("div"); genTitle.className = "mk-month-title";
+  genTitle.textContent = "Tareas generales";
+  genSec.appendChild(genTitle);
+  var genSub = document.createElement("div"); genSub.style.cssText="font-size:11px;color:#9ca3af;margin-top:-8px;margin-bottom:12px";
+  genSub.textContent = "Tareas que no son de contenido: entregar cosas, completar campos, links necesarios, etc.";
+  genSec.appendChild(genSub);
+  if (!(D.mktasks||[]).length) {
+    var emptyT = document.createElement("div"); emptyT.style.cssText="font-size:12px;color:#9ca3af;padding:2px 0 10px";
+    emptyT.textContent = "Sin tareas generales todavia.";
+    genSec.appendChild(emptyT);
+  }
+  (D.mktasks||[]).forEach(function(t){ genSec.appendChild(buildGenericTask(t)); });
+  var addTaskBtn = document.createElement("button"); addTaskBtn.className = "mk-add";
+  addTaskBtn.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar tarea";
+  addTaskBtn.onclick = addGenericTask;
+  genSec.appendChild(addTaskBtn);
+  c.appendChild(genSec);
+
+  var remSec = document.createElement("div"); remSec.className = "mk-month"; remSec.id = "mk-reminders";
+  var remTitle = document.createElement("div"); remTitle.className = "mk-month-title";
+  remTitle.textContent = "Recordatorios";
+  remSec.appendChild(remTitle);
+  remSec.appendChild(buildRemindersBlock("marketing", null, false));
+  c.appendChild(remSec);
+}
+window.renderMarketingBoard = renderMarketingBoard;
+
+// Calendario mensual con casilleros por dia (estilo calendario real) para cargar publicaciones
+var WEEKDAYS_MON_FIRST = ["Lun","Mar","Mie","Jue","Vie","Sab","Dom"];
+
+function buildMonthCalendar(monthDate, monthKey) {
+  var wrap = document.createElement("div");
+  var y = monthDate.getFullYear(), m = monthDate.getMonth();
+  var firstDay = new Date(y, m, 1);
+  var daysInMonth = new Date(y, m+1, 0).getDate();
+  var startOffset = (firstDay.getDay() + 6) % 7; // 0=Lunes
+
+  var head = document.createElement("div"); head.className = "mk-cal-head";
+  WEEKDAYS_MON_FIRST.forEach(function(d){ var hc=document.createElement("div"); hc.textContent=d; head.appendChild(hc); });
+  wrap.appendChild(head);
+
+  var grid = document.createElement("div"); grid.className = "mk-cal-grid";
+  for (var i=0; i<startOffset; i++) {
+    var pad = document.createElement("div"); pad.className = "mk-cal-day mk-cal-pad";
+    grid.appendChild(pad);
+  }
+  var todayStr = new Date().toISOString().slice(0,10);
+  for (var day=1; day<=daysInMonth; day++) {
+    var dateStr = monthKey + "-" + (day<10 ? "0"+day : day);
+    var cell = document.createElement("div"); cell.className = "mk-cal-day" + (dateStr===todayStr ? " mk-cal-today" : "");
+    var num = document.createElement("div"); num.className = "mk-cal-daynum"; num.textContent = day;
+    cell.appendChild(num);
+    var items = (D.content||[]).filter(function(it){ return it.date===dateStr; });
+    items.forEach(function(it) {
+      var chip = document.createElement("div"); chip.className = "mk-cal-chip" + (it.programada ? " on" : "");
+      chip.textContent = it.title || "(sin titulo)";
+      if (it.notas) chip.title = it.notas;
+      chip.onclick = (function(itId){ return function(){ openDayTask(dateStr, itId); }; })(it.id);
+      cell.appendChild(chip);
+    });
+    var addBtn = document.createElement("button"); addBtn.className = "mk-cal-add"; addBtn.title = "Agregar publicacion";
+    addBtn.innerHTML = "<i class='ti ti-plus' style='font-size:11px'></i>";
+    addBtn.onclick = (function(ds){ return function(){ openDayTask(ds, null); }; })(dateStr);
+    cell.appendChild(addBtn);
+    grid.appendChild(cell);
+  }
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+// ── Modal: publicacion de un dia puntual ────────────────────────
+var dtEditingId = null, dtEditingDate = null, dtProgramada = false;
+
+function openDayTask(dateStr, itemId) {
+  dtEditingDate = dateStr;
+  dtEditingId = itemId;
+  var it = null;
+  if (itemId) { for (var i=0;i<D.content.length;i++){ if (D.content[i].id===itemId){ it=D.content[i]; break; } } }
+  document.getElementById("dt-title-lbl").textContent = it ? "Editar publicacion" : "Nueva publicacion";
+  document.getElementById("dt-date").value = dateStr;
+  document.getElementById("dt-title").value = it ? (it.title||"") : "";
+  document.getElementById("dt-notas").value = it ? (it.notas||"") : "";
+  dtProgramada = it ? !!it.programada : false;
+  renderDtProgToggle();
+  var delBtn = document.getElementById("dt-del-btn");
+  delBtn.style.display = it ? "inline-block" : "none";
+  delBtn.onclick = function(){ if (dtEditingId) { deleteContentItem(dtEditingId); closeModal("mo-daytask"); } };
+  document.getElementById("mo-daytask").classList.add("op");
+  setTimeout(function(){ document.getElementById("dt-title").focus(); }, 50);
+}
+window.openDayTask = openDayTask;
+
+function renderDtProgToggle() {
+  var el = document.getElementById("dt-prog-toggle");
+  el.className = "mk-prog" + (dtProgramada ? " on" : "");
+  el.innerHTML = "<i class='ti ti-" + (dtProgramada ? "circle-check" : "circle-dashed") + "' style='font-size:12px'></i> " + (dtProgramada ? "Programada" : "Sin programar");
+  el.onclick = function(){ dtProgramada = !dtProgramada; renderDtProgToggle(); };
+}
+
+function saveDayTaskModal() {
+  var title = document.getElementById("dt-title").value.trim();
+  if (!title) return;
+  var it = { id: dtEditingId || nid("ct") };
+  it.date = dtEditingDate;
+  it.month = dtEditingDate.slice(0,7);
+  it.title = title;
+  it.notas = document.getElementById("dt-notas").value;
+  it.programada = dtProgramada;
+  saveContentItem(it);
+  closeModal("mo-daytask");
+}
+window.saveDayTaskModal = saveDayTaskModal;
+
+function buildGenericTask(t) {
+  var card = document.createElement("div"); card.className = "mk-task-row";
+  var top = document.createElement("div"); top.className = "mk-task-top";
+  var titleInp = document.createElement("input"); titleInp.type = "text";
+  titleInp.placeholder = "Tarea a realizar..."; titleInp.value = t.title || "";
+  titleInp.onchange = function(){ t.title = this.value; saveGenericTask(t); };
+  var startInp = document.createElement("input"); startInp.type = "date"; startInp.value = t.start || "";
+  startInp.onchange = function(){ t.start = this.value; saveGenericTask(t); };
+  var endInp = document.createElement("input"); endInp.type = "date"; endInp.value = t.end || "";
+  endInp.onchange = function(){ t.end = this.value; saveGenericTask(t); };
+  var del = document.createElement("button"); del.className = "mk-del"; del.innerHTML = "<i class='ti ti-x'></i>";
+  del.onclick = function(){ deleteGenericTask(t.id); };
+  top.appendChild(titleInp); top.appendChild(startInp); top.appendChild(endInp); top.appendChild(del);
+  var linkInp = document.createElement("input"); linkInp.type = "url";
+  linkInp.placeholder = "Link necesario (opcional)"; linkInp.value = t.link || "";
+  linkInp.onchange = function(){ t.link = this.value; saveGenericTask(t); };
+  var notes = document.createElement("textarea"); notes.className = "mk-notes";
+  notes.placeholder = "Notas..."; notes.value = t.notas || "";
+  notes.onchange = function(){ t.notas = this.value; saveGenericTask(t); };
+  card.appendChild(top); card.appendChild(linkInp); card.appendChild(notes);
+  return card;
+}
+
+function addGenericTask() {
+  var t = { id: nid("mkt"), title: "", start: "", end: "", link: "", notas: "" };
+  saveGenericTask(t);
+}
 
 // ── FIRESTORE LISTENERS ──────────────────────────────────────────
 function startListeners() {
@@ -422,6 +745,23 @@ function startListeners() {
     D.activity.sort(function(a,b){ return b.ts - a.ts; });
     renderNotifBadge();
     if (curView === "notif") renderNotifList();
+  });
+  onSnapshot(collection(db,"content"), function(snap) {
+    D.content = [];
+    snap.forEach(function(d) { D.content.push(d.data()); });
+    if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+  });
+  onSnapshot(collection(db,"mktasks"), function(snap) {
+    D.mktasks = [];
+    snap.forEach(function(d) { D.mktasks.push(d.data()); });
+    if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+  });
+  onSnapshot(collection(db,"reminders"), function(snap) {
+    D.reminders = [];
+    snap.forEach(function(d) { D.reminders.push(d.data()); });
+    checkReminders();
+    if (curDept === "pipeline" && curView === "board") renderBoard();
+    if (curDept === "marketing" && curView === "board") renderMarketingBoard();
   });
 }
 
@@ -459,6 +799,10 @@ function deleteLink(id) {
   showSyncing();
   deleteDoc(doc(db,"links",id)).then(showSynced);
 }
+function saveContentItem(it) { showSyncing(); setDoc(doc(db,"content",it.id), it).then(showSynced); }
+function deleteContentItem(id) { showSyncing(); deleteDoc(doc(db,"content",id)).then(showSynced); }
+function saveGenericTask(t) { showSyncing(); setDoc(doc(db,"mktasks",t.id), t).then(showSynced); }
+function deleteGenericTask(id) { showSyncing(); deleteDoc(doc(db,"mktasks",id)).then(showSynced); }
 
 function showSyncing() {
   var el = document.getElementById("save-ind");
@@ -476,21 +820,146 @@ function showSynced() {
 function nid(p) { return p + Date.now() + Math.floor(Math.random()*1000); }
 
 // ── NOTIFICATIONS ───────────────────────────────────────────────
-function sendNewProjectNotification(proj) {
+// Todas las notificaciones reusan la misma plantilla de EmailJS (la unica configurada),
+// reacomodando el texto en sus 4 campos existentes. Si en algun momento se arma una
+// plantilla dedicada para recordatorios/cambios de fecha, se puede pasar el template ID aca.
+function sendEmailNotif(toEmail, nombreField, seccionField, prioridadField, quienField) {
+  if (!toEmail) return;
   try { emailjs.init(EMAILJS_KEY); } catch(e) {}
-  var quien = "";
-  for (var i=0; i<TEAM.length; i++) {
-    if (TEAM[i].id === currentUser) { quien = TEAM[i].name; break; }
-  }
   emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-    to_email:           ALL_EMAILS[0],
-    proyecto_nombre:    proj.name,
-    proyecto_seccion:   "Proyectos",
-    proyecto_prioridad: proj.priority,
-    quien:              quien
+    to_email:           toEmail,
+    proyecto_nombre:    nombreField,
+    proyecto_seccion:   seccionField,
+    proyecto_prioridad: prioridadField,
+    quien:              quienField
   }).catch(function(err) {
     console.warn("EmailJS error:", err);
   });
+}
+
+function currentUserName() {
+  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === currentUser) return TEAM[i].name; }
+  return "";
+}
+
+// Avisa a todo el equipo (un mail por persona, sin duplicar direcciones)
+function notifyTeam(nombreField, seccionField, prioridadField, quienField) {
+  var seen = {};
+  TEAM.forEach(function(m) {
+    var email = TEAM_EMAILS[m.id];
+    if (email && !seen[email]) { seen[email] = true; sendEmailNotif(email, nombreField, seccionField, prioridadField, quienField); }
+  });
+}
+
+function sendNewProjectNotification(proj) {
+  notifyTeam(
+    "Nuevo proyecto: " + proj.name,
+    getDept(proj.section).label,
+    "Prioridad: " + proj.priority,
+    currentUserName()
+  );
+}
+
+function notifyDateChange(proj, campoLabel, nuevoValor) {
+  if (!nuevoValor) return;
+  notifyTeam(
+    "Cambio de fecha - " + proj.name,
+    getDept(proj.section).label,
+    campoLabel + ": " + nuevoValor,
+    currentUserName()
+  );
+}
+
+function sendReminderEmail(rem) {
+  var proj = rem.projectId ? findProjectById(rem.projectId) : null;
+  sendEmailNotif(
+    rem.email,
+    "Recordatorio: " + (proj ? proj.name : "Marketing"),
+    rem.scope === "marketing" ? "Marketing" : (proj ? getDept(proj.section).label : ""),
+    rem.text || "",
+    "Fecha: " + rem.date
+  );
+}
+
+// ── RECORDATORIOS ────────────────────────────────────────────────
+function saveReminder(r) { showSyncing(); setDoc(doc(db,"reminders",r.id), r).then(showSynced); }
+function deleteReminder(id) { showSyncing(); deleteDoc(doc(db,"reminders",id)).then(showSynced); }
+
+function checkReminders() {
+  var today = new Date().toISOString().slice(0,10);
+  D.reminders.forEach(function(r) {
+    // solo dispara cuando el recordatorio esta completo (mail, fecha y texto) para no
+    // enviarlo/bloquearlo a mitad de carga mientras el usuario todavia esta completando los campos
+    if (!r.sent && r.email && r.date && r.text && r.text.trim() && r.date <= today) {
+      sendReminderEmail(r);
+      r.sent = true;
+      r.sentAt = Date.now();
+      saveReminder(r);
+    }
+  });
+}
+
+function addReminder(scope, projectId) {
+  var r = { id: nid("rm"), scope: scope, projectId: projectId||null, email:"", date:"", text:"", sent:false, sentAt:null };
+  saveReminder(r);
+}
+
+function buildReminderRow(r, locked) {
+  var row = document.createElement("div"); row.className="ctc-row"; row.style.flexWrap="wrap"; row.style.rowGap="6px";
+  var selWrap = document.createElement("select");
+  selWrap.style.cssText="flex:1;min-width:130px;font-size:12px;padding:6px 9px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151";
+  var optBlank = document.createElement("option"); optBlank.value=""; optBlank.textContent="Elegir mail...";
+  selWrap.appendChild(optBlank);
+  TEAM.forEach(function(m) {
+    var email = TEAM_EMAILS[m.id]||"";
+    var opt = document.createElement("option"); opt.value=email; opt.textContent=m.name+" ("+email+")";
+    if (r.email === email) opt.selected = true;
+    selWrap.appendChild(opt);
+  });
+  var isLocked = locked || !!r.sent;
+  if (isLocked) selWrap.disabled = true;
+  selWrap.onchange = function(){ r.email=this.value; saveReminder(r); };
+
+  var dInp = document.createElement("input"); dInp.type="date"; dInp.value=r.date||"";
+  dInp.style.cssText="font-size:12px;padding:6px 9px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151";
+  if (isLocked) dInp.disabled = true;
+  dInp.onchange = function(){ r.date=this.value; r.sent=false; saveReminder(r); };
+
+  var tInp = document.createElement("input"); tInp.placeholder="Texto del recordatorio"; tInp.value=r.text||"";
+  tInp.style.cssText="flex:2;min-width:160px;font-size:12px;padding:6px 9px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151";
+  if (isLocked) tInp.disabled = true;
+  tInp.onchange = function(){ r.text=this.value; saveReminder(r); };
+
+  row.appendChild(selWrap); row.appendChild(dInp); row.appendChild(tInp);
+
+  if (r.sent) {
+    var badge = document.createElement("span"); badge.style.cssText="font-size:10px;color:#1D9E75;font-weight:600;flex-shrink:0;white-space:nowrap"; badge.textContent="Enviado";
+    row.appendChild(badge);
+  }
+  if (!locked) {
+    var delBtn = document.createElement("button"); delBtn.className="ctc-del"; delBtn.innerHTML="<i class='ti ti-x'></i>";
+    delBtn.onclick = function(){ deleteReminder(r.id); };
+    row.appendChild(delBtn);
+  }
+  return row;
+}
+
+function buildRemindersBlock(scope, projectId, locked) {
+  var wrap = document.createElement("div"); wrap.className="margin-box"; wrap.style.marginTop="14px";
+  var title = document.createElement("div"); title.className="bxt"; title.style.marginBottom="9px";
+  title.innerHTML = "<i class='ti ti-bell' style='font-size:14px;margin-right:5px;color:#f59e0b'></i>Recordatorios";
+  wrap.appendChild(title);
+  var list = D.reminders.filter(function(r) {
+    return r.scope === scope && (scope === "marketing" ? true : r.projectId === projectId);
+  });
+  list.forEach(function(r) { wrap.appendChild(buildReminderRow(r, locked)); });
+  if (!locked) {
+    var addBtn = document.createElement("button"); addBtn.className="nb"; addBtn.style.marginTop="4px";
+    addBtn.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Agregar recordatorio";
+    addBtn.onclick = function(){ addReminder(scope, projectId); };
+    wrap.appendChild(addBtn);
+  }
+  return wrap;
 }
 
 // ── LOGIN ────────────────────────────────────────────────────────
@@ -528,6 +997,10 @@ function enterApp(id) {
   renderCurrentUser();
   renderTeam();
   startListeners();
+  switchDept("pipeline");
+  if (!window._remindersInterval) {
+    window._remindersInterval = setInterval(checkReminders, 60000);
+  }
 }
 
 function logout() {
@@ -599,25 +1072,29 @@ function renderTeam() {
 
 // ── PROJECTS ─────────────────────────────────────────────────────
 function renderProjList() {
-  ["proyectos","marketing"].forEach(function(sec) {
-    var c = document.getElementById("pl-" + sec);
-    c.innerHTML = "";
-    D.projects.filter(function(p){ return p.section===sec && p.status==="activo"; }).forEach(function(p) {
-      (function(proj) {
-        var cnt = D.tasks.filter(function(t){ return t.projId===proj.id; }).length;
-        var div = document.createElement("div");
-        div.className = "pi" + (selProj===proj.id?" act":"");
-        var dot = document.createElement("span"); dot.className="pd"; dot.style.background=proj.color;
-        var nm = document.createElement("span"); nm.className="pn"; nm.textContent=proj.name;
-        var pr = document.createElement("span"); pr.className="pp pp"+proj.priority[0]; pr.textContent=proj.priority;
-        var ct = document.createElement("span"); ct.className="pc"; ct.textContent=cnt;
-        div.appendChild(dot); div.appendChild(nm); div.appendChild(pr); div.appendChild(ct);
-        div.onclick = function() { selProj=proj.id; selTask=null; closeDetail(); renderProjList(); switchView("board"); };
-        c.appendChild(div);
-      })(p);
-    });
+  var dept = getDept(curDept);
+  var dotEl = document.getElementById("sb-dept-dot"), lblEl = document.getElementById("sb-dept-label");
+  if (dotEl) dotEl.style.background = dept.color;
+  if (lblEl) lblEl.textContent = dept.label.charAt(0) + dept.label.slice(1).toLowerCase();
+
+  var c = document.getElementById("pl-main");
+  c.innerHTML = "";
+  D.projects.filter(function(p){ return p.section===curDept && p.status==="activo"; }).forEach(function(p) {
+    (function(proj) {
+      var cnt = D.tasks.filter(function(t){ return t.projId===proj.id; }).length;
+      var div = document.createElement("div");
+      div.className = "pi" + (selProj===proj.id?" act":"");
+      var dot = document.createElement("span"); dot.className="pd"; dot.style.background=proj.color;
+      var nm = document.createElement("span"); nm.className="pn"; nm.textContent=proj.name;
+      var pr = document.createElement("span"); pr.className="pp pp"+proj.priority[0]; pr.textContent=proj.priority;
+      var ct = document.createElement("span"); ct.className="pc"; ct.textContent=cnt;
+      div.appendChild(dot); div.appendChild(nm); div.appendChild(pr); div.appendChild(ct);
+      div.onclick = function() { selProj=proj.id; selTask=null; closeDetail(); renderProjList(); switchView("board"); };
+      c.appendChild(div);
+    })(p);
   });
-  var fins = D.projects.filter(function(p){ return p.status==="finalizado"; });
+
+  var fins = D.projects.filter(function(p){ return p.section===curDept && p.status==="finalizado"; });
   var fc = document.getElementById("pl-fin"); fc.innerHTML="";
   document.getElementById("fin-empty").style.display = fins.length?"none":"block";
   fins.forEach(function(p) {
@@ -634,7 +1111,7 @@ function renderProjList() {
   });
 
   // Vendidos
-  var vends = D.projects.filter(function(p){ return p.status === "vendido"; });
+  var vends = D.projects.filter(function(p){ return p.section===curDept && p.status === "vendido"; });
   var vc = document.getElementById("pl-vend");
   if (vc) {
     vc.innerHTML = "";
@@ -661,13 +1138,17 @@ function getProj() {
 
 // ── BOARD ────────────────────────────────────────────────────────
 function renderBoard() {
+  if (curDept === "marketing") { renderMarketingBoard(); return; }
   var c = document.getElementById("board-inner");
   if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
   if (!proj) return;
-  var isFin = proj.status==="finalizado";
-  var secLabel = isFin?"Finalizado":(proj.section==="marketing"?"Marketing":"Proyectos");
-  var secCls = isFin?"sbf":(proj.section==="marketing"?"sbm":"sbp");
+  var isArq = proj.section==="proyectos";
+  var isFin = proj.status !== "activo"; // activo es el unico estado "editable"; el resto queda solo lectura
+  var projDept = getDept(proj.section);
+  var statusLabel = proj.status==="vendido" ? "Vendido" : (proj.status==="finalizado" ? (isArq?"Terminado":"Finalizado") : "");
+  var secLabel = statusLabel || (projDept.label.charAt(0)+projDept.label.slice(1).toLowerCase());
+  var secCls = statusLabel ? "sbf" : (proj.section==="pipeline"?"sbg":"sbp");
 
   var tasks = D.tasks.filter(function(t){ return t.projId===selProj && (!filterMember||t.assignee===filterMember); });
   var cols = {pendiente:[], "en-curso":[], terminado:[]};
@@ -687,33 +1168,58 @@ function renderBoard() {
   var acts = document.createElement("div"); acts.className="ha";
   if (!isFin) {
     var bt = document.createElement("button"); bt.className="btn"; bt.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Nueva tarea"; bt.onclick=openNewTask;
-    var bf = document.createElement("button"); bf.className="btn btng"; bf.innerHTML="<i class='ti ti-circle-check' style='font-size:12px'></i> Finalizar"; bf.onclick=confirmFinalizar;
-    acts.appendChild(bt); acts.appendChild(bf);
-  } else {
-    var br2 = document.createElement("button"); br2.className="btn"; br2.innerHTML="<i class='ti ti-refresh' style='font-size:12px'></i> Reabrir"; br2.onclick=reabrirProyecto;
-    var bv = document.createElement("button"); bv.className="btn btn-vend"; bv.innerHTML="<i class='ti ti-tag' style='font-size:12px'></i> Marcar como vendido"; bv.onclick=marcarVendido;
-    acts.appendChild(br2); acts.appendChild(bv);
+    acts.appendChild(bt);
   }
+  var stateSel = document.createElement("select"); stateSel.className="statesel"; stateSel.title="El estado siempre se puede volver a cambiar";
+  var stateOpts = isArq
+    ? [{v:"activo",l:"Activo"},{v:"finalizado",l:"Terminado"}]
+    : [{v:"activo",l:"Activo"},{v:"finalizado",l:"Finalizado"},{v:"vendido",l:"Vendido"}];
+  stateOpts.forEach(function(o){ var op=document.createElement("option"); op.value=o.v; op.textContent=o.l; if(proj.status===o.v) op.selected=true; stateSel.appendChild(op); });
+  stateSel.onchange = function(){ updateProjectStatus(this.value); };
+  acts.appendChild(stateSel);
   var bd2 = document.createElement("button"); bd2.className="btn btnr"; bd2.innerHTML="<i class='ti ti-trash'></i>"; bd2.title="Eliminar"; bd2.onclick=confirmEliminar;
   acts.appendChild(bd2);
   hdr.appendChild(left); hdr.appendChild(acts); c.appendChild(hdr);
 
   if (isFin) {
-    var banTxt = proj.status === "vendido" ? "Proyecto marcado como vendido." : "Proyecto finalizado - solo lectura.";
+    var banTxt = proj.status === "vendido" ? "Proyecto marcado como vendido." : (isArq ? "Entrega de Arquitectura completada - solo lectura." : "Proyecto finalizado - solo lectura.");
     var banColor = proj.status === "vendido" ? "background:#fffbeb;border:1px solid #fcd34d;color:#92400e;" : "";
-    var ban=document.createElement("div"); ban.className="fb"; ban.style.cssText=banColor; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> " + banTxt; c.appendChild(ban);
+    var ban=document.createElement("div"); ban.className="fb"; ban.style.cssText=banColor; ban.innerHTML="<i class='ti ti-circle-check' style='font-size:16px'></i> " + banTxt + " Cambia el estado arriba para volver a editar."; c.appendChild(ban);
   }
 
   // Info box
   var box = document.createElement("div"); box.className="bx";
   var bxt = document.createElement("div"); bxt.className="bxt"; bxt.textContent="Informacion del proyecto"; box.appendChild(bxt);
 
+  // Cross-link entre Proyectos <-> Arquitectura
+  if (proj.section==="proyectos" && proj.sourceProjectId) {
+    var backBadge=document.createElement("a"); backBadge.className="arq-badge"; backBadge.href="javascript:void(0)";
+    backBadge.innerHTML="<i class='ti ti-arrow-left' style='font-size:11px'></i> Viene de Proyectos";
+    backBadge.onclick=function(){ var srcId=proj.sourceProjectId; switchDept("pipeline"); selProj=srcId; renderProjList(); renderBoard(); };
+    box.appendChild(backBadge);
+  }
+  if (proj.section==="pipeline" && proj.arqProjectId && findProjectById(proj.arqProjectId)) {
+    var fwdBadge=document.createElement("a"); fwdBadge.className="arq-badge"; fwdBadge.href="javascript:void(0)";
+    fwdBadge.innerHTML="<i class='ti ti-arrow-right' style='font-size:11px'></i> Ver en Arquitectura";
+    fwdBadge.onclick=function(){ var arqId=proj.arqProjectId; switchDept("proyectos"); selProj=arqId; renderProjList(); renderBoard(); };
+    box.appendChild(fwdBadge);
+  }
+
   var mr = document.createElement("div"); mr.className="mr";
   function mkDateField(lbl, val, field) {
     var fi = document.createElement("div"); fi.className="mi";
     var l = document.createElement("label"); l.textContent=lbl;
     var inp = document.createElement("input"); inp.type="date"; inp.value=val||""; if(isFin) inp.disabled=true;
-    inp.onchange = function(){ var p=getProj(); if(p){p[field]=this.value; saveProject(p);} };
+    inp.onchange = function(){
+      var p=getProj(); if(!p) return;
+      p[field]=this.value; saveProject(p);
+      notifyDateChange(p, lbl, this.value);
+      // Arquitectura -> Proyectos: si cambia la fecha de fin de un proyecto replicado, se refleja en el origen
+      if (field==="end" && p.section==="proyectos" && p.sourceProjectId) {
+        var src = findProjectById(p.sourceProjectId);
+        if (src) { src.entregaArquitectura = this.value; saveProject(src); }
+      }
+    };
     fi.appendChild(l); fi.appendChild(inp); return fi;
   }
   var fi3 = document.createElement("div"); fi3.className="mi";
@@ -725,6 +1231,20 @@ function renderBoard() {
   mr.appendChild(mkDateField("Fecha de inicio", proj.start, "start"));
   mr.appendChild(mkDateField("Fecha de fin", proj.end, "end"));
   mr.appendChild(fi3); box.appendChild(mr);
+
+  // Pipeline (PROYECTOS): fecha de entrega area arquitectura -> replica el proyecto en Arquitectura
+  if (proj.section==="pipeline") {
+    var eaWrap = document.createElement("div"); eaWrap.className="mi"; eaWrap.style.marginBottom="14px";
+    var eaLbl = document.createElement("label"); eaLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:4px;font-weight:500"; eaLbl.textContent="Fecha de entrega - Area Arquitectura";
+    var eaInp = document.createElement("input"); eaInp.type="date"; eaInp.value=proj.entregaArquitectura||""; if(isFin) eaInp.disabled=true;
+    eaInp.onchange = function(){ onEntregaArqChange(this.value); };
+    eaWrap.appendChild(eaLbl); eaWrap.appendChild(eaInp); box.appendChild(eaWrap);
+    if (proj.arqProjectId) {
+      var eaNote = document.createElement("div"); eaNote.style.cssText="font-size:11px;color:#059669;margin:-8px 0 14px;display:flex;align-items:center;gap:4px";
+      eaNote.innerHTML = "<i class='ti ti-check' style='font-size:12px'></i> Replicado en Arquitectura";
+      box.appendChild(eaNote);
+    }
+  }
 
   // Necesario del proyecto
   var nxt = document.createElement("div"); nxt.className="bxt"; nxt.style.marginBottom="9px"; nxt.textContent="Necesario del proyecto"; box.appendChild(nxt);
@@ -746,22 +1266,96 @@ function renderBoard() {
   });
   box.appendChild(nlg);
 
-  // Checklist - Entregables
-  var cxt = document.createElement("div"); cxt.className="bxt"; cxt.style.marginBottom="9px"; cxt.textContent="Entregables del proyecto"; box.appendChild(cxt);
-  var clg = document.createElement("div"); clg.className="cl";
-  var checklist = proj.checklist||{};
-  CL.forEach(function(ci) {
-    (function(item) {
-      var done = !!checklist[item.id];
-      var row = document.createElement("div"); row.className="ci"+(done?" ck":"");
-      if (!isFin) row.onclick = function(){ var p=getProj(); if(!p) return; if(!p.checklist) p.checklist={}; p.checklist[item.id]=!p.checklist[item.id]; saveProject(p); };
-      var cb = document.createElement("div"); cb.className="cb";
-      if (done){ var ic=document.createElement("i"); ic.className="ti ti-check"; ic.style.cssText="font-size:10px;color:#fff"; cb.appendChild(ic); }
-      var lbl = document.createElement("span"); lbl.className="cil"; lbl.textContent=item.label;
-      row.appendChild(cb); row.appendChild(lbl); clg.appendChild(row);
-    })(ci);
-  });
-  box.appendChild(clg);
+  // Pipeline (PROYECTOS): datos al margen + obra
+  if (proj.section === "pipeline") {
+    var margin = document.createElement("div"); margin.className="margin-box";
+    var mTitle = document.createElement("div"); mTitle.className="bxt"; mTitle.style.marginBottom="9px"; mTitle.textContent="Datos al margen"; margin.appendChild(mTitle);
+    var cLbl = document.createElement("label"); cLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:6px;font-weight:500"; cLbl.textContent="Contactos de obra"; margin.appendChild(cLbl);
+    var contactos = proj.contactosObra || [];
+    var ctWrap = document.createElement("div");
+    contactos.forEach(function(ct, idx) {
+      var row = document.createElement("div"); row.className="ctc-row";
+      var nInp = document.createElement("input"); nInp.placeholder="Nombre"; nInp.value=ct.nombre||"";
+      var aInp = document.createElement("input"); aInp.placeholder="Apellido"; aInp.value=ct.apellido||"";
+      var tInp = document.createElement("input"); tInp.placeholder="Telefono"; tInp.value=ct.telefono||"";
+      if (isFin) { nInp.disabled=true; aInp.disabled=true; tInp.disabled=true; }
+      var updContact = function(){ var p=getProj(); if(!p||!p.contactosObra) return; p.contactosObra[idx]={id:ct.id,nombre:nInp.value,apellido:aInp.value,telefono:tInp.value}; saveProject(p); };
+      nInp.onchange=updContact; aInp.onchange=updContact; tInp.onchange=updContact;
+      row.appendChild(nInp); row.appendChild(aInp); row.appendChild(tInp);
+      if (!isFin) {
+        var delBtn = document.createElement("button"); delBtn.className="ctc-del"; delBtn.innerHTML="<i class='ti ti-x'></i>";
+        delBtn.onclick = function(){ var p=getProj(); if(!p||!p.contactosObra) return; p.contactosObra.splice(idx,1); saveProject(p); };
+        row.appendChild(delBtn);
+      }
+      ctWrap.appendChild(row);
+    });
+    margin.appendChild(ctWrap);
+    if (!isFin) {
+      var addContact = document.createElement("button"); addContact.className="nb"; addContact.style.marginTop="4px";
+      addContact.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Agregar contacto";
+      addContact.onclick = function(){ var p=getProj(); if(!p) return; if(!p.contactosObra) p.contactosObra=[]; p.contactosObra.push({id:nid("ct"),nombre:"",apellido:"",telefono:""}); saveProject(p); };
+      margin.appendChild(addContact);
+    }
+    var oLbl = document.createElement("label"); oLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin:12px 0 5px;font-weight:500"; oLbl.textContent="Otros datos";
+    var oTa = document.createElement("textarea"); oTa.className="na"; oTa.style.minHeight="60px"; oTa.placeholder="Otra informacion del proyecto..."; oTa.value=proj.otrosDatos||""; if(isFin) oTa.disabled=true;
+    oTa.onchange = function(){ var p=getProj(); if(p){p.otrosDatos=this.value; saveProject(p);} };
+    margin.appendChild(oLbl); margin.appendChild(oTa);
+    box.appendChild(margin);
+
+    // Obra vendida
+    var vendidoOn = !!proj.vendido;
+    var dro = document.createElement("div"); dro.className="dro"+(vendidoOn?" ck":"");
+    if (!isFin) dro.onclick = function(){ var p=getProj(); if(!p) return; p.vendido=!p.vendido; saveProject(p); logActivity(p.vendido?"marco la obra como vendida":"desmarco la obra vendida", p.name, currentUser); };
+    var drob = document.createElement("div"); drob.className="drob";
+    if (vendidoOn){ var vic=document.createElement("i"); vic.className="ti ti-check"; vic.style.cssText="font-size:10px;color:#fff"; drob.appendChild(vic); }
+    var drol = document.createElement("span"); drol.className="drol"; drol.textContent=vendidoOn?"Obra vendida":"Marcar obra como vendida";
+    var droi = document.createElement("i"); droi.className="ti ti-tag"; droi.style.cssText="font-size:16px;color:#f59e0b;flex-shrink:0";
+    dro.appendChild(drob); dro.appendChild(drol); dro.appendChild(droi); box.appendChild(dro);
+
+    if (vendidoOn) {
+      var obraSub = document.createElement("div"); obraSub.className="obra-sub";
+      var obTitle = document.createElement("div"); obTitle.className="bxt"; obTitle.style.marginBottom="9px"; obTitle.textContent="Obra"; obraSub.appendChild(obTitle);
+      var obra = proj.obra || {};
+      function mkObraField(lbl, val, field) {
+        var fi = document.createElement("div"); fi.className="mi";
+        var l = document.createElement("label"); l.textContent=lbl;
+        var inp = document.createElement("input"); inp.type="date"; inp.value=val||""; if(isFin) inp.disabled=true;
+        inp.onchange = function(){ var p=getProj(); if(!p) return; if(!p.obra) p.obra={}; p.obra[field]=this.value; saveProject(p); };
+        fi.appendChild(l); fi.appendChild(inp); return fi;
+      }
+      var obMr1 = document.createElement("div"); obMr1.className="mr"; obMr1.style.gridTemplateColumns="1fr 1fr";
+      obMr1.appendChild(mkObraField("Fecha inicio de obra", obra.start, "start"));
+      obMr1.appendChild(mkObraField("Fecha fin de obra", obra.end, "end"));
+      obraSub.appendChild(obMr1);
+      var obMr2 = document.createElement("div"); obMr2.className="mr"; obMr2.style.gridTemplateColumns="1fr 1fr"; obMr2.style.marginBottom="0";
+      obMr2.appendChild(mkObraField("Llegada de insumos", obra.insumos, "insumos"));
+      obMr2.appendChild(mkObraField("Tiempo final de fabricacion", obra.fabricacion, "fabricacion"));
+      obraSub.appendChild(obMr2);
+      box.appendChild(obraSub);
+    }
+
+    // Recordatorios (solo PROYECTOS)
+    box.appendChild(buildRemindersBlock("pipeline", proj.id, isFin));
+  }
+
+  // Checklist - Entregables (solo Arquitectura)
+  if (proj.section === "proyectos") {
+    var cxt = document.createElement("div"); cxt.className="bxt"; cxt.style.marginBottom="9px"; cxt.textContent="Entregables del proyecto"; box.appendChild(cxt);
+    var clg = document.createElement("div"); clg.className="cl";
+    var checklist = proj.checklist||{};
+    CL.forEach(function(ci) {
+      (function(item) {
+        var done = !!checklist[item.id];
+        var row = document.createElement("div"); row.className="ci"+(done?" ck":"");
+        if (!isFin) row.onclick = function(){ var p=getProj(); if(!p) return; if(!p.checklist) p.checklist={}; p.checklist[item.id]=!p.checklist[item.id]; saveProject(p); };
+        var cb = document.createElement("div"); cb.className="cb";
+        if (done){ var ic=document.createElement("i"); ic.className="ti ti-check"; ic.style.cssText="font-size:10px;color:#fff"; cb.appendChild(ic); }
+        var lbl = document.createElement("span"); lbl.className="cil"; lbl.textContent=item.label;
+        row.appendChild(cb); row.appendChild(lbl); clg.appendChild(row);
+      })(ci);
+    });
+    box.appendChild(clg);
+  }
 
   // Dropbox
   var dbDone = !!proj.dropbox;
@@ -889,6 +1483,48 @@ window.confirmFinalizar=confirmFinalizar;
 function reabrirProyecto(){ var p=getProj(); if(p){p.status="activo"; saveProject(p);} }
 window.reabrirProyecto=reabrirProyecto;
 
+// El estado del proyecto (Activo/Finalizado-Terminado/Vendido) siempre se puede volver a cambiar
+function updateProjectStatus(newStatus) {
+  var p = getProj(); if (!p) return;
+  var isArq = p.section === "proyectos";
+  p.status = newStatus;
+  if (newStatus === "vendido" && !p.fechaVenta) p.fechaVenta = new Date().toISOString().slice(0,10);
+  saveProject(p);
+  var label = newStatus === "activo" ? "activo" : (newStatus === "vendido" ? "vendido" : (isArq ? "terminado" : "finalizado"));
+  logActivity("cambio el estado del proyecto a " + label, p.name, currentUser);
+  renderProjList();
+  renderBoard();
+}
+window.updateProjectStatus = updateProjectStatus;
+
+// Pipeline (PROYECTOS): al cargar la fecha de entrega a Arquitectura, replica (o actualiza) el proyecto
+function onEntregaArqChange(val) {
+  var p = getProj(); if (!p) return;
+  p.entregaArquitectura = val;
+  if (val) {
+    if (!p.arqProjectId || !findProjectById(p.arqProjectId)) {
+      var newId = nid("p");
+      var arqProj = {
+        id: newId, name: p.name, color: p.color, members: (p.members||[]).slice(),
+        start: p.start || new Date().toISOString().slice(0,10), end: val,
+        notes: "", section: "proyectos", priority: p.priority||"media",
+        status: "activo", checklist: {}, necesario: Object.assign({}, p.necesario||{}),
+        dropbox: false, sourceProjectId: p.id
+      };
+      saveProject(arqProj);
+      p.arqProjectId = newId;
+      logActivity("genero el proyecto en Arquitectura", p.name, currentUser);
+    } else {
+      var arqExisting = findProjectById(p.arqProjectId);
+      if (arqExisting) { arqExisting.end = val; saveProject(arqExisting); }
+    }
+  }
+  saveProject(p);
+  notifyDateChange(p, "Fecha de entrega - Area Arquitectura", val);
+  renderBoard();
+}
+window.onEntregaArqChange = onEntregaArqChange;
+
 function confirmEliminar() {
   var p=getProj();
   document.getElementById("conf-icon").innerHTML="<i class='ti ti-trash' style='color:#b91c1c;font-size:28px'></i>";
@@ -907,8 +1543,9 @@ window.confirmEliminar=confirmEliminar;
 // ── INFO UTIL ────────────────────────────────────────────────────
 function renderInfoGrid() {
   var g=document.getElementById("info-grid"); g.innerHTML="";
-  if(!D.links||!D.links.length){g.innerHTML="<div style='grid-column:1/-1;text-align:center;padding:48px;color:#9ca3af;font-size:13px'><i class='ti ti-link' style='font-size:28px;margin-bottom:10px;display:block'></i>Todavia no hay links.</div>";return;}
-  D.links.forEach(function(l){
+  var deptLinks = (D.links||[]).filter(function(l){ return !l.dept || l.dept===curDept; });
+  if(!deptLinks.length){g.innerHTML="<div style='grid-column:1/-1;text-align:center;padding:48px;color:#9ca3af;font-size:13px'><i class='ti ti-link' style='font-size:28px;margin-bottom:10px;display:block'></i>Todavia no hay links en "+getDept(curDept).label+".</div>";return;}
+  deptLinks.forEach(function(l){
     (function(link){
       var card=document.createElement("div");card.className="ic";
       var top=document.createElement("div");top.className="ict";
@@ -930,6 +1567,7 @@ window.renderInfoGrid=renderInfoGrid;
 function openNewInfo(){
   document.getElementById("in-name").value=""; document.getElementById("in-desc").value="";
   document.getElementById("in-url").value=""; document.getElementById("in-cat").value="Ficha tecnica";
+  document.getElementById("in-dept-hint").textContent = "Se agrega a "+getDept(curDept).label;
   document.getElementById("mo-info").classList.add("op");
   setTimeout(function(){document.getElementById("in-name").focus();},50);
 }
@@ -937,7 +1575,7 @@ window.openNewInfo=openNewInfo;
 
 function saveInfo(){
   var name=document.getElementById("in-name").value.trim(); if(!name) return;
-  var link={id:nid("l"),name:name,desc:document.getElementById("in-desc").value.trim(),url:document.getElementById("in-url").value.trim(),cat:document.getElementById("in-cat").value};
+  var link={id:nid("l"),name:name,desc:document.getElementById("in-desc").value.trim(),url:document.getElementById("in-url").value.trim(),cat:document.getElementById("in-cat").value,dept:curDept};
   saveLink(link); closeModal("mo-info");
 }
 window.saveInfo=saveInfo;
@@ -945,9 +1583,16 @@ window.saveInfo=saveInfo;
 // ── GANTT ────────────────────────────────────────────────────────
 function renderGantt() {
   var c=document.getElementById("gantt-ct");
-  var all=D.projects.filter(function(p){return p.start&&p.end;});
-  if(!all.length){c.innerHTML="<div style='text-align:center;padding:40px;color:#9ca3af;font-size:13px'><i class='ti ti-calendar' style='font-size:28px;margin-bottom:10px;display:block'></i>Agrega fechas a los proyectos para ver el cronograma</div>";return;}
+  var dept = getDept(curDept);
+  var deptProjects = D.projects.filter(function(p){return p.section===curDept&&p.start&&p.end;});
+  var linkedExtra = [];
+  deptProjects.forEach(function(p){ var lp=linkedProjectFor(p); if(lp&&lp.start&&lp.end) linkedExtra.push(lp); });
+  var all = deptProjects.concat(linkedExtra);
+  if(!all.length){c.innerHTML="<div style='text-align:center;padding:40px;color:#9ca3af;font-size:13px'><i class='ti ti-calendar' style='font-size:28px;margin-bottom:10px;display:block'></i>Agrega fechas a los proyectos de "+dept.label+" para ver el cronograma</div>";return;}
   var dates=[]; all.forEach(function(p){dates.push(new Date(p.start));dates.push(new Date(p.end));});
+  if (curDept==="pipeline") {
+    deptProjects.forEach(function(p){ if(p.vendido && p.obra && p.obra.start && p.obra.end){ dates.push(new Date(p.obra.start)); dates.push(new Date(p.obra.end)); } });
+  }
   var minD=new Date(Math.min.apply(null,dates)),maxD=new Date(Math.max.apply(null,dates));
   minD=new Date(minD.getFullYear(),minD.getMonth(),1); maxD=new Date(maxD.getFullYear(),maxD.getMonth()+1,0);
   var tMs=maxD-minD,months=[],cur=new Date(minD);
@@ -1013,13 +1658,18 @@ function renderGantt() {
 
   // Also add weekend shading behind the gantt bars
   // (subtle column backgrounds for weekends in bar area)
+  var deptLabelCap = dept.label.charAt(0)+dept.label.slice(1).toLowerCase();
+  var showOverlay = (curDept==="pipeline" || curDept==="proyectos");
+  var finLabel = curDept==="proyectos" ? "Terminados" : "Finalizados";
   var secs=[
-    {label:"Proyectos",color:"#378ADD",filter:function(p){return p.section==="proyectos"&&p.status==="activo";}},
-    {label:"Marketing",color:"#D4537E",filter:function(p){return p.section==="marketing"&&p.status==="activo";}},
-    {label:"Finalizados",color:"#16a34a",filter:function(p){return p.status==="finalizado";}}
+    {label:deptLabelCap,color:dept.color,filter:function(p){return p.section===curDept&&p.status==="activo";}}
   ];
+  // Arquitectura: el cronograma solo muestra lo activo, no hace falta el diagrama de lo terminado
+  if (curDept !== "proyectos") {
+    secs.push({label:finLabel,color:"#16a34a",filter:function(p){return p.section===curDept&&p.status==="finalizado";}});
+  }
   secs.forEach(function(sec){
-    var ps=all.filter(sec.filter); if(!ps.length) return;
+    var ps=deptProjects.filter(sec.filter); if(!ps.length) return;
     var sr=document.createElement("div");sr.className="gsr";
     var sl=document.createElement("div");sl.className="gsl";sl.style.color=sec.color;sl.textContent=sec.label;
     var line=document.createElement("div");line.style.cssText="flex:1;height:1px;background:#e5e7eb;margin-left:8px";
@@ -1053,14 +1703,54 @@ function renderGantt() {
         }
       });
       var tl=document.createElement("div");tl.className="gtl";tl.style.left=todayPct+"%";
-      var bar=document.createElement("div");bar.className="gb";bar.style.cssText="left:"+lp+"%;width:"+wp+"%;background:"+p.color+";opacity:"+op;bar.title=p.start+" - "+p.end;
-      var pg=document.createElement("div");pg.className="gpg";pg.style.width=Math.round(done/Math.max(total,1)*100)+"%";
-      bar.appendChild(pg);bar.appendChild(document.createTextNode(p.name+" ("+done+"/"+total+")"));
-      ba.appendChild(tl);ba.appendChild(bar);row.appendChild(lbl);row.appendChild(ba);gn.appendChild(row);
+      ba.appendChild(tl);
+
+      var linked = showOverlay ? linkedProjectFor(p) : null;
+      var hasLinked = linked && linked.start && linked.end;
+
+      // Fases a apilar en la fila: propia + (Arquitectura si hay link) + (Obra, solo en PROYECTOS)
+      var phases = [{label:(curDept==="pipeline"?"Proyectos":"Arquitectura"), start:p.start, end:p.end, color:p.color, opacity:op, isOwn:true}];
+      if (hasLinked) {
+        var lop=linked.status==="finalizado"?"0.45":"0.75";
+        phases.push({label:(curDept==="pipeline"?"Arquitectura":"Proyectos"), start:linked.start, end:linked.end, color:linked.color||"#378ADD", opacity:lop});
+      }
+      if (curDept==="pipeline" && p.vendido && p.obra && p.obra.start && p.obra.end) {
+        phases.push({label:"Obra", start:p.obra.start, end:p.obra.end, color:"#f59e0b", opacity:"0.85"});
+      }
+
+      if (phases.length > 1) {
+        var barH = 12, gapH = 1, totalH = phases.length*(barH+gapH)+2;
+        ba.style.height = totalH+"px";
+        row.style.marginBottom = (totalH-16)+"px";
+        phases.forEach(function(ph, idx) {
+          var ps=new Date(ph.start), pe=new Date(ph.end);
+          var plp=Math.max(0,(ps-minD)/tMs*100).toFixed(2), pwp=Math.max(0.5,(pe-ps)/tMs*100).toFixed(2);
+          var pbar=document.createElement("div"); pbar.className="gb";
+          pbar.style.cssText="left:"+plp+"%;width:"+pwp+"%;top:"+(idx*(barH+gapH)+1)+"px;height:"+barH+"px;line-height:"+barH+"px;font-size:9px;background:"+ph.color+";opacity:"+ph.opacity;
+          pbar.title=ph.label+": "+ph.start+" - "+ph.end;
+          if (ph.isOwn) {
+            var pg=document.createElement("div");pg.className="gpg";pg.style.width=Math.round(done/Math.max(total,1)*100)+"%";
+            pbar.appendChild(pg);pbar.appendChild(document.createTextNode(p.name+" ("+done+"/"+total+")"));
+          } else {
+            pbar.appendChild(document.createTextNode(ph.label));
+          }
+          ba.appendChild(pbar);
+        });
+      } else {
+        var bar=document.createElement("div");bar.className="gb";bar.style.cssText="left:"+lp+"%;width:"+wp+"%;background:"+p.color+";opacity:"+op;bar.title=p.start+" - "+p.end;
+        var pg2=document.createElement("div");pg2.className="gpg";pg2.style.width=Math.round(done/Math.max(total,1)*100)+"%";
+        bar.appendChild(pg2);bar.appendChild(document.createTextNode(p.name+" ("+done+"/"+total+")"));
+        ba.appendChild(bar);
+      }
+      row.appendChild(lbl);row.appendChild(ba);gn.appendChild(row);
     });
   });
   var leg=document.createElement("div");leg.className="gl";
-  [{color:"#378ADD",label:"Proyectos"},{color:"#D4537E",label:"Marketing"},{color:"#16a34a",label:"Finalizados",op:"0.5"}].forEach(function(item){
+  var legItems=[{color:dept.color,label:deptLabelCap}];
+  if (curDept !== "proyectos") legItems.push({color:"#16a34a",label:finLabel,op:"0.5"});
+  if (showOverlay) legItems.push({color:curDept==="pipeline"?"#378ADD":"#7F77DD",label:curDept==="pipeline"?"Arquitectura (superpuesto)":"Proyectos (superpuesto)"});
+  if (curDept==="pipeline") legItems.push({color:"#f59e0b",label:"Obra (superpuesto)"});
+  legItems.forEach(function(item){
     var li=document.createElement("div");li.className="gli";var d=document.createElement("div");d.className="gld";d.style.background=item.color;if(item.op)d.style.opacity=item.op;var t=document.createElement("span");t.textContent=item.label;li.appendChild(d);li.appendChild(t);leg.appendChild(li);
   });
   var li2=document.createElement("div");li2.className="gli";var gt=document.createElement("div");gt.className="glt";var lt=document.createElement("span");lt.textContent="Hoy";li2.appendChild(gt);li2.appendChild(lt);leg.appendChild(li2);
@@ -1070,10 +1760,10 @@ window.renderGantt=renderGantt;
 
 // ── NEW PROJECT ──────────────────────────────────────────────────
 function openNewProj(sec) {
-  nPS=sec; nPC=(sec==="marketing")?COLORS[4]:COLORS[0]; nPM=[];
+  nPS=sec; nPC=(sec==="marketing")?COLORS[4]:(sec==="pipeline"?COLORS[6]:COLORS[0]); nPM=[];
   document.getElementById("pn-name").value=""; document.getElementById("pn-start").value="";
   document.getElementById("pn-end").value=""; document.getElementById("pn-prio").value="media";
-  document.getElementById("mo-proj-title").textContent=sec==="marketing"?"Nuevo proyecto de marketing":"Nuevo proyecto";
+  document.getElementById("mo-proj-title").textContent="Nuevo proyecto - "+getDept(sec).label;
   var cp=document.getElementById("pn-colors"); cp.innerHTML="";
   COLORS.forEach(function(cl){
     var d=document.createElement("div"); d.className="cd"+(cl===nPC?" sel":""); d.style.background=cl;
@@ -1095,13 +1785,15 @@ function openNewProj(sec) {
   setTimeout(function(){document.getElementById("pn-name").focus();},50);
 }
 window.openNewProj=openNewProj;
+function openNewProjCur() { openNewProj(curDept); }
+window.openNewProjCur = openNewProjCur;
 
 function saveProj(){
   var name=document.getElementById("pn-name").value.trim(); if(!name) return;
   var p={id:nid("p"),name:name,color:nPC,members:nPM.slice(),start:document.getElementById("pn-start").value,end:document.getElementById("pn-end").value,notes:"",section:nPS,priority:document.getElementById("pn-prio").value,status:"activo",checklist:{},dropbox:false};
   saveProject(p);
   logActivity("creo el proyecto", p.name, currentUser);
-  if (nPS === "proyectos") sendNewProjectNotification(p);
+  sendNewProjectNotification(p);
   closeModal("mo-proj");
 }
 window.saveProj=saveProj;
@@ -1195,13 +1887,13 @@ function renderNotifList() {
 window.renderNotifList = renderNotifList;
 
 function exportVendidos() {
-  var vends = D.projects.filter(function(p){ return p.status === "vendido"; });
-  if (!vends.length) { alert("No hay proyectos vendidos todavia."); return; }
+  var vends = D.projects.filter(function(p){ return p.section===curDept && p.status === "vendido"; });
+  if (!vends.length) { alert("No hay proyectos vendidos todavia en "+getDept(curDept).label+"."); return; }
   var rows = [["Proyecto","Seccion","Fecha de inicio","Fecha de venta","Link carpeta"]];
   vends.forEach(function(p) {
     rows.push([
       p.name || "",
-      p.section === "marketing" ? "Marketing" : "Proyectos",
+      getDept(p.section).label,
       p.start || "",
       p.fechaVenta || p.end || "",
       p.carpeta || ""
@@ -1215,22 +1907,58 @@ function exportVendidos() {
 }
 window.exportVendidos = exportVendidos;
 
+// Exporta el detalle completo de TODOS los proyectos de la pestaña PROYECTOS (cualquier estado)
+function exportDetalleProyectos() {
+  var projs = D.projects.filter(function(p){ return p.section==="pipeline"; });
+  if (!projs.length) { alert("Todavia no hay proyectos cargados en PROYECTOS."); return; }
+  var rows = [[
+    "Nombre","Estado","Fecha inicio","Fecha fin","Prioridad","Fecha entrega Arquitectura",
+    "DIALux necesario","Recuento luminarias necesario","PDF necesario","Video necesario",
+    "Contactos de obra","Otros datos","Obra vendida","Fecha inicio obra","Fecha fin obra",
+    "Llegada de insumos","Tiempo final de fabricacion","Link carpeta","Notas adicionales"
+  ]];
+  projs.forEach(function(p) {
+    var nec = p.necesario || {};
+    var necVal = function(id){ return (nec[id] !== false) ? "Si" : "No"; };
+    var contactos = (p.contactosObra || []).map(function(c){
+      return [c.nombre, c.apellido].filter(Boolean).join(" ") + (c.telefono ? " - " + c.telefono : "");
+    }).filter(Boolean).join("; ");
+    var obra = p.obra || {};
+    var estadoLbl = p.status === "vendido" ? "Vendido" : (p.status === "finalizado" ? "Finalizado" : "Activo");
+    rows.push([
+      p.name || "", estadoLbl, p.start || "", p.end || "", p.priority || "",
+      p.entregaArquitectura || "",
+      necVal("n_dialux"), necVal("n_luminarias"), necVal("n_pdf"), necVal("n_video"),
+      contactos, p.otrosDatos || "", p.vendido ? "Si" : "No",
+      obra.start || "", obra.end || "", obra.insumos || "", obra.fabricacion || "",
+      p.carpeta || "", p.notes || ""
+    ]);
+  });
+  var wb = XLSX.utils.book_new();
+  var ws = XLSX.utils.aoa_to_sheet(rows);
+  ws["!cols"] = [{wch:30},{wch:10},{wch:14},{wch:14},{wch:9},{wch:20},{wch:12},{wch:14},{wch:10},{wch:12},{wch:35},{wch:35},{wch:10},{wch:16},{wch:16},{wch:16},{wch:20},{wch:40},{wch:35}];
+  XLSX.utils.book_append_sheet(wb, ws, "Proyectos");
+  var fecha = new Date().toLocaleDateString("es-AR").replace(/\//g,"-");
+  XLSX.writeFile(wb, "ITELSA_Proyectos_Detalle_"+fecha+".xlsx");
+}
+window.exportDetalleProyectos = exportDetalleProyectos;
+
 function closeModal(id){ document.getElementById(id).classList.remove("op"); }
 window.closeModal=closeModal;
 document.querySelectorAll(".mo").forEach(function(o){ o.addEventListener("click",function(e){if(e.target===o)o.classList.remove("op");}); });
 
 // ── EXPORT EXCEL ────────────────────────────────────────────────
 function exportFinalizados() {
-  var fins = D.projects.filter(function(p){ return p.status === "finalizado"; });
+  var fins = D.projects.filter(function(p){ return p.section===curDept && p.status === "finalizado"; });
   if (!fins.length) {
-    alert("No hay proyectos finalizados para exportar.");
+    alert("No hay proyectos finalizados para exportar en "+getDept(curDept).label+".");
     return;
   }
   var rows = [["Nombre del proyecto", "Seccion", "Fecha de inicio", "Fecha de finalizacion", "Link carpeta"]];
   fins.forEach(function(p) {
     rows.push([
       p.name || "",
-      p.section === "marketing" ? "Marketing" : "Proyectos",
+      getDept(p.section).label,
       p.start || "",
       p.end || "",
       p.carpeta || ""
