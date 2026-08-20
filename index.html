@@ -242,6 +242,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mk-task-top input[type=text]{flex:1;min-width:160px;font-size:13px;padding:7px 10px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
 .mk-task-top input[type=date]{width:145px;font-size:12px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
 .mk-task-row input[type=url]{width:100%;font-size:12px;padding:7px 10px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.mkp-wrap{margin-bottom:6px}
+.mkp-row{background:#f9f9f8;border:1px solid var(--br)}
+.mkp-row:hover{background:#f3f4f6}
+.mkp-check{background:transparent;border:none;color:#d1d5db;cursor:pointer;font-size:17px;flex-shrink:0;padding:2px 3px;line-height:0;display:flex}
+.mkp-check:hover{color:#9ca3af}
+.mkp-check.on{color:#16a34a}
+.mkp-chev{font-size:13px;color:#9ca3af;flex-shrink:0;transition:transform 0.15s}
+.mkp-chev.open{transform:rotate(180deg)}
+.mkp-body{display:flex;flex-direction:column;gap:7px;background:#f9f9f8;border:1px solid var(--br);border-top:none;border-radius:0 0 10px 10px;padding:12px 14px;margin-top:-3px}
 .mk-cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
 .mk-cal-head div{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;text-align:center;letter-spacing:0.04em}
 .mk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
@@ -255,6 +264,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mk-cal-chip.on{background:#f0fdf4;border-color:#86efac;color:#166534;font-weight:600}
 .mk-cal-chip.proj{background:#f5f3ff;border-color:#c4b5fd;color:#5b21b6;font-weight:600}
 .mk-cal-chip.proj:hover{border-color:#7F77DD}
+.mk-cal-chip.task{background:#ecfdf5;border-color:#6ee7c8;color:#047857;font-weight:600}
+.mk-cal-chip.task:hover{border-color:#1D9E75}
 .mk-cal-add{margin-top:auto;align-self:flex-start;background:transparent;border:1px dashed #d1d5db;border-radius:6px;font-size:10px;color:#9ca3af;cursor:pointer;padding:2px 6px}
 .mk-cal-add:hover{background:#fff;color:#374151}
 </style>
@@ -322,13 +333,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
       <div id="sidebar-marketing" style="display:none">
         <div class="ss">
-          <div class="sl"><span class="sd" style="background:#D4537E"></span>Meses</div>
-          <div id="mk-months-nav"></div>
+          <div class="sl"><span class="sd" style="background:#1D9E75"></span>General</div>
+          <div id="mk-general-nav"></div>
         </div>
         <div class="sdv"></div>
         <div class="ss" style="margin-top:10px">
-          <div class="sl"><span class="sd" style="background:#9ca3af"></span>General</div>
-          <div id="mk-general-nav"></div>
+          <div class="sl"><span class="sd" style="background:#D4537E"></span>Meses</div>
+          <div id="mk-months-nav"></div>
         </div>
       </div>
     </div>
@@ -481,6 +492,10 @@ var D = {projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], r
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
+var mkProjJustAdded = null; // id del ultimo proyecto de marketing creado, para abrirlo expandido al instante
+var mkpExpandedIds = {}; // que items de la lista de proyectos de marketing estan desplegados, sobrevive a los re-renders
+var mktJustAdded = null; // id de la ultima tarea general creada, para abrirla expandida al instante
+var mktExpandedIds = {}; // que tareas generales estan desplegadas, sobrevive a los re-renders
 
 // ── DEPARTAMENTOS ────────────────────────────────────────────────
 // "proyectos" se mantiene como valor interno (compatibilidad con datos ya
@@ -602,35 +617,64 @@ function renderMarketingSidebar() {
     nm.textContent = MN[m.getMonth()] + " " + m.getFullYear();
     a.appendChild(nm); nav.appendChild(a);
   });
+
+  // Cada tarea general se lista por su nombre (igual que los proyectos en Proyectos/Arquitectura);
+  // al hacer click se abre esa tarea puntual en el tablero.
   var gen = document.getElementById("mk-general-nav"); gen.innerHTML = "";
-  var a2 = document.createElement("a"); a2.href = "#mk-general";
-  a2.className = "pi"; a2.style.cssText = "text-decoration:none;display:flex";
-  var nm2 = document.createElement("span"); nm2.className = "pn"; nm2.textContent = "Tareas generales";
-  a2.appendChild(nm2); gen.appendChild(a2);
+  var pendingTasks = (D.mktasks||[]).filter(function(t){ return !t.done; });
+  if (!pendingTasks.length) {
+    var emptyNav = document.createElement("div"); emptyNav.style.cssText = "font-size:11px;color:#9ca3af;padding:5px 9px";
+    emptyNav.textContent = "Sin tareas todavia";
+    gen.appendChild(emptyNav);
+  }
+  pendingTasks.forEach(function(t) {
+    var a = document.createElement("a"); a.href = "javascript:void(0)";
+    a.className = "pi"; a.style.cssText = "text-decoration:none;display:flex";
+    var dot = document.createElement("span"); dot.className = "pd"; dot.style.background = "#1D9E75";
+    var nm = document.createElement("span"); nm.className = "pn"; nm.textContent = t.title || "Nueva tarea";
+    a.appendChild(dot); a.appendChild(nm);
+    a.onclick = (function(taskId){ return function(){ openMkTaskFromSidebar(taskId); }; })(t.id);
+    gen.appendChild(a);
+  });
 }
+
+// Despliega la tarea puntual dentro de "Tareas generales" y hace scroll hasta ella
+function openMkTaskFromSidebar(taskId) {
+  mktExpandedIds[taskId] = true;
+  renderMarketingBoard();
+  setTimeout(function(){
+    var el = document.getElementById("mkt-row-" + taskId);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 60);
+}
+window.openMkTaskFromSidebar = openMkTaskFromSidebar;
 
 function renderMarketingBoard() {
   var c = document.getElementById("board-inner");
   c.innerHTML = "";
 
-  var projSec = document.createElement("div"); projSec.className = "mk-month"; projSec.id = "mk-projects";
-  var projTitle = document.createElement("div"); projTitle.className = "mk-month-title";
-  projTitle.textContent = "Proyectos";
-  projSec.appendChild(projTitle);
-  var projSub = document.createElement("div"); projSub.style.cssText="font-size:11px;color:#9ca3af;margin-top:-8px;margin-bottom:12px";
-  projSub.textContent = "Proyectos de marketing, sin checklist ni datos internos. Al ponerles fecha se adjuntan solo en el calendario de abajo.";
-  projSec.appendChild(projSub);
-  if (!(D.mkprojects||[]).length) {
-    var emptyP = document.createElement("div"); emptyP.style.cssText="font-size:12px;color:#9ca3af;padding:2px 0 10px";
-    emptyP.textContent = "Sin proyectos de marketing todavia.";
-    projSec.appendChild(emptyP);
+  // Tareas generales: arriba de todo. Al ponerles fecha de fin se adjuntan como chip
+  // en el dia correspondiente del calendario de abajo. Al marcarlas como terminadas, se van
+  // a la solapa "Finalizado" que queda al final de todo.
+  var genSec = document.createElement("div"); genSec.className = "mk-month"; genSec.id = "mk-general";
+  var genTitle = document.createElement("div"); genTitle.className = "mk-month-title";
+  genTitle.textContent = "Tareas generales";
+  genSec.appendChild(genTitle);
+  var genSub = document.createElement("div"); genSub.style.cssText="font-size:11px;color:#9ca3af;margin-top:-8px;margin-bottom:12px";
+  genSub.textContent = "Tareas que no son de contenido: entregar cosas, completar campos, links necesarios, etc. La fecha de fin se replica en el calendario de abajo.";
+  genSec.appendChild(genSub);
+  var pendingTasks = (D.mktasks||[]).filter(function(t){ return !t.done; });
+  if (!pendingTasks.length) {
+    var emptyT = document.createElement("div"); emptyT.style.cssText="font-size:12px;color:#9ca3af;padding:2px 0 10px";
+    emptyT.textContent = "Sin tareas generales todavia.";
+    genSec.appendChild(emptyT);
   }
-  (D.mkprojects||[]).forEach(function(p){ projSec.appendChild(buildMkProjectRow(p)); });
-  var addProjBtn = document.createElement("button"); addProjBtn.className = "mk-add";
-  addProjBtn.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar proyecto";
-  addProjBtn.onclick = addMkProject;
-  projSec.appendChild(addProjBtn);
-  c.appendChild(projSec);
+  pendingTasks.forEach(function(t){ genSec.appendChild(buildGenericTask(t)); });
+  var addTaskBtn = document.createElement("button"); addTaskBtn.className = "mk-add";
+  addTaskBtn.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar tarea";
+  addTaskBtn.onclick = addGenericTask;
+  genSec.appendChild(addTaskBtn);
+  c.appendChild(genSec);
 
   getRemainingMonths().forEach(function(m) {
     var monthKey = m.getFullYear() + "-" + (m.getMonth()+1 < 10 ? "0"+(m.getMonth()+1) : (m.getMonth()+1));
@@ -643,31 +687,26 @@ function renderMarketingBoard() {
     c.appendChild(sec);
   });
 
-  var genSec = document.createElement("div"); genSec.className = "mk-month"; genSec.id = "mk-general";
-  var genTitle = document.createElement("div"); genTitle.className = "mk-month-title";
-  genTitle.textContent = "Tareas generales";
-  genSec.appendChild(genTitle);
-  var genSub = document.createElement("div"); genSub.style.cssText="font-size:11px;color:#9ca3af;margin-top:-8px;margin-bottom:12px";
-  genSub.textContent = "Tareas que no son de contenido: entregar cosas, completar campos, links necesarios, etc.";
-  genSec.appendChild(genSub);
-  if (!(D.mktasks||[]).length) {
-    var emptyT = document.createElement("div"); emptyT.style.cssText="font-size:12px;color:#9ca3af;padding:2px 0 10px";
-    emptyT.textContent = "Sin tareas generales todavia.";
-    genSec.appendChild(emptyT);
-  }
-  (D.mktasks||[]).forEach(function(t){ genSec.appendChild(buildGenericTask(t)); });
-  var addTaskBtn = document.createElement("button"); addTaskBtn.className = "mk-add";
-  addTaskBtn.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar tarea";
-  addTaskBtn.onclick = addGenericTask;
-  genSec.appendChild(addTaskBtn);
-  c.appendChild(genSec);
-
   var remSec = document.createElement("div"); remSec.className = "mk-month"; remSec.id = "mk-reminders";
   var remTitle = document.createElement("div"); remTitle.className = "mk-month-title";
   remTitle.textContent = "Recordatorios";
   remSec.appendChild(remTitle);
   remSec.appendChild(buildRemindersBlock("marketing", null, false));
   c.appendChild(remSec);
+
+  // Finalizado: al final de todo, tareas generales ya marcadas como terminadas
+  var finSec = document.createElement("div"); finSec.className = "mk-month"; finSec.id = "mk-general-fin";
+  var finTitle = document.createElement("div"); finTitle.className = "mk-month-title";
+  finTitle.textContent = "Finalizado";
+  finSec.appendChild(finTitle);
+  var doneTasks = (D.mktasks||[]).filter(function(t){ return t.done; });
+  if (!doneTasks.length) {
+    var emptyF = document.createElement("div"); emptyF.style.cssText="font-size:12px;color:#9ca3af;padding:2px 0 10px";
+    emptyF.textContent = "Todavia no hay tareas generales finalizadas.";
+    finSec.appendChild(emptyF);
+  }
+  doneTasks.forEach(function(t){ finSec.appendChild(buildGenericTask(t)); });
+  c.appendChild(finSec);
 }
 window.renderMarketingBoard = renderMarketingBoard;
 
@@ -704,16 +743,17 @@ function buildMonthCalendar(monthDate, monthKey) {
       chip.onclick = (function(itId){ return function(){ openDayTask(dateStr, itId); }; })(it.id);
       cell.appendChild(chip);
     });
-    var mkProjItems = (D.mkprojects||[]).filter(function(pr){ return pr.date===dateStr; });
-    mkProjItems.forEach(function(pr) {
-      var pchip = document.createElement("div"); pchip.className = "mk-cal-chip proj";
-      pchip.innerHTML = "<i class='ti ti-briefcase' style='font-size:9px;margin-right:3px'></i>" + (pr.title || "(sin nombre)");
-      if (pr.notas) pchip.title = pr.notas;
-      pchip.onclick = function(){
-        var row = document.getElementById("mk-projects");
+    // Tareas generales: se adjuntan en el dia de su fecha de fin
+    var mkTaskItems = (D.mktasks||[]).filter(function(tk){ return tk.end===dateStr; });
+    mkTaskItems.forEach(function(tk) {
+      var tchip = document.createElement("div"); tchip.className = "mk-cal-chip task";
+      tchip.innerHTML = "<i class='ti ti-checklist' style='font-size:9px;margin-right:3px'></i>" + (tk.title || "(sin nombre)");
+      if (tk.notas) tchip.title = tk.notas;
+      tchip.onclick = function(){
+        var row = document.getElementById("mk-general");
         if (row) row.scrollIntoView({ behavior:"smooth", block:"start" });
       };
-      cell.appendChild(pchip);
+      cell.appendChild(tchip);
     });
     var addBtn = document.createElement("button"); addBtn.className = "mk-cal-add"; addBtn.title = "Agregar publicacion";
     addBtn.innerHTML = "<i class='ti ti-plus' style='font-size:11px'></i>";
@@ -768,12 +808,34 @@ function saveDayTaskModal() {
 }
 window.saveDayTaskModal = saveDayTaskModal;
 
+// Tareas generales: misma lista compacta que "Proyectos" (punto + nombre + fecha o tilde), se abren
+// al hacer click igual que en las otras secciones. La fecha de fin se replica como chip en el calendario.
 function buildGenericTask(t) {
-  var card = document.createElement("div"); card.className = "mk-task-row";
+  var wrap = document.createElement("div"); wrap.className = "mkp-wrap"; wrap.id = "mkt-row-" + t.id;
+  var isOpen = !!mktExpandedIds[t.id];
+
+  var row = document.createElement("div"); row.className = "pi mkp-row";
+  var dot = document.createElement("span"); dot.className = "pd"; dot.style.background = t.done ? "#c4c9d4" : "#1D9E75";
+  var nm = document.createElement("span"); nm.className = "pn"; nm.textContent = t.title || "Nueva tarea";
+  if (t.done) nm.style.cssText = "text-decoration:line-through;color:#9ca3af";
+  row.appendChild(dot); row.appendChild(nm);
+  var dateBadge = document.createElement("span"); dateBadge.className = "pc";
+  if (t.end && !t.done) { dateBadge.textContent = t.end.slice(5).replace("-","/"); row.appendChild(dateBadge); }
+
+  var doneBtn = document.createElement("button"); doneBtn.className = "mkp-check" + (t.done ? " on" : "");
+  doneBtn.title = t.done ? "Marcar como pendiente" : "Marcar como terminada";
+  doneBtn.innerHTML = "<i class='ti ti-circle-check'></i>";
+  doneBtn.onclick = function(e){ e.stopPropagation(); t.done = !t.done; saveGenericTask(t); };
+  row.appendChild(doneBtn);
+
+  var chev = document.createElement("i"); chev.className = "ti ti-chevron-down mkp-chev" + (isOpen ? " open" : "");
+  row.appendChild(chev);
+
+  var body = document.createElement("div"); body.className = "mkp-body"; body.style.display = isOpen ? "flex" : "none";
   var top = document.createElement("div"); top.className = "mk-task-top";
   var titleInp = document.createElement("input"); titleInp.type = "text";
   titleInp.placeholder = "Tarea a realizar..."; titleInp.value = t.title || "";
-  titleInp.onchange = function(){ t.title = this.value; saveGenericTask(t); };
+  titleInp.onchange = function(){ t.title = this.value; saveGenericTask(t); nm.textContent = this.value || "Nueva tarea"; };
   var startInp = document.createElement("input"); startInp.type = "date"; startInp.value = t.start || "";
   startInp.onchange = function(){ t.start = this.value; saveGenericTask(t); };
   var endInp = document.createElement("input"); endInp.type = "date"; endInp.value = t.end || "";
@@ -787,23 +849,65 @@ function buildGenericTask(t) {
   var notes = document.createElement("textarea"); notes.className = "mk-notes";
   notes.placeholder = "Notas..."; notes.value = t.notas || "";
   notes.onchange = function(){ t.notas = this.value; saveGenericTask(t); };
-  card.appendChild(top); card.appendChild(linkInp); card.appendChild(notes);
-  return card;
+  body.appendChild(top); body.appendChild(linkInp); body.appendChild(notes);
+  body.appendChild(buildRemindersBlock("marketing", null, false, t.id));
+
+  row.onclick = function(){
+    var nowOpen = !mktExpandedIds[t.id];
+    mktExpandedIds[t.id] = nowOpen;
+    body.style.display = nowOpen ? "flex" : "none";
+    chev.classList.toggle("open", nowOpen);
+  };
+
+  // La tarea recien creada se abre expandida y con el foco en el nombre, para escribirlo de una
+  if (t.id === mktJustAdded) {
+    mktJustAdded = null;
+    mktExpandedIds[t.id] = true;
+    body.style.display = "flex";
+    chev.classList.add("open");
+    setTimeout(function(){ titleInp.focus(); }, 50);
+  }
+
+  wrap.appendChild(row); wrap.appendChild(body);
+  return wrap;
 }
 
 function addGenericTask() {
-  var t = { id: nid("mkt"), title: "", start: "", end: "", link: "", notas: "" };
+  var t = { id: nid("mkt"), title: "", start: "", end: "", link: "", notas: "", done: false };
+  mktJustAdded = t.id;
   saveGenericTask(t);
 }
 
 // ── PROYECTOS DE MARKETING (version liviana, sin checklist/necesario/contactos/obra) ──
-// Al ponerle fecha, el proyecto se adjunta como chip en el calendario cuadrado por dia.
+// Se muestran como lista compacta (igual formato que la lista de proyectos de Proyectos/Arquitectura:
+// punto de color + nombre + fecha o tilde de hecho) y se despliegan al hacer click para editar.
+// Al ponerle fecha, el proyecto se adjunta ademas como chip en el calendario cuadrado por dia.
 function buildMkProjectRow(p) {
-  var card = document.createElement("div"); card.className = "mk-task-row mk-proj-row";
+  var wrap = document.createElement("div"); wrap.className = "mkp-wrap";
+  var isOpen = !!mkpExpandedIds[p.id];
+
+  var row = document.createElement("div"); row.className = "pi mkp-row";
+  var dot = document.createElement("span"); dot.className = "pd"; dot.style.background = p.done ? "#c4c9d4" : "#D4537E";
+  var nm = document.createElement("span"); nm.className = "pn"; nm.textContent = p.title || "Nuevo proyecto";
+  if (p.done) nm.style.cssText = "text-decoration:line-through;color:#9ca3af";
+  row.appendChild(dot); row.appendChild(nm);
+  var dateBadge = document.createElement("span"); dateBadge.className = "pc";
+  if (p.date && !p.done) { dateBadge.textContent = p.date.slice(5).replace("-","/"); row.appendChild(dateBadge); }
+
+  var doneBtn = document.createElement("button"); doneBtn.className = "mkp-check" + (p.done ? " on" : "");
+  doneBtn.title = p.done ? "Marcar como pendiente" : "Marcar como hecho";
+  doneBtn.innerHTML = "<i class='ti ti-circle-check'></i>";
+  doneBtn.onclick = function(e){ e.stopPropagation(); p.done = !p.done; saveMkProject(p); };
+  row.appendChild(doneBtn);
+
+  var chev = document.createElement("i"); chev.className = "ti ti-chevron-down mkp-chev" + (isOpen ? " open" : "");
+  row.appendChild(chev);
+
+  var body = document.createElement("div"); body.className = "mkp-body"; body.style.display = isOpen ? "flex" : "none";
   var top = document.createElement("div"); top.className = "mk-task-top";
   var titleInp = document.createElement("input"); titleInp.type = "text";
   titleInp.placeholder = "Nombre del proyecto..."; titleInp.value = p.title || "";
-  titleInp.onchange = function(){ p.title = this.value; saveMkProject(p); };
+  titleInp.onchange = function(){ p.title = this.value; saveMkProject(p); nm.textContent = this.value || "Nuevo proyecto"; };
   var dateInp = document.createElement("input"); dateInp.type = "date"; dateInp.value = p.date || "";
   dateInp.onchange = function(){ p.date = this.value; saveMkProject(p); };
   var del = document.createElement("button"); del.className = "mk-del"; del.innerHTML = "<i class='ti ti-x'></i>";
@@ -815,12 +919,31 @@ function buildMkProjectRow(p) {
   var notes = document.createElement("textarea"); notes.className = "mk-notes";
   notes.placeholder = "Notas..."; notes.value = p.notas || "";
   notes.onchange = function(){ p.notas = this.value; saveMkProject(p); };
-  card.appendChild(top); card.appendChild(linkInp); card.appendChild(notes);
-  return card;
+  body.appendChild(top); body.appendChild(linkInp); body.appendChild(notes);
+
+  row.onclick = function(){
+    var nowOpen = !mkpExpandedIds[p.id];
+    mkpExpandedIds[p.id] = nowOpen;
+    body.style.display = nowOpen ? "flex" : "none";
+    chev.classList.toggle("open", nowOpen);
+  };
+
+  // El proyecto recien creado se abre expandido y con el foco en el nombre, para escribirlo de una
+  if (p.id === mkProjJustAdded) {
+    mkProjJustAdded = null;
+    mkpExpandedIds[p.id] = true;
+    body.style.display = "flex";
+    chev.classList.add("open");
+    setTimeout(function(){ titleInp.focus(); }, 50);
+  }
+
+  wrap.appendChild(row); wrap.appendChild(body);
+  return wrap;
 }
 
 function addMkProject() {
-  var p = { id: nid("mkp"), title: "", date: "", link: "", notas: "" };
+  var p = { id: nid("mkp"), title: "", date: "", link: "", notas: "", done: false };
+  mkProjJustAdded = p.id;
   saveMkProject(p);
 }
 
@@ -865,6 +988,7 @@ function startListeners() {
     D.mktasks = [];
     snap.forEach(function(d) { D.mktasks.push(d.data()); });
     if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+    if (curDept === "marketing") renderMarketingSidebar();
   });
   onSnapshot(collection(db,"reminders"), function(snap) {
     D.reminders = [];
@@ -1018,11 +1142,16 @@ function moveBackToActivo(p) {
   }
 }
 
+function findMkTaskById(id) {
+  for (var i=0; i<D.mktasks.length; i++) { if (D.mktasks[i].id===id) return D.mktasks[i]; }
+  return null;
+}
 function sendReminderEmail(rem) {
   var proj = rem.projectId ? findProjectById(rem.projectId) : null;
+  var mkTask = rem.taskId ? findMkTaskById(rem.taskId) : null;
   sendEmailNotif(
     rem.email,
-    "Recordatorio: " + (proj ? proj.name : "Marketing"),
+    "Recordatorio: " + (mkTask ? mkTask.title : (proj ? proj.name : "Marketing")),
     rem.scope === "marketing" ? "Marketing" : (proj ? getDept(proj.section).label : ""),
     rem.text || "",
     "Fecha: " + rem.date
@@ -1047,8 +1176,8 @@ function checkReminders() {
   });
 }
 
-function addReminder(scope, projectId) {
-  var r = { id: nid("rm"), scope: scope, projectId: projectId||null, email:"", date:"", text:"", sent:false, sentAt:null };
+function addReminder(scope, projectId, taskId) {
+  var r = { id: nid("rm"), scope: scope, projectId: projectId||null, taskId: taskId||null, email:"", date:"", text:"", sent:false, sentAt:null };
   saveReminder(r);
 }
 
@@ -1092,19 +1221,22 @@ function buildReminderRow(r, locked) {
   return row;
 }
 
-function buildRemindersBlock(scope, projectId, locked) {
+function buildRemindersBlock(scope, projectId, locked, taskId) {
   var wrap = document.createElement("div"); wrap.className="margin-box"; wrap.style.marginTop="14px";
   var title = document.createElement("div"); title.className="bxt"; title.style.marginBottom="9px";
   title.innerHTML = "<i class='ti ti-bell' style='font-size:14px;margin-right:5px;color:#f59e0b'></i>Recordatorios";
   wrap.appendChild(title);
   var list = D.reminders.filter(function(r) {
-    return r.scope === scope && (scope === "marketing" ? true : r.projectId === projectId);
+    if (r.scope !== scope) return false;
+    if (scope !== "marketing") return r.projectId === projectId;
+    // en marketing, separamos los recordatorios generales de los que son de una tarea puntual
+    return taskId ? r.taskId === taskId : !r.taskId;
   });
   list.forEach(function(r) { wrap.appendChild(buildReminderRow(r, locked)); });
   if (!locked) {
     var addBtn = document.createElement("button"); addBtn.className="nb"; addBtn.style.marginTop="4px";
     addBtn.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Agregar recordatorio";
-    addBtn.onclick = function(){ addReminder(scope, projectId); };
+    addBtn.onclick = function(){ addReminder(scope, projectId, taskId); };
     wrap.appendChild(addBtn);
   }
   return wrap;
