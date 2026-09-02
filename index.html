@@ -450,7 +450,7 @@ var db = getFirestore(fbApp);
 
 var TEAM = [
   {id:"t1", name:"Sofia", initials:"SO", cls:"av1"},
-  {id:"t2", name:"Mayra", initials:"MA", cls:"av2"},
+  {id:"t2", name:"Meli", initials:"ME", cls:"av2"},
   {id:"t3", name:"Fabio", initials:"FA", cls:"av3"},
   {id:"t4", name:"Ruben", initials:"RU", cls:"av4"},
   {id:"t5", name:"Cande", initials:"CN", cls:"av5"}
@@ -468,14 +468,14 @@ var EMAILJS_TEMPLATE = "template_2a3f9an";
 var EMAILJS_KEY      = "vxumSVBkPuWUz8sy8";
 var TEAM_EMAILS = {
   "t1": "sofiagcastex@gmail.com",
-  "t2": "mcieri.arq@gmail.com",
+  "t2": "arquitectura@itelsasas.com",
   "t3": "Fabiopalencia9@hotmail.com",
   "t4": "rpozzo@itelsasas.com",
   "t5": "mcsotgiu@itelsasas.com"
 };
 var ALL_EMAILS = [
   "sofiagcastex@gmail.com",
-  "mcieri.arq@gmail.com",
+  "arquitectura@itelsasas.com",
   "Fabiopalencia9@hotmail.com",
   "rpozzo@itelsasas.com",
   "mcsotgiu@itelsasas.com"
@@ -1061,68 +1061,154 @@ function showSynced() {
 function nid(p) { return p + Date.now() + Math.floor(Math.random()*1000); }
 
 // ── NOTIFICATIONS ───────────────────────────────────────────────
-// Todas las notificaciones reusan la misma plantilla de EmailJS (la unica configurada),
-// reacomodando el texto en sus 4 campos existentes. Si en algun momento se arma una
-// plantilla dedicada para recordatorios/cambios de fecha, se puede pasar el template ID aca.
-function sendEmailNotif(toEmail, nombreField, seccionField, prioridadField, quienField) {
-  if (!toEmail) return;
-  try { emailjs.init(EMAILJS_KEY); } catch(e) {}
-  emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-    to_email:           toEmail,
-    proyecto_nombre:    nombreField,
-    proyecto_seccion:   seccionField,
-    proyecto_prioridad: prioridadField,
-    quien:              quienField
-  }).catch(function(err) {
-    console.warn("EmailJS error:", err);
-  });
+// Cada aviso arma su propio asunto y su propio cuerpo con lo que realmente paso.
+// La plantilla de EmailJS solo imprime {{asunto}}, {{titulo}}, {{mensaje}}, {{detalle}},
+// {{quien}} y {{fecha}}: el texto de cada evento vive aca, no en la plantilla.
+
+function fmtFecha(iso) {
+  if (!iso) return "sin cargar";
+  var p = String(iso).split("-");
+  if (p.length === 3) return p[2] + "/" + p[1] + "/" + p[0];
+  return String(iso);
+}
+function ahoraTexto() {
+  function z(n) { return n < 10 ? "0" + n : "" + n; }
+  var d = new Date();
+  return z(d.getDate()) + "/" + z(d.getMonth()+1) + "/" + d.getFullYear() + " a las " + z(d.getHours()) + ":" + z(d.getMinutes());
 }
 
 function currentUserName() {
   for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === currentUser) return TEAM[i].name; }
   return "";
 }
+function memberName(id) {
+  for (var i=0; i<TEAM.length; i++) { if (TEAM[i].id === id) return TEAM[i].name; }
+  return "";
+}
+function nombresDeIds(ids) {
+  var out = [];
+  (ids || []).forEach(function(id) { var n = memberName(id); if (n) out.push(n); });
+  return out.join(", ");
+}
 
-// Avisa a todo el equipo (un mail por persona, sin duplicar direcciones)
-function notifyTeam(nombreField, seccionField, prioridadField, quienField) {
-  var seen = {};
-  TEAM.forEach(function(m) {
-    var email = TEAM_EMAILS[m.id];
-    if (email && !seen[email]) { seen[email] = true; sendEmailNotif(email, nombreField, seccionField, prioridadField, quienField); }
+// Un mail por evento, con el asunto y el cuerpo ya redactados.
+// ev = { asunto, titulo, mensaje, detalle: [lineas] }
+function sendEmailNotif(toEmail, ev) {
+  if (!toEmail || !ev) return;
+  try { emailjs.init(EMAILJS_KEY); } catch(e) {}
+  var detalleTxt = (ev.detalle || []).join("\n");
+  var quien = ev.quien || currentUserName();
+  emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    to_email: toEmail,
+    asunto:   ev.asunto,
+    titulo:   ev.titulo || ev.asunto,
+    mensaje:  ev.mensaje || "",
+    detalle:  detalleTxt,
+    quien:    quien,
+    fecha:    ahoraTexto(),
+    // Compatibilidad con la plantilla vieja de 4 campos, por si todavia no se actualizo.
+    proyecto_nombre:    ev.asunto,
+    proyecto_seccion:   ev.mensaje || "",
+    proyecto_prioridad: detalleTxt.replace(/\n/g, " | ")
+  }).catch(function(err) {
+    console.warn("EmailJS error:", err);
   });
 }
 
+// Destinatarios: la gente involucrada en el proyecto (sus miembros + los que se pasen
+// como extra, por ejemplo el responsable de una tarea), sin el que hizo el cambio.
+// Si el proyecto todavia no tiene miembros cargados, se avisa a todo el equipo.
+function emailsInvolucrados(proj, extraIds) {
+  var ids = [], out = [], seen = {};
+  function push(id) { if (id && ids.indexOf(id) < 0) ids.push(id); }
+  if (proj && proj.members) proj.members.forEach(push);
+  (extraIds || []).forEach(push);
+  if (!ids.length) TEAM.forEach(function(m) { push(m.id); });
+  ids.forEach(function(id) {
+    if (id === currentUser) return;
+    var e = TEAM_EMAILS[id];
+    if (e && !seen[e]) { seen[e] = true; out.push(e); }
+  });
+  return out;
+}
+function notify(proj, ev, extraIds) {
+  emailsInvolucrados(proj, extraIds).forEach(function(e) { sendEmailNotif(e, ev); });
+}
+
 function sendNewProjectNotification(proj) {
-  notifyTeam(
-    "Nuevo proyecto: " + proj.name,
-    getDept(proj.section).label,
-    "Prioridad: " + proj.priority,
-    currentUserName()
-  );
+  var dept = getDept(proj.section).label;
+  var equipo = nombresDeIds(proj.members);
+  notify(proj, {
+    asunto:  "Nuevo proyecto: " + proj.name,
+    titulo:  "Se creo un proyecto nuevo",
+    mensaje: currentUserName() + " creo el proyecto \"" + proj.name + "\" en " + dept +
+             ", con prioridad " + (proj.priority || "media") + ".",
+    detalle: [
+      "Proyecto: " + proj.name,
+      "Area: " + dept,
+      "Prioridad: " + (proj.priority || "media"),
+      "Fecha de inicio: " + fmtFecha(proj.start),
+      "Fecha de fin: " + fmtFecha(proj.end),
+      "Equipo asignado: " + (equipo || "todavia sin asignar")
+    ]
+  });
 }
 
-function notifyDateChange(proj, campoLabel, nuevoValor) {
-  if (!nuevoValor) return;
-  notifyTeam(
-    "Cambio de fecha - " + proj.name,
-    getDept(proj.section).label,
-    campoLabel + ": " + nuevoValor,
-    currentUserName()
-  );
+function notifyDateChange(proj, campoLabel, nuevoValor, valorAnterior) {
+  if (nuevoValor === valorAnterior) return;
+  var dept = getDept(proj.section).label;
+  var cambio;
+  if (!nuevoValor)          cambio = "se borro la fecha que estaba cargada (" + fmtFecha(valorAnterior) + ")";
+  else if (!valorAnterior)  cambio = "quedo fijada para el " + fmtFecha(nuevoValor);
+  else                      cambio = "paso del " + fmtFecha(valorAnterior) + " al " + fmtFecha(nuevoValor);
+  notify(proj, {
+    asunto:  proj.name + ": " + campoLabel + " " + (nuevoValor ? "-> " + fmtFecha(nuevoValor) : "sin fecha"),
+    titulo:  "Cambio una fecha del proyecto",
+    mensaje: currentUserName() + " modifico \"" + campoLabel + "\" en el proyecto \"" + proj.name + "\": " + cambio + ".",
+    detalle: [
+      "Proyecto: " + proj.name,
+      "Area: " + dept,
+      "Campo: " + campoLabel,
+      "Fecha anterior: " + (valorAnterior ? fmtFecha(valorAnterior) : "sin cargar"),
+      "Fecha nueva: " + (nuevoValor ? fmtFecha(nuevoValor) : "sin cargar")
+    ]
+  });
 }
 
-// Aviso fijo a liopalencia35@gmail.com con los datos de obra (fecha inicio/fin, insumos, fabricacion)
-// cada vez que la obra se marca como vendida o se completa/cambia alguno de esos datos.
+// Aviso fijo a liopalencia35@gmail.com con los datos de obra (fecha inicio/fin, insumos,
+// fabricacion) cuando la obra se marca como vendida o cambia alguno de esos datos.
 var OBRA_NOTIFY_EMAIL = "liopalencia35@gmail.com";
-function notifyObraData(proj) {
-  var obra = proj.obra || {};
-  sendEmailNotif(
-    OBRA_NOTIFY_EMAIL,
-    "Datos de obra - " + proj.name,
-    "Inicio obra: " + (obra.start || "-") + " | Fin obra: " + (obra.end || "-"),
-    "Insumos: " + (obra.insumos || "-") + " | Fabricacion: " + (obra.fabricacion || "-"),
-    "Actualizo: " + currentUserName()
-  );
+function obraDetalle(proj) {
+  var o = proj.obra || {};
+  return [
+    "Proyecto: " + proj.name,
+    "Inicio de obra: " + fmtFecha(o.start),
+    "Fin de obra: " + fmtFecha(o.end),
+    "Llegada de insumos: " + fmtFecha(o.insumos),
+    "Tiempo final de fabricacion: " + fmtFecha(o.fabricacion)
+  ];
+}
+function notifyObraVendida(proj) {
+  sendEmailNotif(OBRA_NOTIFY_EMAIL, {
+    asunto:  "Obra vendida: " + proj.name,
+    titulo:  "Se marco una obra como vendida",
+    mensaje: currentUserName() + " marco la obra \"" + proj.name + "\" como vendida. " +
+             "Estos son los datos de obra cargados hasta ahora:",
+    detalle: obraDetalle(proj)
+  });
+}
+function notifyObraCampo(proj, campoLabel, valorAnterior, nuevoValor) {
+  if (nuevoValor === valorAnterior) return;
+  var cambio;
+  if (!nuevoValor)          cambio = "se borro la fecha que estaba cargada (" + fmtFecha(valorAnterior) + ")";
+  else if (!valorAnterior)  cambio = "se cargo por primera vez: " + fmtFecha(nuevoValor);
+  else                      cambio = "paso del " + fmtFecha(valorAnterior) + " al " + fmtFecha(nuevoValor);
+  sendEmailNotif(OBRA_NOTIFY_EMAIL, {
+    asunto:  "Obra " + proj.name + ": " + campoLabel + " " + (nuevoValor ? "-> " + fmtFecha(nuevoValor) : "sin fecha"),
+    titulo:  "Se actualizo un dato de obra",
+    mensaje: currentUserName() + " actualizo \"" + campoLabel + "\" en la obra \"" + proj.name + "\": " + cambio + ".",
+    detalle: obraDetalle(proj)
+  });
 }
 
 // Mueve el proyecto a la solapa Vendidos sin bloquear la edicion de sus datos
@@ -1149,13 +1235,20 @@ function findMkTaskById(id) {
 function sendReminderEmail(rem) {
   var proj = rem.projectId ? findProjectById(rem.projectId) : null;
   var mkTask = rem.taskId ? findMkTaskById(rem.taskId) : null;
-  sendEmailNotif(
-    rem.email,
-    "Recordatorio: " + (mkTask ? mkTask.title : (proj ? proj.name : "Marketing")),
-    rem.scope === "marketing" ? "Marketing" : (proj ? getDept(proj.section).label : ""),
-    rem.text || "",
-    "Fecha: " + rem.date
-  );
+  var sobre = mkTask ? mkTask.title : (proj ? proj.name : "Marketing");
+  var area = rem.scope === "marketing" ? "Marketing" : (proj ? getDept(proj.section).label : "");
+  var det = ["Vence el: " + fmtFecha(rem.date)];
+  if (area)   det.push("Area: " + area);
+  if (proj)   det.push("Proyecto: " + proj.name);
+  if (mkTask) det.push("Tarea: " + mkTask.title);
+  if (rem.text) det.push("Nota: " + rem.text);
+  sendEmailNotif(rem.email, {
+    asunto:  "Recordatorio para el " + fmtFecha(rem.date) + ": " + sobre,
+    titulo:  "Recordatorio",
+    mensaje: "Recordatorio sobre \"" + sobre + "\" para el " + fmtFecha(rem.date) +
+             (rem.text ? ": " + rem.text : "."),
+    detalle: det
+  });
 }
 
 // ── RECORDATORIOS ────────────────────────────────────────────────
@@ -1494,8 +1587,9 @@ function renderBoard() {
     var inp = document.createElement("input"); inp.type="date"; inp.value=val||""; if(isFin) inp.disabled=true;
     inp.onchange = function(){
       var p=getProj(); if(!p) return;
+      var _anterior = p[field] || "";
       p[field]=this.value; saveProject(p);
-      notifyDateChange(p, lbl, this.value);
+      notifyDateChange(p, lbl, this.value, _anterior);
       syncLinkedFields(p);
       // Arquitectura -> Proyectos: si cambia la fecha de fin de un proyecto replicado, se refleja en el origen
       if (field==="end" && p.section==="proyectos" && p.sourceProjectId) {
@@ -1592,7 +1686,7 @@ function renderBoard() {
       var p=getProj(); if(!p) return;
       p.vendido=!p.vendido;
       logActivity(p.vendido?"marco la obra como vendida":"desmarco la obra vendida", p.name, currentUser);
-      if (p.vendido) { moveToVendidos(p); saveProject(p); notifyObraData(p); }
+      if (p.vendido) { moveToVendidos(p); saveProject(p); notifyObraVendida(p); }
       else { moveBackToActivo(p); saveProject(p); }
     };
     var drob = document.createElement("div"); drob.className="drob";
@@ -1612,10 +1706,11 @@ function renderBoard() {
         inp.onchange = function(){
           var p=getProj(); if(!p) return;
           if(!p.obra) p.obra={};
+          var _obraAnterior = p.obra[field] || "";
           p.obra[field]=this.value;
           if ((field==="start" || field==="end") && this.value) { moveToVendidos(p); }
           saveProject(p);
-          notifyObraData(p);
+          notifyObraCampo(p, lbl, _obraAnterior, this.value);
         };
         fi.appendChild(l); fi.appendChild(inp); return fi;
       }
@@ -1811,6 +1906,7 @@ window.updateProjectStatus = updateProjectStatus;
 // Pipeline (PROYECTOS): al cargar la fecha de entrega a Arquitectura, replica (o actualiza) el proyecto
 function onEntregaArqChange(val) {
   var p = getProj(); if (!p) return;
+  var _entregaAnterior = p.entregaArquitectura || "";
   p.entregaArquitectura = val;
   if (val) {
     if (!p.arqProjectId || !findProjectById(p.arqProjectId)) {
@@ -1831,7 +1927,7 @@ function onEntregaArqChange(val) {
     }
   }
   saveProject(p);
-  notifyDateChange(p, "Fecha de entrega - Area Arquitectura", val);
+  notifyDateChange(p, "Fecha de entrega - Area Arquitectura", val, _entregaAnterior);
   renderBoard();
 }
 window.onEntregaArqChange = onEntregaArqChange;
