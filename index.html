@@ -37,7 +37,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s}
 .av:hover{border-color:#9ca3af}
 .av.af{border-color:#1D9E75}
-.av1{background:#ede9fe;color:#5b21b6}.av2{background:#d1fae5;color:#065f46}.av3{background:#fef3c7;color:#92400e}.av4{background:#fee2e2;color:#991b1b}.av5{background:#dbeafe;color:#1e40af}
+.av1{background:#ede9fe;color:#5b21b6}.av2{background:#d1fae5;color:#065f46}.av3{background:#fef3c7;color:#92400e}.av4{background:#fee2e2;color:#991b1b}.av5{background:#dbeafe;color:#1e40af}.av6{background:#e0f2fe;color:#075985}.av7{background:#fce7f3;color:#9d174d}
 .cu{display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;background:#f9f9f8;padding:5px 11px;border-radius:20px;border:1px solid var(--br);cursor:pointer}
 .bl{display:flex;flex:1;min-height:calc(100vh - 58px)}
 .sb{width:225px;background:#fff;border-right:1px solid var(--br);padding:12px 0;flex-shrink:0;overflow-y:auto}
@@ -205,6 +205,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
 .dbtn:hover{border-color:#9ca3af;color:#374151}
 .dbtn.act{color:#fff;border-color:transparent}
+.gsec{background:#fff}
+.gsub{font-size:11px;color:#9ca3af;margin-bottom:10px}
+.glbl{font-size:11px;color:#9ca3af;display:block;margin:8px 0 6px;font-weight:500}
+.gempty{font-size:12px;color:#9ca3af;padding:2px 0 6px}
+.gdni{font-size:10px;color:#9ca3af;margin-left:auto;white-space:nowrap}
+.ci.gfull{grid-column:1/-1}
+.gsec .ci.gfull{margin-top:2px}
+.gchip{font-size:11px;padding:5px 9px;border-radius:999px;border:1px solid #d1d5db;background:#fff;color:#9ca3af;cursor:pointer;white-space:nowrap;font-weight:500}
+.gchip:disabled{cursor:default}
+.gchip-nec.on{background:#fef3c7;border-color:#f59e0b;color:#92400e}
+.gchip-ok.on{background:#dcfce7;border-color:#16a34a;color:#166534}
+.gck-done input{text-decoration:line-through;color:#9ca3af}
+.gfile{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;background:#f9f9f8;margin-bottom:8px}
+.gfile-name{font-size:12px;color:#374151;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sbg{background:#ede9fe;color:#5b21b6}
 .arq-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#378ADD;background:#eff6ff;border:1px solid #bfdbfe;padding:4px 10px;border-radius:20px;margin-bottom:12px;cursor:pointer;text-decoration:none;font-weight:500}
 .arq-badge:hover{background:#dbeafe}
@@ -300,6 +314,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="dbtn" id="dbtn-pipeline" onclick="switchDept('pipeline')">PROYECTOS</button>
     <button class="dbtn" id="dbtn-proyectos" onclick="switchDept('proyectos')">ARQUITECTURA</button>
     <button class="dbtn" id="dbtn-marketing" onclick="switchDept('marketing')">MARKETING</button>
+    <button class="dbtn" id="dbtn-gestion" onclick="switchDept('gestion')">GESTION DE PROYECTOS</button>
   </div>
   <div class="bl">
     <div class="sb">
@@ -434,7 +449,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, onSnapshot, setDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, doc, onSnapshot, setDoc, deleteDoc, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 var firebaseConfig = {
   apiKey: "AIzaSyB0kfu3MR2AaC9rnP3c3bIa60nfxQ6R9RA",
@@ -453,7 +468,9 @@ var TEAM = [
   {id:"t2", name:"Meli", initials:"ME", cls:"av2"},
   {id:"t3", name:"Fabio", initials:"FA", cls:"av3"},
   {id:"t4", name:"Ruben", initials:"RU", cls:"av4"},
-  {id:"t5", name:"Cande", initials:"CN", cls:"av5"}
+  {id:"t5", name:"Cande", initials:"CN", cls:"av5"},
+  {id:"t6", name:"Francisco", initials:"FR", cls:"av6"},
+  {id:"t7", name:"Flor", initials:"FL", cls:"av7"}
 ];
 var COLORS = ["#378ADD","#1D9E75","#D85A30","#BA7517","#D4537E","#639922","#7F77DD"];
 var MN = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
@@ -471,14 +488,17 @@ var TEAM_EMAILS = {
   "t2": "arquitectura@itelsasas.com",
   "t3": "Fabiopalencia9@hotmail.com",
   "t4": "rpozzo@itelsasas.com",
-  "t5": "mcsotgiu@itelsasas.com"
+  "t5": "mcsotgiu@itelsasas.com",
+  "t6": "arquitectura@itelsasas.com",
+  "t7": "admin@itelsasas.com"
 };
 var ALL_EMAILS = [
   "sofiagcastex@gmail.com",
   "arquitectura@itelsasas.com",
   "Fabiopalencia9@hotmail.com",
   "rpozzo@itelsasas.com",
-  "mcsotgiu@itelsasas.com"
+  "mcsotgiu@itelsasas.com",
+  "admin@itelsasas.com"
 ];
 
 var NECESARIOS = [
@@ -504,7 +524,8 @@ var mktExpandedIds = {}; // que tareas generales estan desplegadas, sobrevive a 
 var DEPTS = [
   {sec:"pipeline",  label:"PROYECTOS",    color:"#7F77DD"},
   {sec:"proyectos", label:"ARQUITECTURA", color:"#378ADD"},
-  {sec:"marketing", label:"MARKETING",    color:"#D4537E"}
+  {sec:"marketing", label:"MARKETING",    color:"#D4537E"},
+  {sec:"gestion",   label:"GESTION DE PROYECTOS", color:"#0F766E"}
 ];
 var curDept = "pipeline";
 function getDept(sec) {
@@ -1509,6 +1530,355 @@ function getProj() {
   return null;
 }
 
+// ── GESTION DE PROYECTOS ─────────────────────────────────────────
+// Solapa para gestionar cada obra: seguros, alojamiento, contactos, checklist de obra,
+// diagrama de Gantt, informes enviados y Dropbox. Los proyectos viven en la misma
+// coleccion "projects" con section "gestion"; el archivo de Gantt va aparte en "gfiles".
+var ADMIN_EMAIL = "admin@itelsasas.com";
+var EMPLEADOS = [
+  {id:"e1", nombre:"Lionel Ezequiel Palencia",        dni:"46845492", nac:"2006-01-11"},
+  {id:"e2", nombre:"Cristian Gaspar Ferreira (Kiki)", dni:"34861169", nac:"1990-01-05"},
+  {id:"e3", nombre:"Tomas Ferreira",                  dni:"40678298", nac:"1998-07-12"},
+  {id:"e4", nombre:"Melina Andrea Dolce",             dni:"37854657", nac:"1993-11-03"},
+  {id:"e5", nombre:"Sofia Gutierrez Castex",          dni:"39360609", nac:"1995-04-27"},
+  {id:"e6", nombre:"Fabio Emanuel Palencia",          dni:"31058100", nac:"1984-10-26"}
+];
+var GFILE_MAX = 700 * 1024; // Firestore admite ~1 MB por documento; en base64 el archivo crece un tercio
+
+function gEl(tag, cls, txt) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (txt != null) e.textContent = txt;
+  return e;
+}
+function gSection(title, sub) {
+  var s = gEl("div", "margin-box gsec");
+  var t = gEl("div", "bxt", title); t.style.marginBottom = sub ? "2px" : "9px"; s.appendChild(t);
+  if (sub) { var st = gEl("div", "gsub", sub); s.appendChild(st); }
+  return s;
+}
+function gLabel(txt) { return gEl("label", "glbl", txt); }
+function gCheck(label, on, disabled, onToggle, extraCls) {
+  var row = gEl("div", "ci" + (on ? " ck" : "") + (extraCls ? " " + extraCls : ""));
+  var cb = gEl("div", "cb");
+  if (on) { var ic = gEl("i", "ti ti-check"); ic.style.cssText = "font-size:10px;color:#fff"; cb.appendChild(ic); }
+  var l = gEl("span", "cil", label);
+  row.appendChild(cb); row.appendChild(l);
+  if (!disabled) row.onclick = onToggle; else row.style.cursor = "default";
+  return row;
+}
+function gInput(type, val, ph, disabled, onSave) {
+  var i = document.createElement("input"); i.type = type; i.value = val || "";
+  if (ph) i.placeholder = ph;
+  if (disabled) i.disabled = true;
+  i.onchange = function(){ onSave(this.value); };
+  return i;
+}
+function gField(lbl, input) {
+  var f = gEl("div", "mi"); f.appendChild(gEl("label", null, lbl)); f.appendChild(input); return f;
+}
+function gDel(onDel) {
+  var b = gEl("button", "ctc-del"); b.innerHTML = "<i class='ti ti-x'></i>"; b.title = "Quitar"; b.onclick = onDel; return b;
+}
+function gAddBtn(txt, onAdd) {
+  var b = gEl("button", "nb"); b.style.marginTop = "4px";
+  b.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> ";
+  b.appendChild(document.createTextNode(txt));
+  b.onclick = onAdd; return b;
+}
+// Modifica el proyecto seleccionado y lo guarda
+function gUpd(fn) { var p = getProj(); if (!p) return; fn(p); saveProject(p); }
+
+function buildGestionBlocks(box, proj, isFin) {
+  box.appendChild(buildSegurosBlock(proj, isFin));
+  box.appendChild(buildAlojamientoBlock(proj, isFin));
+  box.appendChild(buildContactosGestion(proj, isFin));
+  box.appendChild(buildChecklistObra(proj, isFin));
+  box.appendChild(buildGanttFileBlock(proj, isFin));
+  box.appendChild(buildInformesBlock(proj, isFin));
+}
+
+// ── Seguros ──
+function segurosPersonas(proj) {
+  var s = proj.seguros || {};
+  var out = [];
+  (s.empleados || []).forEach(function(id){
+    for (var i=0; i<EMPLEADOS.length; i++) if (EMPLEADOS[i].id === id) out.push(EMPLEADOS[i]);
+  });
+  (s.otros || []).forEach(function(o){ if (o.nombre && o.nombre.trim()) out.push(o); });
+  return out;
+}
+function buildSegurosBlock(proj, isFin) {
+  var s = proj.seguros || {};
+  var enviado = !!s.enviado;
+  var lock = isFin || enviado; // una vez enviada la solicitud, los datos quedan fijos (destildar para editar)
+  var sec = gSection("Seguros", "Tilda quienes necesitan seguro para esta obra y completa el tipo de seguro.");
+
+  var grid = gEl("div", "cl");
+  var sel = s.empleados || [];
+  EMPLEADOS.forEach(function(emp){
+    var on = sel.indexOf(emp.id) >= 0;
+    var row = gCheck(emp.nombre, on, lock, function(){
+      gUpd(function(p){
+        if (!p.seguros) p.seguros = {};
+        var arr = p.seguros.empleados || [];
+        var ix = arr.indexOf(emp.id);
+        if (ix >= 0) arr.splice(ix, 1); else arr.push(emp.id);
+        p.seguros.empleados = arr;
+      });
+    });
+    var dni = gEl("span", "gdni", "DNI " + emp.dni); row.appendChild(dni);
+    grid.appendChild(row);
+  });
+  sec.appendChild(grid);
+
+  // Personas que no estan en la lista
+  var otros = s.otros || [];
+  if (otros.length) sec.appendChild(gLabel("Otras personas"));
+  otros.forEach(function(o, idx){
+    var row = gEl("div", "ctc-row");
+    function upd(field){ return function(v){ gUpd(function(p){ if (p.seguros && p.seguros.otros && p.seguros.otros[idx]) p.seguros.otros[idx][field] = v; }); }; }
+    row.appendChild(gInput("text", o.nombre, "Nombre completo", lock, upd("nombre")));
+    row.appendChild(gInput("text", o.dni, "DNI", lock, upd("dni")));
+    var nac = gInput("date", o.nac, "", lock, upd("nac")); nac.title = "Fecha de nacimiento"; row.appendChild(nac);
+    if (!lock) row.appendChild(gDel(function(){ gUpd(function(p){ p.seguros.otros.splice(idx, 1); }); }));
+    sec.appendChild(row);
+  });
+  if (!lock) sec.appendChild(gAddBtn("Agregar otra persona", function(){
+    gUpd(function(p){ if (!p.seguros) p.seguros = {}; if (!p.seguros.otros) p.seguros.otros = []; p.seguros.otros.push({id:nid("sg"), nombre:"", dni:"", nac:""}); });
+  }));
+
+  // Vigencia + tipo / datos extra
+  var mr = gEl("div", "mr"); mr.style.cssText = "grid-template-columns:1fr 1fr;margin:12px 0 10px";
+  mr.appendChild(gField("Cobertura desde", gInput("date", s.desde || proj.start, "", lock, function(v){ gUpd(function(p){ if(!p.seguros) p.seguros={}; p.seguros.desde = v; }); })));
+  mr.appendChild(gField("Cobertura hasta", gInput("date", s.hasta || proj.end, "", lock, function(v){ gUpd(function(p){ if(!p.seguros) p.seguros={}; p.seguros.hasta = v; }); })));
+  sec.appendChild(mr);
+  sec.appendChild(gLabel("Tipo de seguro y datos extra"));
+  var ta = gEl("textarea", "na"); ta.style.minHeight = "64px";
+  ta.placeholder = "Ej: Altura 45 metros. Tareas de mantenimiento de luminarias. Clausula de no repeticion a favor de ...";
+  ta.value = s.datos || ""; if (lock) ta.disabled = true;
+  var saveDatos = debounce(function(){ gUpd(function(p){ if(!p.seguros) p.seguros={}; p.seguros.datos = ta.value; }); }, 400);
+  ta.oninput = saveDatos; ta.onchange = saveDatos;
+  sec.appendChild(ta);
+
+  // Enviar a administracion
+  var send = gEl("div", "dr gsend" + (enviado ? " ck" : ""));
+  send.style.margin = "12px 0 8px";
+  var sb = gEl("div", "drb");
+  if (enviado) { var si = gEl("i", "ti ti-check"); si.style.cssText = "font-size:10px;color:#fff"; sb.appendChild(si); }
+  var sl = gEl("span", "drl", enviado
+    ? "Solicitud enviada a administracion (" + ADMIN_EMAIL + ")" + (s.enviadoTxt ? " - " + s.enviadoTxt : "")
+    : "Solicitud lista: enviar datos a administracion (" + ADMIN_EMAIL + ")");
+  var sic = gEl("i", "ti ti-mail"); sic.style.cssText = "font-size:16px;color:#2563eb;flex-shrink:0";
+  send.appendChild(sb); send.appendChild(sl); send.appendChild(sic);
+  if (!isFin) send.onclick = function(){
+    var p = getProj(); if (!p) return;
+    if (!p.seguros) p.seguros = {};
+    if (p.seguros.enviado) {
+      if (!confirm("Destildar permite editar los datos y volver a enviar la solicitud. Continuar?")) return;
+      p.seguros.enviado = false; saveProject(p); return;
+    }
+    var personas = segurosPersonas(p);
+    if (!personas.length) { alert("Tilda al menos una persona que necesite seguro."); return; }
+    if (!confirm("Se va a enviar un mail a " + ADMIN_EMAIL + " con los datos de " + personas.length + " persona(s). Enviar?")) return;
+    sendSegurosEmail(p, personas);
+    p.seguros.enviado = true;
+    p.seguros.enviadoTxt = ahoraTexto() + " por " + currentUserName();
+    saveProject(p);
+    logActivity("envio la solicitud de seguros a administracion", p.name, currentUser);
+  };
+  sec.appendChild(send);
+
+  // Seguros sacados
+  var sacados = !!s.sacados;
+  var sac = gCheck(sacados ? "Seguros sacados" : "Marcar seguros como sacados", sacados, isFin, function(){
+    var p = getProj(); if (!p) return;
+    if (!p.seguros) p.seguros = {};
+    p.seguros.sacados = !p.seguros.sacados;
+    saveProject(p);
+    logActivity(p.seguros.sacados ? "marco los seguros como sacados" : "desmarco los seguros sacados", p.name, currentUser);
+  }, "gfull");
+  sec.appendChild(sac);
+  return sec;
+}
+function sendSegurosEmail(p, personas) {
+  var s = p.seguros || {};
+  var det = ["Obra: " + p.name,
+             "Cobertura: del " + fmtFecha(s.desde || p.start) + " al " + fmtFecha(s.hasta || p.end),
+             "", "Personal a asegurar:"];
+  personas.forEach(function(x){
+    det.push("- " + x.nombre + " | DNI " + (x.dni || "sin cargar") + " | Nac. " + fmtFecha(x.nac));
+  });
+  if (s.datos && s.datos.trim()) { det.push(""); det.push("Tipo de seguro y datos extra:"); det.push(s.datos.trim()); }
+  sendEmailNotif(ADMIN_EMAIL, {
+    asunto:  "Solicitud de seguros: " + p.name,
+    titulo:  "Solicitud de seguros para obra",
+    mensaje: currentUserName() + " pide sacar seguros para " + personas.length + " persona(s) en la obra \"" + p.name + "\".",
+    detalle: det
+  });
+}
+
+// ── Alojamiento ──
+function buildAlojamientoBlock(proj, isFin) {
+  var a = proj.alojamiento || {};
+  var sec = gSection("Alojamiento");
+  function upd(field){ return function(v){ gUpd(function(p){ if(!p.alojamiento) p.alojamiento={}; p.alojamiento[field] = v; }); }; }
+  var linkWrap = gEl("div", "mi"); linkWrap.style.marginBottom = "10px";
+  linkWrap.appendChild(gEl("label", null, "Link del alojamiento"));
+  var li = gInput("url", a.link, "https://...", isFin, upd("link"));
+  linkWrap.appendChild(li);
+  if (a.link) {
+    var al = gEl("a", "carp-link"); al.href = a.link; al.target = "_blank"; al.rel = "noopener";
+    al.innerHTML = "<i class='ti ti-external-link' style='font-size:11px'></i> Abrir alojamiento";
+    linkWrap.appendChild(al);
+  }
+  sec.appendChild(linkWrap);
+  var mr = gEl("div", "mr"); mr.style.cssText = "grid-template-columns:1fr 1fr;margin-bottom:10px";
+  mr.appendChild(gField("Ingreso", gInput("date", a.desde, "", isFin, upd("desde"))));
+  mr.appendChild(gField("Salida", gInput("date", a.hasta, "", isFin, upd("hasta"))));
+  sec.appendChild(mr);
+  var res = !!a.reservado;
+  sec.appendChild(gCheck(res ? "Alojamiento reservado" : "Marcar alojamiento como reservado", res, isFin, function(){
+    gUpd(function(p){ if(!p.alojamiento) p.alojamiento={}; p.alojamiento.reservado = !p.alojamiento.reservado; });
+  }, "gfull"));
+  return sec;
+}
+
+// ── Contactos de obra ──
+function buildContactosGestion(proj, isFin) {
+  var sec = gSection("Contactos de obra");
+  var list = proj.contactosObra || [];
+  if (!list.length) sec.appendChild(gEl("div", "gempty", "Sin contactos cargados."));
+  list.forEach(function(ct, idx){
+    var row = gEl("div", "ctc-row");
+    function upd(field){ return function(v){ gUpd(function(p){ if (p.contactosObra && p.contactosObra[idx]) p.contactosObra[idx][field] = v; }); }; }
+    row.appendChild(gInput("text", ct.nombre, "Nombre", isFin, upd("nombre")));
+    row.appendChild(gInput("text", ct.apellido, "Apellido / rol", isFin, upd("apellido")));
+    row.appendChild(gInput("text", ct.telefono, "Telefono", isFin, upd("telefono")));
+    if (!isFin) row.appendChild(gDel(function(){ gUpd(function(p){ p.contactosObra.splice(idx, 1); }); }));
+    sec.appendChild(row);
+  });
+  if (!isFin) sec.appendChild(gAddBtn("Agregar contacto", function(){
+    gUpd(function(p){ if (!p.contactosObra) p.contactosObra = []; p.contactosObra.push({id:nid("ct"), nombre:"", apellido:"", telefono:""}); });
+  }));
+  return sec;
+}
+
+// ── Checklist de obra: cada item se marca como necesario y/o realizado ──
+function buildChecklistObra(proj, isFin) {
+  var sec = gSection("Checklist de obra", "Marca cada cuestion como necesaria y, cuando este hecha, como realizada.");
+  var list = proj.checkObra || [];
+  if (!list.length) sec.appendChild(gEl("div", "gempty", "Sin items todavia."));
+  list.forEach(function(it, idx){
+    var row = gEl("div", "ctc-row gck-row" + (it.realizado ? " gck-done" : ""));
+    var inp = gInput("text", it.texto, "Ej: Permiso de ingreso, elevador, EPP...", isFin, function(v){
+      gUpd(function(p){ if (p.checkObra && p.checkObra[idx]) p.checkObra[idx].texto = v; });
+    });
+    row.appendChild(inp);
+    function chip(lbl, field, cls) {
+      var on = !!it[field];
+      var b = gEl("button", "gchip " + cls + (on ? " on" : ""), lbl);
+      if (isFin) b.disabled = true;
+      b.onclick = function(){ gUpd(function(p){ if (p.checkObra && p.checkObra[idx]) p.checkObra[idx][field] = !p.checkObra[idx][field]; }); };
+      return b;
+    }
+    row.appendChild(chip("Necesario", "necesario", "gchip-nec"));
+    row.appendChild(chip("Realizado", "realizado", "gchip-ok"));
+    if (!isFin) row.appendChild(gDel(function(){ gUpd(function(p){ p.checkObra.splice(idx, 1); }); }));
+    sec.appendChild(row);
+  });
+  if (!isFin) sec.appendChild(gAddBtn("Agregar item", function(){
+    gUpd(function(p){ if (!p.checkObra) p.checkObra = []; p.checkObra.push({id:nid("ck"), texto:"", necesario:true, realizado:false}); });
+  }));
+  return sec;
+}
+
+// ── Diagrama de Gantt de la obra (archivo) ──
+function buildGanttFileBlock(proj, isFin) {
+  var sec = gSection("Diagrama de Gantt de la obra", "Subi el archivo (hasta 700 KB) o pega el link si es mas pesado.");
+  var gf = proj.ganttFile;
+  if (gf && gf.fileId) {
+    var row = gEl("div", "gfile");
+    var ic = gEl("i", "ti ti-file-analytics"); ic.style.cssText = "font-size:18px;color:#0F766E;flex-shrink:0"; row.appendChild(ic);
+    var info = gEl("div"); info.style.cssText = "flex:1;min-width:0";
+    var nm = gEl("div", "gfile-name", gf.name); info.appendChild(nm);
+    info.appendChild(gEl("div", "gsub", Math.max(1, Math.round(gf.size/1024)) + " KB" + (gf.subido ? " - subido " + gf.subido : "")));
+    row.appendChild(info);
+    var dl = gEl("button", "btn"); dl.innerHTML = "<i class='ti ti-download' style='font-size:12px'></i> Descargar";
+    dl.onclick = function(){ downloadGanttFile(gf); };
+    row.appendChild(dl);
+    sec.appendChild(row);
+  }
+  if (!isFin) {
+    var fileInp = document.createElement("input"); fileInp.type = "file"; fileInp.style.display = "none";
+    fileInp.onchange = function(){ if (this.files && this.files[0]) uploadGanttFile(this.files[0]); };
+    var up = gAddBtn(gf && gf.fileId ? "Reemplazar archivo" : "Subir archivo de Gantt", function(){ fileInp.click(); });
+    sec.appendChild(fileInp); sec.appendChild(up);
+  }
+  var lw = gEl("div", "mi"); lw.style.marginTop = "10px";
+  lw.appendChild(gEl("label", null, "o link al archivo"));
+  lw.appendChild(gInput("url", proj.ganttLink, "https://...", isFin, function(v){ gUpd(function(p){ p.ganttLink = v; }); }));
+  if (proj.ganttLink) {
+    var a = gEl("a", "carp-link"); a.href = proj.ganttLink; a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = "<i class='ti ti-external-link' style='font-size:11px'></i> Abrir Gantt";
+    lw.appendChild(a);
+  }
+  sec.appendChild(lw);
+  return sec;
+}
+function uploadGanttFile(file) {
+  var p = getProj(); if (!p) return;
+  if (file.size > GFILE_MAX) {
+    alert("El archivo pesa " + Math.round(file.size/1024) + " KB y el maximo es 700 KB. Subilo a Dropbox o Drive y pega el link abajo.");
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(){
+    var oldId = p.ganttFile && p.ganttFile.fileId;
+    var fid = nid("gf");
+    showSyncing();
+    setDoc(doc(db, "gfiles", fid), {id:fid, projId:p.id, name:file.name, type:file.type || "application/octet-stream", size:file.size, data:reader.result})
+      .then(function(){
+        var cur = getProj() || p;
+        cur.ganttFile = {fileId:fid, name:file.name, size:file.size, subido: ahoraTexto() + " por " + currentUserName()};
+        saveProject(cur);
+        logActivity("subio el diagrama de Gantt", cur.name, currentUser);
+        if (oldId) deleteDoc(doc(db, "gfiles", oldId));
+      })
+      .catch(function(err){ console.warn(err); alert("No se pudo subir el archivo. Proba de nuevo o usa un link."); showSynced(); });
+  };
+  reader.readAsDataURL(file);
+}
+function downloadGanttFile(gf) {
+  getDoc(doc(db, "gfiles", gf.fileId)).then(function(snap){
+    if (!snap.exists()) { alert("No se encontro el archivo."); return; }
+    var d = snap.data();
+    var a = document.createElement("a"); a.href = d.data; a.download = d.name || gf.name;
+    document.body.appendChild(a); a.click(); a.remove();
+  }).catch(function(err){ console.warn(err); alert("No se pudo descargar el archivo."); });
+}
+
+// ── Informes enviados ──
+function buildInformesBlock(proj, isFin) {
+  var sec = gSection("Informes enviados");
+  var list = proj.informes || [];
+  if (!list.length) sec.appendChild(gEl("div", "gempty", "Sin informes cargados."));
+  list.forEach(function(inf, idx){
+    var row = gEl("div", "ctc-row");
+    var n = gInput("text", inf.nombre, "Nombre del informe", isFin, function(v){ gUpd(function(p){ if (p.informes && p.informes[idx]) p.informes[idx].nombre = v; }); });
+    n.style.flex = "3";
+    row.appendChild(n);
+    row.appendChild(gInput("date", inf.fecha, "", isFin, function(v){ gUpd(function(p){ if (p.informes && p.informes[idx]) p.informes[idx].fecha = v; }); }));
+    if (!isFin) row.appendChild(gDel(function(){ gUpd(function(p){ p.informes.splice(idx, 1); }); }));
+    sec.appendChild(row);
+  });
+  if (!isFin) sec.appendChild(gAddBtn("Agregar informe", function(){
+    var hoy = new Date(); function z(n){ return n<10 ? "0"+n : ""+n; }
+    gUpd(function(p){ if (!p.informes) p.informes = []; p.informes.push({id:nid("in"), nombre:"", fecha: hoy.getFullYear()+"-"+z(hoy.getMonth()+1)+"-"+z(hoy.getDate())}); });
+  }));
+  return sec;
+}
+
 // ── BOARD ────────────────────────────────────────────────────────
 function renderBoard() {
   if (curDept === "marketing") { renderMarketingBoard(); return; }
@@ -1517,6 +1887,7 @@ function renderBoard() {
   var proj = getProj();
   if (!proj) return;
   var isArq = proj.section==="proyectos";
+  var isGest = proj.section==="gestion";
   var isFin = proj.status === "finalizado"; // "vendido" ya no bloquea: la obra sigue completandose con el proyecto vendido
   var projDept = getDept(proj.section);
   var statusLabel = proj.status==="vendido" ? "Vendido" : (proj.status==="finalizado" ? (isArq?"Terminado":"Finalizado") : "");
@@ -1623,7 +1994,11 @@ function renderBoard() {
     }
   }
 
-  // Necesario del proyecto
+  // Gestion de proyectos: seguros, alojamiento, contactos, checklist, Gantt e informes
+  if (isGest) buildGestionBlocks(box, proj, isFin);
+
+  // Necesario del proyecto (no aplica a Gestion)
+  if (!isGest) {
   var nxt = document.createElement("div"); nxt.className="bxt"; nxt.style.marginBottom="9px"; nxt.textContent="Necesario del proyecto"; box.appendChild(nxt);
   var nlg = document.createElement("div"); nlg.className="cl";
   var necesario = proj.necesario||{};
@@ -1642,6 +2017,7 @@ function renderBoard() {
     })(ni);
   });
   box.appendChild(nlg);
+  }
 
   // Pipeline (PROYECTOS): datos al margen + obra
   if (proj.section === "pipeline") {
@@ -1754,7 +2130,7 @@ function renderBoard() {
   if (!isFin) dr.onclick = function(){ var p=getProj(); if(!p) return; p.dropbox=!p.dropbox; saveProject(p); syncLinkedFields(p); };
   var drb = document.createElement("div"); drb.className="drb";
   if (dbDone){ var dic=document.createElement("i"); dic.className="ti ti-check"; dic.style.cssText="font-size:10px;color:#fff"; drb.appendChild(dic); }
-  var drl = document.createElement("span"); drl.className="drl"; drl.textContent=dbDone?"Proyecto subido a Dropbox":"Confirmar subida a Dropbox";
+  var drl = document.createElement("span"); drl.className="drl"; drl.textContent=isGest?(dbDone?"Documentos de obra subidos a Dropbox":"Confirmar subida de documentos a Dropbox"):(dbDone?"Proyecto subido a Dropbox":"Confirmar subida a Dropbox");
   var dri = document.createElement("i"); dri.className="ti ti-brand-dropbox"; dri.style.cssText="font-size:16px;color:#2563eb;flex-shrink:0";
   dr.appendChild(drb); dr.appendChild(drl); dr.appendChild(dri); box.appendChild(dr);
 
@@ -2118,7 +2494,7 @@ function renderGantt() {
       var hasLinked = linked && linked.start && linked.end;
 
       // Fases a apilar en la fila: propia + (Arquitectura si hay link) + (Obra, solo en PROYECTOS)
-      var phases = [{label:(curDept==="pipeline"?"Proyectos":"Arquitectura"), start:p.start, end:p.end, color:p.color, opacity:op, isOwn:true}];
+      var phases = [{label:(curDept==="pipeline"?"Proyectos":(curDept==="gestion"?"Obra":"Arquitectura")), start:p.start, end:p.end, color:p.color, opacity:op, isOwn:true}];
       if (hasLinked) {
         var lop=linked.status==="finalizado"?"0.45":"0.75";
         phases.push({label:(curDept==="pipeline"?"Arquitectura":"Proyectos"), start:linked.start, end:linked.end, color:linked.color||"#378ADD", opacity:lop});
@@ -2169,7 +2545,7 @@ window.renderGantt=renderGantt;
 
 // ── NEW PROJECT ──────────────────────────────────────────────────
 function openNewProj(sec) {
-  nPS=sec; nPC=(sec==="marketing")?COLORS[4]:(sec==="pipeline"?COLORS[6]:COLORS[0]); nPM=[];
+  nPS=sec; nPC=(sec==="marketing")?COLORS[4]:(sec==="pipeline"?COLORS[6]:(sec==="gestion"?COLORS[1]:COLORS[0])); nPM=[];
   document.getElementById("pn-name").value=""; document.getElementById("pn-start").value="";
   document.getElementById("pn-end").value=""; document.getElementById("pn-prio").value="media";
   document.getElementById("mo-proj-title").textContent="Nuevo proyecto - "+getDept(sec).label;
