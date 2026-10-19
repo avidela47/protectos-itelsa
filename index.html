@@ -205,6 +205,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
 .dbtn:hover{border-color:#9ca3af;color:#374151}
 .dbtn.act{color:#fff;border-color:transparent}
+.asp-box{background:#fff7ed;border:1.5px solid #f97316;border-left:5px solid #ea580c;border-radius:10px;padding:12px 14px;margin:2px 0 14px}
+.asp-title{font-size:12px;font-weight:700;color:#c2410c;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.asp-ta{width:100%;min-height:70px;font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid #fdba74;background:#fff;color:#1f2937;resize:vertical;line-height:1.55;font-family:inherit}
+.asp-ta:focus{outline:none;border-color:#ea580c}
+.peg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:2px}
+.peg{position:relative;border-radius:4px;padding:10px 10px 6px;min-height:120px;box-shadow:0 2px 5px rgba(0,0,0,0.12);display:flex;flex-direction:column}
+.peg:nth-child(odd){transform:rotate(-0.8deg)}.peg:nth-child(even){transform:rotate(0.7deg)}
+.peg textarea{flex:1;width:100%;min-height:80px;border:none;background:transparent;resize:none;font-size:12.5px;line-height:1.5;color:#1f2937;font-family:inherit}
+.peg textarea:focus{outline:none}
+.peg-bar{display:flex;align-items:center;gap:4px;margin-top:4px;opacity:0.55;transition:opacity 0.15s}
+.peg:hover .peg-bar{opacity:1}
+.peg-dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,0.2);cursor:pointer}
+.peg-dot.sel{outline:2px solid rgba(0,0,0,0.45);outline-offset:1px}
+.peg-del{margin-left:auto;border:none;background:transparent;cursor:pointer;color:#6b7280;font-size:13px;padding:0 2px}
+.peg-add{background:transparent;border:1.5px dashed #d1d5db;box-shadow:none;align-items:center;justify-content:center;gap:4px;color:#9ca3af;cursor:pointer;font-size:12px;transform:none!important}
+.peg-add:hover{border-color:#9ca3af;color:#374151}
 .gsec{background:#fff}
 .gsub{font-size:11px;color:#9ca3af;margin-bottom:10px}
 .glbl{font-size:11px;color:#9ca3af;display:block;margin:8px 0 6px;font-weight:500}
@@ -437,6 +453,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
 </div>
+<div class="mo" id="mo-notif">
+  <div class="md">
+    <div class="mt">Enviar notificacion</div>
+    <div class="fe" id="nf-proj" style="margin-bottom:8px"></div>
+    <div class="fg"><label>Para</label><div class="mo2" id="nf-members"></div></div>
+    <div class="fg"><label>Otro mail (opcional)</label><input type="text" id="nf-otro" placeholder="nombre@empresa.com, otro@empresa.com"></div>
+    <div class="fg"><label>Asunto</label><input type="text" id="nf-asunto"></div>
+    <div class="fg"><label>Mensaje</label><textarea id="nf-msg" placeholder="Que queres avisar?"></textarea></div>
+    <div class="fg"><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="nf-resumen" style="width:auto"> Incluir resumen del proyecto (fechas, area, equipo)</label></div>
+    <div class="ma"><button class="bc" onclick="closeModal('mo-notif')">Cancelar</button><button class="bs" onclick="sendManualNotif()">Enviar</button></div>
+  </div>
+</div>
 <div class="mo" id="mo-confirm">
   <div class="cm">
     <div class="cmi" id="conf-icon"></div>
@@ -554,6 +582,7 @@ function syncLinkedFields(p) {
   linked.dropbox = p.dropbox;
   linked.carpeta = p.carpeta;
   linked.notes = p.notes;
+  linked.aspectos = p.aspectos || "";
   saveProject(linked);
 }
 // Crea una copia espejo de una tarea nueva en el proyecto vinculado (Proyectos <-> Arquitectura),
@@ -1159,7 +1188,7 @@ function notify(proj, ev, extraIds) {
 function sendNewProjectNotification(proj) {
   var dept = getDept(proj.section).label;
   var equipo = nombresDeIds(proj.members);
-  notify(proj, {
+  sendToList(teamEmails(["t7"]), {
     asunto:  "Nuevo proyecto: " + proj.name,
     titulo:  "Se creo un proyecto nuevo",
     mensaje: currentUserName() + " creo el proyecto \"" + proj.name + "\" en " + dept +
@@ -1231,6 +1260,214 @@ function notifyObraCampo(proj, campoLabel, valorAnterior, nuevoValor) {
     detalle: obraDetalle(proj)
   });
 }
+
+// ── REGLAS DE AVISOS AUTOMATICOS (19/10) ─────────────────────────
+// Solo se mandan solos estos mails; todo lo demas se avisa a mano con "Notificar".
+//  - Proyecto nuevo            -> todo el equipo menos Flor (admin)
+//  - Proyecto pasa a Arquitectura -> solo arquitectura@itelsasas.com
+//  - Proyecto finalizado/terminado/vendido -> todo el equipo
+//  - Gestion de proyectos: solicitud de seguros -> admin (ver sendSegurosEmail)
+// Nunca se le manda el aviso a quien hizo el cambio.
+var ARQ_EMAIL = "arquitectura@itelsasas.com";
+function teamEmails(excludeIds) {
+  var out = [], seen = {};
+  TEAM.forEach(function(m) {
+    if (m.id === currentUser || (excludeIds || []).indexOf(m.id) >= 0) return;
+    var e = TEAM_EMAILS[m.id];
+    if (e && !seen[e.toLowerCase()]) { seen[e.toLowerCase()] = true; out.push(e); }
+  });
+  return out;
+}
+function sendToList(list, ev) {
+  var seen = {};
+  list.forEach(function(e) {
+    if (!e) return;
+    var k = e.trim().toLowerCase();
+    if (seen[k]) return; seen[k] = true;
+    sendEmailNotif(e.trim(), ev);
+  });
+}
+function proyectoResumen(p) {
+  var det = [
+    "Proyecto: " + p.name,
+    "Area: " + getDept(p.section).label,
+    "Prioridad: " + (p.priority || "media"),
+    "Fecha de inicio: " + fmtFecha(p.start),
+    "Fecha de fin: " + fmtFecha(p.end)
+  ];
+  if (p.section === "pipeline" && p.entregaArquitectura) det.push("Entrega Arquitectura: " + fmtFecha(p.entregaArquitectura));
+  if (p.obra && (p.obra.start || p.obra.end)) {
+    det.push("Inicio de obra: " + fmtFecha(p.obra.start));
+    det.push("Fin de obra: " + fmtFecha(p.obra.end));
+  }
+  var eq = nombresDeIds(p.members);
+  det.push("Equipo asignado: " + (eq || "todavia sin asignar"));
+  return det;
+}
+function notifyPasoArquitectura(p, arqProj) {
+  sendToList([ARQ_EMAIL], {
+    asunto:  "Nuevo proyecto en Arquitectura: " + p.name,
+    titulo:  "Un proyecto paso a Arquitectura",
+    mensaje: currentUserName() + " paso el proyecto \"" + p.name + "\" a Arquitectura, con entrega el " + fmtFecha(arqProj.end) + ".",
+    detalle: proyectoResumen(arqProj)
+  });
+}
+function notifyEstadoFinal(p, status) {
+  var lbl = status === "vendido" ? "vendido" : (p.section === "proyectos" ? "terminado" : "finalizado");
+  var lista = teamEmails([]);
+  var det = proyectoResumen(p);
+  if (status === "vendido" && p.section === "pipeline") {
+    lista.push(OBRA_NOTIFY_EMAIL); // aviso de obra que ya existia
+    det = det.concat(["", "Datos de obra:"]).concat(obraDetalle(p).slice(1));
+  }
+  sendToList(lista, {
+    asunto:  "Proyecto " + lbl + ": " + p.name,
+    titulo:  "Un proyecto paso a " + lbl,
+    mensaje: currentUserName() + " marco el proyecto \"" + p.name + "\" como " + lbl + ".",
+    detalle: det
+  });
+}
+
+// ── NOTIFICACION MANUAL ──────────────────────────────────────────
+var notifSel = [];
+function openNotifModal() {
+  var p = getProj(); if (!p) return;
+  notifSel = [];
+  document.getElementById("nf-proj").textContent = p.name + " - " + getDept(p.section).label;
+  document.getElementById("nf-asunto").value = "Novedad en el proyecto " + p.name;
+  document.getElementById("nf-msg").value = "";
+  document.getElementById("nf-otro").value = "";
+  document.getElementById("nf-resumen").checked = true;
+  var wrap = document.getElementById("nf-members"); wrap.innerHTML = "";
+  TEAM.forEach(function(m) {
+    if (m.id === currentUser) return;
+    var d = document.createElement("div"); d.className = "mop";
+    var av = document.createElement("div"); av.className = "tav " + m.cls; av.style.cssText = "width:16px;height:16px;font-size:9px"; av.textContent = m.initials;
+    var nm = document.createElement("span"); nm.textContent = m.name;
+    d.title = TEAM_EMAILS[m.id] || "";
+    d.appendChild(av); d.appendChild(nm);
+    d.onclick = function() {
+      var i = notifSel.indexOf(m.id);
+      if (i >= 0) { notifSel.splice(i, 1); d.classList.remove("sel"); } else { notifSel.push(m.id); d.classList.add("sel"); }
+    };
+    wrap.appendChild(d);
+  });
+  document.getElementById("mo-notif").classList.add("op");
+}
+window.openNotifModal = openNotifModal;
+function sendManualNotif() {
+  var p = getProj(); if (!p) return;
+  var lista = notifSel.map(function(id){ return TEAM_EMAILS[id]; });
+  document.getElementById("nf-otro").value.split(/[,;\s]+/).forEach(function(e){ if (e && e.indexOf("@") > 0) lista.push(e); });
+  if (!lista.length) { alert("Elegi al menos una persona o escribi un mail."); return; }
+  var asunto = document.getElementById("nf-asunto").value.trim() || ("Novedad en el proyecto " + p.name);
+  var msg = document.getElementById("nf-msg").value.trim();
+  var det = document.getElementById("nf-resumen").checked ? proyectoResumen(p) : [];
+  sendToList(lista, {
+    asunto:  asunto,
+    titulo:  asunto,
+    mensaje: msg || (currentUserName() + " te envia una novedad sobre el proyecto \"" + p.name + "\"."),
+    detalle: det
+  });
+  var nombres = notifSel.map(memberName).filter(Boolean);
+  logActivity("envio una notificacion a " + (nombres.join(", ") || "otros mails"), p.name, currentUser);
+  closeModal("mo-notif");
+}
+window.sendManualNotif = sendManualNotif;
+
+// ── ASPECTOS IMPORTANTES (bloque resaltado debajo de "Necesario del proyecto") ──
+function buildAspectosBlock(proj, isFin) {
+  var w = document.createElement("div"); w.className = "asp-box";
+  var t = document.createElement("div"); t.className = "asp-title";
+  t.innerHTML = "<i class='ti ti-alert-triangle' style='font-size:15px'></i> ";
+  t.appendChild(document.createTextNode("ASPECTOS IMPORTANTES A TENER EN CUENTA"));
+  w.appendChild(t);
+  var ta = document.createElement("textarea"); ta.className = "asp-ta";
+  ta.placeholder = "Lo que nadie del equipo puede pasar por alto en este proyecto...";
+  ta.value = proj.aspectos || ""; if (isFin) ta.disabled = true;
+  var save = debounce(function(){ var p = getProj(); if (p) { p.aspectos = ta.value; saveProject(p); syncLinkedFields(p); } }, 400);
+  ta.oninput = save; ta.onchange = save;
+  w.appendChild(ta);
+  return w;
+}
+
+// ── NOTAS DEL PROYECTO COMO PEGATINAS (Datos al margen) ──
+var PEG_COLORS = ["#fef08a", "#fbcfe8", "#bfdbfe", "#bbf7d0", "#fed7aa"];
+function notasPegatinas(proj) {
+  if (proj.notasPeg) return proj.notasPeg;
+  // Lo que estaba cargado en el viejo "Otros datos" aparece como primera pegatina
+  return proj.otrosDatos ? [{id:"peg_old", texto:proj.otrosDatos, color:PEG_COLORS[0]}] : [];
+}
+function updPegatinas(fn) {
+  var p = getProj(); if (!p) return;
+  if (!p.notasPeg) { p.notasPeg = notasPegatinas(p).slice(); p.otrosDatos = ""; }
+  fn(p.notasPeg); saveProject(p);
+}
+function buildPegatinas(proj, isFin) {
+  var wrap = document.createElement("div"); wrap.className = "peg-grid";
+  notasPegatinas(proj).forEach(function(n, idx) {
+    var card = document.createElement("div"); card.className = "peg"; card.style.background = n.color || PEG_COLORS[0];
+    var ta = document.createElement("textarea"); ta.value = n.texto || ""; ta.placeholder = "Escribi una nota...";
+    if (isFin) ta.disabled = true;
+    var save = debounce(function(){ updPegatinas(function(arr){ if (arr[idx]) arr[idx].texto = ta.value; }); }, 400);
+    ta.oninput = save; ta.onchange = save;
+    card.appendChild(ta);
+    if (!isFin) {
+      var bar = document.createElement("div"); bar.className = "peg-bar";
+      PEG_COLORS.forEach(function(c) {
+        var dot = document.createElement("span"); dot.className = "peg-dot" + (c === (n.color||PEG_COLORS[0]) ? " sel" : ""); dot.style.background = c;
+        dot.title = "Cambiar color";
+        dot.onclick = function(){ updPegatinas(function(arr){ if (arr[idx]) arr[idx].color = c; }); };
+        bar.appendChild(dot);
+      });
+      var del = document.createElement("button"); del.className = "peg-del"; del.innerHTML = "<i class='ti ti-trash'></i>"; del.title = "Quitar nota";
+      del.onclick = function(){ updPegatinas(function(arr){ arr.splice(idx, 1); }); };
+      bar.appendChild(del);
+      card.appendChild(bar);
+    }
+    wrap.appendChild(card);
+  });
+  if (!isFin) {
+    var add = document.createElement("button"); add.className = "peg peg-add";
+    add.innerHTML = "<i class='ti ti-plus' style='font-size:16px'></i><span>Nueva nota</span>";
+    add.onclick = function(){ updPegatinas(function(arr){ arr.push({id:nid("pg"), texto:"", color:PEG_COLORS[arr.length % PEG_COLORS.length]}); }); };
+    wrap.appendChild(add);
+  }
+  return wrap;
+}
+
+// ── AVISO DE TAREA ASIGNADA ──
+// Unico mail de tareas: le llega a la persona a la que se le asigna (al crearla o al reasignarla).
+// Los cambios de estado (pendiente / en curso / terminado) no mandan mail.
+function notifyTareaAsignada(t) {
+  if (!t || !t.assignee || t.assignee === currentUser) return;
+  var email = TEAM_EMAILS[t.assignee]; if (!email) return;
+  var quien = memberName(t.assignee) || "";
+  var p = findProjectById(t.projId);
+  var det = ["Tarea: " + t.title, "Asignada a: " + quien];
+  if (p) { det.push("Proyecto: " + p.name); det.push("Area: " + getDept(p.section).label); }
+  det.push("Prioridad: " + (t.priority || "media"));
+  det.push("Fecha limite: " + fmtFecha(t.due));
+  if (t.desc) det.push("Descripcion: " + t.desc);
+  sendEmailNotif(email, {
+    asunto:  "Tarea asignada a " + quien + ": " + t.title,
+    titulo:  "Tenes una tarea nueva, " + quien,
+    mensaje: currentUserName() + " le asigno a " + quien + " la tarea \"" + t.title + "\"" + (p ? " en el proyecto \"" + p.name + "\"" : "") + ".",
+    detalle: det
+  });
+}
+function updateAssignee(v) {
+  if (!selTask) return;
+  var t = null; for (var i=0; i<D.tasks.length; i++) { if (D.tasks[i].id === selTask) { t = D.tasks[i]; break; } }
+  if (!t || (t.assignee || "") === v) return;
+  t.assignee = v; if (!t.activity) t.activity = [];
+  t.activity.push({who:currentUser, action: v ? "Asigno la tarea a " + memberName(v) : "Dejo la tarea sin asignar", ts:Date.now()});
+  saveTask(t); renderActivity(t.activity);
+  var mirror = mirrorTaskFor(t);
+  if (mirror) { mirror.assignee = v; saveTask(mirror); }
+  notifyTareaAsignada(t);
+}
+window.updateAssignee = updateAssignee;
 
 // Mueve el proyecto a la solapa Vendidos sin bloquear la edicion de sus datos
 function moveToVendidos(p) {
@@ -1914,6 +2151,8 @@ function renderBoard() {
     var bt = document.createElement("button"); bt.className="btn"; bt.innerHTML="<i class='ti ti-plus' style='font-size:12px'></i> Nueva tarea"; bt.onclick=openNewTask;
     acts.appendChild(bt);
   }
+  var bnf = document.createElement("button"); bnf.className="btn"; bnf.innerHTML="<i class='ti ti-mail' style='font-size:12px'></i> Notificar"; bnf.title="Enviar notificacion por mail y elegir a quien"; bnf.onclick=openNotifModal;
+  acts.appendChild(bnf);
   var stateSel = document.createElement("select"); stateSel.className="statesel"; stateSel.title="El estado siempre se puede volver a cambiar";
   var stateOpts = isArq
     ? [{v:"activo",l:"Activo"},{v:"finalizado",l:"Terminado"}]
@@ -1960,7 +2199,6 @@ function renderBoard() {
       var p=getProj(); if(!p) return;
       var _anterior = p[field] || "";
       p[field]=this.value; saveProject(p);
-      notifyDateChange(p, lbl, this.value, _anterior);
       syncLinkedFields(p);
       // Arquitectura -> Proyectos: si cambia la fecha de fin de un proyecto replicado, se refleja en el origen
       if (field==="end" && p.section==="proyectos" && p.sourceProjectId) {
@@ -1995,7 +2233,7 @@ function renderBoard() {
   }
 
   // Gestion de proyectos: seguros, alojamiento, contactos, checklist, Gantt e informes
-  if (isGest) buildGestionBlocks(box, proj, isFin);
+  if (isGest) { box.appendChild(buildAspectosBlock(proj, isFin)); buildGestionBlocks(box, proj, isFin); }
 
   // Necesario del proyecto (no aplica a Gestion)
   if (!isGest) {
@@ -2019,11 +2257,14 @@ function renderBoard() {
   box.appendChild(nlg);
   }
 
+  // Aspectos importantes: bloque resaltado (en Gestion va arriba de todo)
+  if (!isGest) box.appendChild(buildAspectosBlock(proj, isFin));
+
   // Pipeline (PROYECTOS): datos al margen + obra
   if (proj.section === "pipeline") {
     var margin = document.createElement("div"); margin.className="margin-box";
     var mTitle = document.createElement("div"); mTitle.className="bxt"; mTitle.style.marginBottom="9px"; mTitle.textContent="Datos al margen"; margin.appendChild(mTitle);
-    var cLbl = document.createElement("label"); cLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:6px;font-weight:500"; cLbl.textContent="Contactos de obra"; margin.appendChild(cLbl);
+    var cLbl = document.createElement("label"); cLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin-bottom:6px;font-weight:500"; cLbl.textContent="Contactos"; margin.appendChild(cLbl);
     var contactos = proj.contactosObra || [];
     var ctWrap = document.createElement("div");
     contactos.forEach(function(ct, idx) {
@@ -2049,10 +2290,8 @@ function renderBoard() {
       addContact.onclick = function(){ var p=getProj(); if(!p) return; if(!p.contactosObra) p.contactosObra=[]; p.contactosObra.push({id:nid("ct"),nombre:"",apellido:"",telefono:""}); saveProject(p); };
       margin.appendChild(addContact);
     }
-    var oLbl = document.createElement("label"); oLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin:12px 0 5px;font-weight:500"; oLbl.textContent="Otros datos";
-    var oTa = document.createElement("textarea"); oTa.className="na"; oTa.style.minHeight="60px"; oTa.placeholder="Otra informacion del proyecto..."; oTa.value=proj.otrosDatos||""; if(isFin) oTa.disabled=true;
-    oTa.onchange = function(){ var p=getProj(); if(p){p.otrosDatos=this.value; saveProject(p);} };
-    margin.appendChild(oLbl); margin.appendChild(oTa);
+    var oLbl = document.createElement("label"); oLbl.style.cssText="font-size:11px;color:#9ca3af;display:block;margin:14px 0 8px;font-weight:500"; oLbl.textContent="Notas del proyecto";
+    margin.appendChild(oLbl); margin.appendChild(buildPegatinas(proj, isFin));
     box.appendChild(margin);
 
     // Obra vendida
@@ -2062,7 +2301,7 @@ function renderBoard() {
       var p=getProj(); if(!p) return;
       p.vendido=!p.vendido;
       logActivity(p.vendido?"marco la obra como vendida":"desmarco la obra vendida", p.name, currentUser);
-      if (p.vendido) { moveToVendidos(p); saveProject(p); notifyObraVendida(p); }
+      if (p.vendido) { var _eraVendido = p.status === "vendido"; moveToVendidos(p); saveProject(p); if (!_eraVendido && p.status === "vendido") notifyEstadoFinal(p, "vendido"); }
       else { moveBackToActivo(p); saveProject(p); }
     };
     var drob = document.createElement("div"); drob.className="drob";
@@ -2086,7 +2325,6 @@ function renderBoard() {
           p.obra[field]=this.value;
           if ((field==="start" || field==="end") && this.value) { moveToVendidos(p); }
           saveProject(p);
-          notifyObraCampo(p, lbl, _obraAnterior, this.value);
         };
         fi.appendChild(l); fi.appendChild(inp); return fi;
       }
@@ -2202,8 +2440,11 @@ function openDetail(id) {
   document.getElementById("dp-status").value=t.status;
   var pp=document.getElementById("dp-priority"); pp.textContent=t.priority; pp.className="tpr pr"+t.priority[0];
   var da=document.getElementById("dp-assignee"); da.innerHTML="";
-  if(m){var av=document.createElement("div");av.className="tav "+m.cls;av.textContent=m.initials;da.appendChild(av);var nm=document.createElement("span");nm.textContent=m.name;da.appendChild(nm);}
-  else da.innerHTML="<span style='color:#9ca3af'>Sin asignar</span>";
+  var asel=document.createElement("select"); asel.className="ss2"; asel.title="Al asignar, le llega un mail a esa persona";
+  var o0=document.createElement("option"); o0.value=""; o0.textContent="Sin asignar"; asel.appendChild(o0);
+  TEAM.forEach(function(mm){ var o=document.createElement("option"); o.value=mm.id; o.textContent=mm.name; if(t.assignee===mm.id) o.selected=true; asel.appendChild(o); });
+  asel.onchange=function(){ updateAssignee(this.value); };
+  da.appendChild(asel);
   document.getElementById("dp-due").textContent=t.due||"Sin fecha";
   document.getElementById("dp-desc").textContent=t.desc||"Sin descripcion.";
   renderActivity(t.activity||[]);
@@ -2269,11 +2510,13 @@ window.reabrirProyecto=reabrirProyecto;
 function updateProjectStatus(newStatus) {
   var p = getProj(); if (!p) return;
   var isArq = p.section === "proyectos";
+  var _estadoAnterior = p.status;
   p.status = newStatus;
   if (newStatus === "vendido" && !p.fechaVenta) p.fechaVenta = new Date().toISOString().slice(0,10);
   saveProject(p);
   var label = newStatus === "activo" ? "activo" : (newStatus === "vendido" ? "vendido" : (isArq ? "terminado" : "finalizado"));
   logActivity("cambio el estado del proyecto a " + label, p.name, currentUser);
+  if (newStatus !== _estadoAnterior && (newStatus === "finalizado" || newStatus === "vendido")) notifyEstadoFinal(p, newStatus);
   renderProjList();
   renderBoard();
 }
@@ -2297,13 +2540,13 @@ function onEntregaArqChange(val) {
       saveProject(arqProj);
       p.arqProjectId = newId;
       logActivity("genero el proyecto en Arquitectura", p.name, currentUser);
+      notifyPasoArquitectura(p, arqProj);
     } else {
       var arqExisting = findProjectById(p.arqProjectId);
       if (arqExisting) { arqExisting.end = val; saveProject(arqExisting); }
     }
   }
   saveProject(p);
-  notifyDateChange(p, "Fecha de entrega - Area Arquitectura", val, _entregaAnterior);
   renderBoard();
 }
 window.onEntregaArqChange = onEntregaArqChange;
@@ -2602,6 +2845,7 @@ function saveTask2(){
   if (projForLog) mirrorTaskToLinkedProject(t, projForLog);
   saveTask(t);
   if (projForLog) logActivity("agrego una tarea: " + t.title, projForLog.name, currentUser);
+  notifyTareaAsignada(t);
   closeModal("mo-task");
 }
 window.saveTask2=saveTask2;
@@ -2700,7 +2944,7 @@ function exportDetalleProyectos() {
   var rows = [[
     "Nombre","Estado","Fecha inicio","Fecha fin","Prioridad","Fecha entrega Arquitectura",
     "DIALux necesario","Recuento luminarias necesario","PDF necesario","Video necesario",
-    "Contactos de obra","Otros datos","Obra vendida","Fecha inicio obra","Fecha fin obra",
+    "Contactos","Notas del proyecto","Obra vendida","Fecha inicio obra","Fecha fin obra",
     "Llegada de insumos","Tiempo final de fabricacion","Link carpeta","Notas adicionales"
   ]];
   projs.forEach(function(p) {
@@ -2715,7 +2959,7 @@ function exportDetalleProyectos() {
       p.name || "", estadoLbl, p.start || "", p.end || "", p.priority || "",
       p.entregaArquitectura || "",
       necVal("n_dialux"), necVal("n_luminarias"), necVal("n_pdf"), necVal("n_video"),
-      contactos, p.otrosDatos || "", p.vendido ? "Si" : "No",
+      contactos, notasPegatinas(p).map(function(n){return (n.texto||"").trim();}).filter(Boolean).join(" | "), p.vendido ? "Si" : "No",
       obra.start || "", obra.end || "", obra.insumos || "", obra.fabricacion || "",
       p.carpeta || "", p.notes || ""
     ]);
