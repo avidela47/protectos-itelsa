@@ -205,6 +205,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
 .dbtn:hover{border-color:#9ca3af;color:#374151}
 .dbtn.act{color:#fff;border-color:transparent}
+.cg-tabs{display:flex;gap:4px;background:#f3f4f6;border-radius:9px;padding:3px}
+.cg-tab{border:none;background:transparent;font-size:12px;font-weight:500;color:#6b7280;padding:6px 12px;border-radius:7px;cursor:pointer}
+.cg-tab.act{background:#fff;color:#00695C;box-shadow:0 1px 2px rgba(0,0,0,0.08)}
+.cg-start{max-width:520px;margin:40px auto;background:#fff;border:1px solid var(--br);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.cg-start-t{font-size:16px;font-weight:600;color:#1f2937}
+.cg-start input,.cg-add input{font-size:13px;padding:9px 11px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#1f2937;min-width:0}
+.cg-start input:focus,.cg-add input:focus{outline:none;border-color:#00695C}
+.cg-sub{font-size:11px;color:#9ca3af;margin-top:4px}
+.cg-open{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:1px solid #e5e7eb;background:#f9f9f8;border-radius:8px;padding:8px 11px;cursor:pointer}
+.cg-open:hover{border-color:#00695C}
+.cg-open-n{font-size:13px;font-weight:600;color:#1f2937;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.cg-open-m{font-size:11px;color:#9ca3af}
+.cg-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.cg-proj{font-size:18px;font-weight:600;color:#0D1B2A}
+.cg-close{display:flex;align-items:center;gap:6px;background:#00695C}
+.cg-add{display:flex;gap:8px;align-items:stretch;margin-bottom:10px}
+.cg-sw{position:relative;flex:1;display:flex}
+.cg-sw input{flex:1}
+#cg-qty{width:90px;text-align:center}
+.cg-add #cg-base-q{flex:1}
+.cg-dd{display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:#fff;border:1px solid #d1d5db;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:50;overflow:hidden;max-height:380px;overflow-y:auto}
+.cg-opt{display:flex;align-items:center;gap:10px;padding:7px 10px;cursor:pointer;border-bottom:1px solid #f3f4f6}
+.cg-opt.hi,.cg-opt:hover{background:#f0fdfa}
+.cg-opt-tx{min-width:0}
+.cg-opt-n{font-size:13px;font-weight:500;color:#1f2937;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cg-opt-c{font-size:11px;color:#6b7280;font-family:ui-monospace,Menlo,Consolas,monospace}
+.cg-opt-new{color:#00695C;font-size:12px;font-weight:500;gap:6px}
+.cg-thumb{flex-shrink:0;border-radius:7px;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#9ca3af;font-size:16px}
+.cg-thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
+.cg-sel{display:none;align-items:center;gap:10px;background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:8px 10px;margin-bottom:12px}
+.cg-sel-hint{margin-left:auto;font-size:11px;color:#0f766e}
+.cg-empty{text-align:center;padding:36px;color:#9ca3af;font-size:13px;background:#fff;border:1px dashed #d1d5db;border-radius:12px}
+.cg-table{background:#fff;border:1px solid var(--br);border-radius:12px;overflow:hidden}
+.cg-tr{display:grid;grid-template-columns:36px 52px 150px 1fr 90px 30px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #f3f4f6}
+.cg-th{background:#0D1B2A;color:#fff;font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:8px 12px}
+.cg-num{font-size:12px;color:#9ca3af;text-align:center}
+.cg-cod{font-size:12px;font-weight:600;color:#0D1B2A;font-family:ui-monospace,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis}
+.cg-nom{font-size:13px;color:#374151}
+.cg-q{width:100%;text-align:center;font-size:13px;font-weight:600;color:#00695C;padding:6px;border-radius:7px;border:1px solid #d1d5db}
+.cg-tf{background:#f4f7f8;border-bottom:none}
+.cg-tf .cg-nom{font-weight:600;color:#0D1B2A}
+.cg-tot{text-align:center;font-size:15px;font-weight:700;color:#00695C}
+.cg-hist{display:flex;flex-direction:column;gap:8px}
+.cg-hrow{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--br);border-radius:10px;padding:10px 12px;flex-wrap:wrap}
+.cg-st{font-size:10px;font-weight:600;border-radius:999px;padding:3px 9px}
+.cg-st.cerr{background:#dcfce7;color:#166534}.cg-st.ab{background:#fef3c7;color:#92400e}
+.cg-base{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.cg-lcard{background:#fff;border:1px solid var(--br);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:4px;cursor:pointer;min-width:0}
+.cg-lcard:hover{border-color:#00695C}
+.cg-lcard .cg-thumb{width:100%!important;height:110px!important;margin-bottom:4px}
+.lm-prev{width:100%;height:150px;border:1px dashed #d1d5db;border-radius:10px;background:#f9f9f8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#9ca3af;font-size:12px;overflow:hidden;margin-bottom:8px}
+.lm-prev i{font-size:24px}
+.lm-prev img{max-width:100%;max-height:100%;object-fit:contain}
+@media (max-width:800px){.cg-tr{grid-template-columns:28px 44px 1fr 70px 26px}.cg-tr .cg-cod{display:none}.cg-th span:nth-child(3){display:none}}
 .comp-box{background:#fff;border:1.5px solid #378ADD;border-left:5px solid #1d4ed8;border-radius:10px;padding:12px 14px;margin:0 0 14px}
 .comp-title{font-size:12px;font-weight:700;color:#1d4ed8;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;margin-bottom:10px}
 .comp-row{display:grid;grid-template-columns:78px 140px 108px 1fr 108px 26px;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;margin-bottom:4px}
@@ -340,6 +394,7 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -371,6 +426,7 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
     <button class="dbtn" id="dbtn-marketing" onclick="switchDept('marketing')">MARKETING</button>
     <button class="dbtn" id="dbtn-gestion" onclick="switchDept('gestion')">GESTION DE PROYECTOS</button>
     <button class="dbtn" id="dbtn-accesos" onclick="switchDept('accesos')"><i class="ti ti-lock" style="font-size:11px"></i> ACCESOS</button>
+    <button class="dbtn" id="dbtn-computos" onclick="switchDept('computos')">GENERADOR DE COMPUTOS</button>
   </div>
   <div class="bl">
     <div class="sb">
@@ -493,6 +549,15 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
     </div>
   </div>
 </div>
+<div class="mo" id="mo-lum">
+  <div class="md">
+    <div class="mt" id="lm-title">Nueva luminaria</div>
+    <div class="lm-prev" id="lm-prev"></div>
+    <div class="fg"><label>Imagen</label><div style="display:flex;gap:8px;align-items:center"><input type="file" id="lm-file" accept="image/*" onchange="cgLoadImg(this.files[0])" style="flex:1"><button class="bc" type="button" onclick="cgQuitarImg()">Quitar</button></div></div>
+    <div class="fr"><div class="fg"><label>Nombre</label><input type="text" id="lm-nombre" placeholder="Ej: Proyector SYD 448"></div><div class="fg"><label>Codigo</label><input type="text" id="lm-codigo" placeholder="Ej: SYD448-5K-30"></div></div>
+    <div class="ma"><button class="bd" id="lm-del" style="display:none;margin-right:auto" onclick="deleteLuminaria()">Eliminar</button><button class="bc" onclick="closeModal('mo-lum')">Cancelar</button><button class="bs" onclick="saveLuminaria()">Guardar</button></div>
+  </div>
+</div>
 <div class="mo" id="mo-acceso">
   <div class="md">
     <div class="mt" id="ac-title">Nuevo acceso</div>
@@ -586,7 +651,7 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
+var D = {luminarias:[], compgen:[], accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
@@ -604,7 +669,8 @@ var DEPTS = [
   {sec:"proyectos", label:"ARQUITECTURA", color:"#378ADD"},
   {sec:"marketing", label:"MARKETING",    color:"#D4537E"},
   {sec:"gestion",   label:"GESTION DE PROYECTOS", color:"#0F766E"},
-  {sec:"accesos",   label:"ACCESOS", color:"#475569"}
+  {sec:"accesos",   label:"ACCESOS", color:"#475569"},
+  {sec:"computos",  label:"GENERADOR DE COMPUTOS", color:"#00695C"}
 ];
 var curDept = "pipeline";
 function getDept(sec) {
@@ -678,8 +744,9 @@ function switchDept(sec) {
     b.style.borderColor = isAct ? d.color : "";
   });
   var sbEl = document.querySelector(".sb");
-  if (sbEl) sbEl.style.display = sec === "accesos" ? "none" : "";
-  if (sec === "accesos" && curView !== "board") switchView("board");
+  var _sinSidebar = sec === "accesos" || sec === "computos";
+  if (sbEl) sbEl.style.display = _sinSidebar ? "none" : "";
+  if (_sinSidebar && curView !== "board") switchView("board");
   if (sec === "marketing") {
     document.getElementById("sidebar-projects").style.display = "none";
     document.getElementById("sidebar-marketing").style.display = "block";
@@ -1102,6 +1169,16 @@ function startListeners() {
     checkReminders();
     if (curDept === "pipeline" && curView === "board") renderBoard();
     if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+  });
+  onSnapshot(collection(db,"luminarias"), function(snap) {
+    D.luminarias = [];
+    snap.forEach(function(d) { D.luminarias.push(d.data()); });
+    cgRefresh();
+  });
+  onSnapshot(collection(db,"computosGen"), function(snap) {
+    D.compgen = [];
+    snap.forEach(function(d) { D.compgen.push(d.data()); });
+    cgRefresh();
   });
   onSnapshot(collection(db,"accesos"), function(snap) {
     D.accesos = [];
@@ -1557,6 +1634,433 @@ function deleteAcceso() {
   closeModal("mo-acceso");
 }
 window.deleteAcceso = deleteAcceso;
+
+// ── GENERADOR DE COMPUTOS ────────────────────────────────────────
+// Base de luminarias (coleccion "luminarias": imagen comprimida, nombre, codigo) + computos
+// (coleccion "computosGen": proyecto, items, estado abierto/cerrado). Al cerrar se descarga el PDF.
+var cgView = "nuevo", cgCurId = null, cgPick = null, cgHi = 0, cgImgTmp = null, cgLumEdit = null;
+function cgNorm(s) { return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+function cgHoy() { var d = new Date(); function z(n){ return n < 10 ? "0" + n : "" + n; } return d.getFullYear() + "-" + z(d.getMonth()+1) + "-" + z(d.getDate()); }
+function cgLum(id) { for (var i=0; i<D.luminarias.length; i++) if (D.luminarias[i].id === id) return D.luminarias[i]; return null; }
+function cgCur() { if (!cgCurId) return null; for (var i=0; i<D.compgen.length; i++) if (D.compgen[i].id === cgCurId) return D.compgen[i]; return null; }
+function cgSaveComp(c) { showSyncing(); setDoc(doc(db, "computosGen", c.id), c).then(showSynced); }
+function cgSaveLum(l) { showSyncing(); return setDoc(doc(db, "luminarias", l.id), l).then(showSynced); }
+function cgEl(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+function cgThumb(l, size) {
+  var w = cgEl("div", "cg-thumb"); w.style.width = w.style.height = size + "px";
+  if (l && l.img) { var im = document.createElement("img"); im.src = l.img; im.alt = ""; w.appendChild(im); }
+  else w.innerHTML = "<i class='ti ti-bulb'></i>";
+  return w;
+}
+
+function renderComputosGen() {
+  var c = document.getElementById("board-inner"); c.innerHTML = "";
+  var hdr = cgEl("div", "ch");
+  var left = cgEl("div"); left.style.cssText = "display:flex;align-items:center;gap:8px";
+  left.innerHTML = "<i class='ti ti-list-numbers' style='font-size:18px;color:#00695C'></i><span style='font-size:17px;font-weight:600;color:#1f2937'>Generador de computos</span>";
+  var tabs = cgEl("div", "cg-tabs");
+  [["nuevo","Computo"],["base","Base de luminarias"],["historial","Historial"]].forEach(function(t){
+    var b = cgEl("button", "cg-tab" + (cgView === t[0] ? " act" : ""), t[1]);
+    b.onclick = function(){ cgView = t[0]; renderComputosGen(); };
+    tabs.appendChild(b);
+  });
+  hdr.appendChild(left); hdr.appendChild(tabs); c.appendChild(hdr);
+  var body = cgEl("div"); body.id = "cg-body"; c.appendChild(body);
+  if (cgView === "base") renderCGBase(body);
+  else if (cgView === "historial") renderCGHist(body);
+  else renderCGNuevo(body);
+}
+// Refresco desde Firestore sin pisar lo que se esta tipeando
+function cgRefresh() {
+  if (curDept !== "computos" || curView !== "board") return;
+  var ae = document.activeElement, body = document.getElementById("cg-body");
+  var typing = ae && body && body.contains(ae) && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA");
+  if (cgView === "nuevo") { var it = document.getElementById("cg-items"); if (it && (!typing || !it.contains(ae))) renderCGItems(it); }
+  else if (cgView === "base") { var bl = document.getElementById("cg-base-list"); if (bl) renderCGBaseList(bl); }
+  else if (!typing) renderComputosGen();
+}
+
+// ── Pantalla de computo ──
+function renderCGNuevo(body) {
+  var c = cgCur();
+  if (!c || c.estado === "cerrado") {
+    cgCurId = null;
+    var start = cgEl("div", "cg-start");
+    start.appendChild(cgEl("div", "cg-start-t", "Nuevo computo de luminarias"));
+    var pi = document.createElement("input"); pi.type = "text"; pi.id = "cg-proj-new"; pi.placeholder = "Proyecto / cliente (ej: Club Atletico Platense)";
+    pi.setAttribute("list", "cg-proj-list");
+    var dl = document.createElement("datalist"); dl.id = "cg-proj-list";
+    D.projects.filter(function(p){ return p.section === "pipeline" || p.section === "proyectos" || p.section === "gestion"; })
+      .map(function(p){ return p.name; }).filter(function(n, i, a){ return a.indexOf(n) === i; })
+      .forEach(function(n){ var o = document.createElement("option"); o.value = n; dl.appendChild(o); });
+    var b = cgEl("button", "bs", "Empezar computo");
+    var go = function(){
+      var nm = pi.value.trim(); if (!nm) { pi.focus(); return; }
+      var nc = {id:nid("cg"), proyecto:nm, creado:cgHoy(), items:[], estado:"abierto", by:currentUser, ts:Date.now()};
+      D.compgen.push(nc); cgCurId = nc.id; cgSaveComp(nc);
+      logActivity("empezo un computo de luminarias", nm, currentUser);
+      renderComputosGen();
+    };
+    b.onclick = go; pi.onkeydown = function(e){ if (e.key === "Enter") go(); };
+    start.appendChild(pi); start.appendChild(dl); start.appendChild(b);
+    var abiertos = D.compgen.filter(function(x){ return x.estado !== "cerrado"; }).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+    if (abiertos.length) {
+      start.appendChild(cgEl("div", "cg-sub", "Computos sin cerrar"));
+      abiertos.forEach(function(x){
+        var r = cgEl("button", "cg-open");
+        r.appendChild(cgEl("span", "cg-open-n", x.proyecto));
+        r.appendChild(cgEl("span", "cg-open-m", (x.items||[]).length + " items - " + fmtFecha(x.creado) + " - " + (memberName(x.by) || "")));
+        r.onclick = function(){ cgCurId = x.id; renderComputosGen(); };
+        start.appendChild(r);
+      });
+    }
+    body.appendChild(start);
+    setTimeout(function(){ pi.focus(); }, 50);
+    return;
+  }
+
+  var top = cgEl("div", "cg-top");
+  var tl = cgEl("div");
+  tl.appendChild(cgEl("div", "cg-proj", c.proyecto));
+  tl.appendChild(cgEl("div", "cg-sub", "Empezado el " + fmtFecha(c.creado) + " por " + (memberName(c.by) || "")));
+  top.appendChild(tl);
+  var ta = cgEl("div", "ha");
+  var bOtro = cgEl("button", "btn", "Salir sin cerrar"); bOtro.onclick = function(){ cgCurId = null; renderComputosGen(); };
+  var bClose = cgEl("button", "bs cg-close"); bClose.innerHTML = "<i class='ti ti-file-download' style='font-size:13px'></i> Cerrar computo y descargar PDF";
+  bClose.onclick = cgCerrar;
+  ta.appendChild(bOtro); ta.appendChild(bClose); top.appendChild(ta);
+  body.appendChild(top);
+
+  // Buscador + cantidad
+  var add = cgEl("div", "cg-add");
+  var sw = cgEl("div", "cg-sw");
+  var si = document.createElement("input"); si.type = "text"; si.id = "cg-search"; si.autocomplete = "off";
+  si.placeholder = "Busca la luminaria por nombre o codigo...";
+  var dd = cgEl("div", "cg-dd"); dd.id = "cg-dd";
+  sw.appendChild(si); sw.appendChild(dd);
+  var qi = document.createElement("input"); qi.type = "number"; qi.id = "cg-qty"; qi.min = "1"; qi.value = "1"; qi.placeholder = "Cant.";
+  var ab = cgEl("button", "bs"); ab.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar"; ab.id = "cg-addbtn";
+  add.appendChild(sw); add.appendChild(qi); add.appendChild(ab);
+  body.appendChild(add);
+  var sel = cgEl("div", "cg-sel"); sel.id = "cg-sel"; body.appendChild(sel);
+
+  si.oninput = function(){ cgPick = null; cgHi = 0; cgShowSel(); cgDropdown(); };
+  si.onfocus = function(){ if (si.value) cgDropdown(); };
+  si.onblur = function(){ setTimeout(function(){ dd.style.display = "none"; }, 180); };
+  si.onkeydown = function(e){
+    var opts = dd.querySelectorAll(".cg-opt");
+    if (e.key === "ArrowDown") { e.preventDefault(); cgHi = Math.min(cgHi + 1, opts.length - 1); cgDropdown(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); cgHi = Math.max(cgHi - 1, 0); cgDropdown(); }
+    else if (e.key === "Enter") { e.preventDefault(); if (opts[cgHi]) opts[cgHi].dispatchEvent(new MouseEvent("mousedown")); }
+    else if (e.key === "Escape") { dd.style.display = "none"; }
+  };
+  qi.onkeydown = function(e){ if (e.key === "Enter") cgAgregar(); };
+  ab.onclick = cgAgregar;
+
+  var items = cgEl("div"); items.id = "cg-items"; body.appendChild(items);
+  renderCGItems(items);
+  setTimeout(function(){ si.focus(); }, 50);
+}
+function cgDropdown() {
+  var si = document.getElementById("cg-search"), dd = document.getElementById("cg-dd"); if (!si || !dd) return;
+  var q = cgNorm(si.value.trim()); dd.innerHTML = "";
+  if (!q) { dd.style.display = "none"; return; }
+  var words = q.split(/\s+/);
+  var res = D.luminarias.filter(function(l){ var h = cgNorm(l.nombre + " " + l.codigo); return words.every(function(w){ return h.indexOf(w) >= 0; }); })
+    .sort(function(a,b){ return (a.nombre||"").localeCompare(b.nombre||""); }).slice(0, 8);
+  if (cgHi >= res.length + 1) cgHi = res.length;
+  res.forEach(function(l, i){
+    var o = cgEl("div", "cg-opt" + (i === cgHi ? " hi" : ""));
+    o.appendChild(cgThumb(l, 34));
+    var tx = cgEl("div", "cg-opt-tx"); tx.appendChild(cgEl("div", "cg-opt-n", l.nombre)); tx.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
+    o.appendChild(tx);
+    o.onmousedown = function(e){ if (e && e.preventDefault) e.preventDefault(); cgElegir(l); };
+    dd.appendChild(o);
+  });
+  var nw = cgEl("div", "cg-opt cg-opt-new" + (cgHi === res.length ? " hi" : ""));
+  nw.innerHTML = "<i class='ti ti-plus'></i> ";
+  nw.appendChild(document.createTextNode((res.length ? "No es ninguna: " : "No esta en la base: ") + "cargar \"" + si.value.trim() + "\" como luminaria nueva"));
+  nw.onmousedown = function(e){ if (e && e.preventDefault) e.preventDefault(); dd.style.display = "none"; openLumModal(null, si.value.trim(), true); };
+  dd.appendChild(nw);
+  dd.style.display = "block";
+}
+function cgElegir(l) {
+  cgPick = l.id;
+  var si = document.getElementById("cg-search"), dd = document.getElementById("cg-dd"), qi = document.getElementById("cg-qty");
+  if (si) si.value = l.nombre + (l.codigo ? " - " + l.codigo : "");
+  if (dd) dd.style.display = "none";
+  cgShowSel();
+  if (qi) { qi.focus(); qi.select(); }
+}
+function cgShowSel() {
+  var s = document.getElementById("cg-sel"); if (!s) return; s.innerHTML = "";
+  var l = cgPick ? cgLum(cgPick) : null;
+  if (!l) { s.style.display = "none"; return; }
+  s.style.display = "flex";
+  s.appendChild(cgThumb(l, 44));
+  var tx = cgEl("div"); tx.appendChild(cgEl("div", "cg-opt-n", l.nombre)); tx.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
+  s.appendChild(tx);
+  s.appendChild(cgEl("span", "cg-sel-hint", "Pone la cantidad y Enter"));
+}
+function cgAgregar() {
+  var c = cgCur(); if (!c) return;
+  var si = document.getElementById("cg-search"), qi = document.getElementById("cg-qty");
+  if (!cgPick) { if (si) { si.focus(); cgDropdown(); } return; }
+  var q = parseInt(qi.value, 10); if (!q || q < 1) { qi.focus(); qi.select(); return; }
+  var l = cgLum(cgPick); if (!l) return;
+  if (!c.items) c.items = [];
+  var ex = c.items.filter(function(it){ return it.lumId === l.id; })[0];
+  if (ex) ex.cant = (parseInt(ex.cant, 10) || 0) + q;
+  else c.items.push({lumId:l.id, nombre:l.nombre, codigo:l.codigo || "", cant:q});
+  c.ts = Date.now(); cgSaveComp(c);
+  cgPick = null; si.value = ""; qi.value = "1"; cgShowSel();
+  renderCGItems(document.getElementById("cg-items"));
+  si.focus();
+}
+function renderCGItems(box) {
+  if (!box) return; var c = cgCur(); if (!c) return;
+  box.innerHTML = "";
+  var items = c.items || [];
+  if (!items.length) { box.appendChild(cgEl("div", "cg-empty", "Todavia no agregaste luminarias. Busca arriba, elegila y pone la cantidad.")); return; }
+  var tb = cgEl("div", "cg-table");
+  var hd = cgEl("div", "cg-tr cg-th");
+  ["#", "", "Codigo", "Luminaria", "Cantidad", ""].forEach(function(h){ hd.appendChild(cgEl("span", null, h)); });
+  tb.appendChild(hd);
+  var total = 0;
+  items.forEach(function(it, idx){
+    var l = cgLum(it.lumId) || it;
+    total += parseInt(it.cant, 10) || 0;
+    var r = cgEl("div", "cg-tr");
+    r.appendChild(cgEl("span", "cg-num", String(idx + 1)));
+    r.appendChild(cgThumb(l, 40));
+    r.appendChild(cgEl("span", "cg-cod", l.codigo || it.codigo || "-"));
+    r.appendChild(cgEl("span", "cg-nom", l.nombre || it.nombre));
+    var q = document.createElement("input"); q.type = "number"; q.min = "1"; q.value = it.cant; q.className = "cg-q";
+    q.onchange = function(){ var v = parseInt(this.value, 10); var cc = cgCur(); if (!cc || !cc.items[idx]) return; if (!v || v < 1) { this.value = cc.items[idx].cant; return; } cc.items[idx].cant = v; cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
+    r.appendChild(q);
+    var d = cgEl("button", "ctc-del"); d.innerHTML = "<i class='ti ti-x'></i>"; d.title = "Quitar";
+    d.onclick = function(){ var cc = cgCur(); if (!cc) return; cc.items.splice(idx, 1); cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
+    r.appendChild(d);
+    tb.appendChild(r);
+  });
+  var tf = cgEl("div", "cg-tr cg-tf");
+  tf.appendChild(cgEl("span")); tf.appendChild(cgEl("span")); tf.appendChild(cgEl("span"));
+  tf.appendChild(cgEl("span", "cg-nom", "Total luminarias (" + items.length + " tipos)"));
+  tf.appendChild(cgEl("span", "cg-tot", String(total))); tf.appendChild(cgEl("span"));
+  tb.appendChild(tf);
+  box.appendChild(tb);
+}
+function cgCerrar() {
+  var c = cgCur(); if (!c) return;
+  if (!(c.items || []).length) { alert("Agrega al menos una luminaria antes de cerrar el computo."); return; }
+  if (!confirm("Cerrar el computo de \"" + c.proyecto + "\" y descargar el PDF?")) return;
+  c.estado = "cerrado"; c.cerrado = cgHoy(); c.cerradoPor = currentUser; c.ts = Date.now();
+  cgSaveComp(c);
+  logActivity("cerro un computo de luminarias", c.proyecto, currentUser);
+  cgPdf(c);
+  cgCurId = null; cgView = "historial"; renderComputosGen();
+}
+
+// ── PDF (A4 vertical, formato de informe ITELSA) ──
+function cgImgSize(src) {
+  return new Promise(function(res){ var im = new Image(); im.onload = function(){ res({w:im.naturalWidth, h:im.naturalHeight}); }; im.onerror = function(){ res(null); }; im.src = src; });
+}
+async function cgPdf(c) {
+  if (!window.jspdf) { alert("No se pudo cargar el generador de PDF. Revisa la conexion y volve a intentar desde Historial."); return; }
+  var J = new window.jspdf.jsPDF({unit:"mm", format:"a4"});
+  var W = 210, H = 297, M = 18, ink = [13,27,42], green = [0,105,92], grey = [107,114,128];
+  var fecha = fmtFecha(c.cerrado || cgHoy());
+  var logoEl = document.querySelector('img[alt="ITELSA"]') || document.querySelector('img[alt="ITELSA Lighting"]');
+  var logo = logoEl ? logoEl.src : null, logoSz = logo ? await cgImgSize(logo) : null;
+  function header() {
+    if (logo && logoSz) { var lh = 12, lw = lh * logoSz.w / logoSz.h; if (lw > 40) { lw = 40; lh = lw * logoSz.h / logoSz.w; } try { J.addImage(logo, "PNG", M, 10, lw, lh); } catch(e) {} }
+    J.setFont("helvetica", "bold"); J.setFontSize(9); J.setTextColor.apply(J, green);
+    J.text("CÓMPUTO DE LUMINARIAS", W - M, 14, {align:"right"});
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, grey);
+    J.text(J.splitTextToSize(c.proyecto, 90)[0], W - M, 19, {align:"right"});
+    J.setDrawColor(209,213,219); J.setLineWidth(0.2); J.line(M, 25, W - M, 25);
+    J.setDrawColor.apply(J, green); J.setLineWidth(0.6); J.line(M, 25, M + 14, 25);
+  }
+  header();
+  var y = 36;
+  J.setFont("helvetica", "bold"); J.setFontSize(8); J.setTextColor.apply(J, green); J.text("CÓMPUTO DE LUMINARIAS", M, y);
+  y += 7; J.setFontSize(16); J.setTextColor.apply(J, ink);
+  var tl = J.splitTextToSize(c.proyecto, W - 2*M); J.text(tl, M, y); y += tl.length * 6.5 + 2;
+  var meta = [["Fecha", fecha], ["Realizado por", memberName(c.cerradoPor || c.by) || "-"], ["Tipos de luminaria", String(c.items.length)],
+              ["Total de luminarias", String(c.items.reduce(function(s, it){ return s + (parseInt(it.cant, 10) || 0); }, 0))]];
+  var cw = (W - 2*M) / 4;
+  meta.forEach(function(m, i){
+    J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey); J.text(m[0].toUpperCase(), M + i*cw, y + 4);
+    J.setFont("helvetica", "bold"); J.setFontSize(10.5); J.setTextColor.apply(J, ink); J.text(m[1], M + i*cw, y + 9.5);
+  });
+  y += 17;
+  var cols = [{t:"#", w:10, a:"center"}, {t:"IMAGEN", w:24, a:"center"}, {t:"CÓDIGO", w:36, a:"left"}, {t:"LUMINARIA", w:76, a:"left"}, {t:"CANTIDAD", w:28, a:"center"}];
+  var rowH = 20;
+  function th() {
+    J.setFillColor.apply(J, ink); J.rect(M, y, W - 2*M, 8, "F");
+    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor(255,255,255);
+    var x = M; cols.forEach(function(col){ J.text(col.t, col.a === "center" ? x + col.w/2 : x + 3, y + 5.3, {align: col.a === "center" ? "center" : "left"}); x += col.w; });
+    y += 8;
+  }
+  th();
+  for (var i=0; i<c.items.length; i++) {
+    var it = c.items[i], l = cgLum(it.lumId) || {};
+    if (y + rowH > H - 22) { J.addPage(); header(); y = 32; th(); }
+    if (i % 2 === 1) { J.setFillColor(244,247,248); J.rect(M, y, W - 2*M, rowH, "F"); }
+    var x = M, cy = y + rowH/2 + 1.3;
+    J.setFont("helvetica", "normal"); J.setFontSize(9); J.setTextColor.apply(J, grey); J.text(String(i+1), x + cols[0].w/2, cy, {align:"center"}); x += cols[0].w;
+    if (l.img) {
+      var sz = (l.iw && l.ih) ? {w:l.iw, h:l.ih} : await cgImgSize(l.img);
+      if (sz) { var bw = 18, bh = 16, r = Math.min(bw/sz.w, bh/sz.h), iw = sz.w*r, ih = sz.h*r;
+        try { J.addImage(l.img, "JPEG", x + (cols[1].w - iw)/2, y + (rowH - ih)/2, iw, ih); } catch(e) {} }
+    }
+    x += cols[1].w;
+    J.setFont("helvetica", "bold"); J.setFontSize(9); J.setTextColor.apply(J, ink);
+    J.text(J.splitTextToSize(l.codigo || it.codigo || "-", cols[2].w - 5).slice(0,2), x + 3, cy - (String(l.codigo || it.codigo || "").length > 18 ? 2 : 0)); x += cols[2].w;
+    J.setFont("helvetica", "normal"); J.setFontSize(9);
+    var nl = J.splitTextToSize(l.nombre || it.nombre || "", cols[3].w - 5).slice(0,3);
+    J.text(nl, x + 3, cy - (nl.length - 1) * 2); x += cols[3].w;
+    J.setFont("helvetica", "bold"); J.setFontSize(11); J.setTextColor.apply(J, green); J.text(String(it.cant), x + cols[4].w/2, cy, {align:"center"});
+    J.setDrawColor(229,231,235); J.setLineWidth(0.15); J.line(M, y + rowH, W - M, y + rowH);
+    y += rowH;
+  }
+  if (y + 12 > H - 22) { J.addPage(); header(); y = 32; }
+  J.setFillColor(244,247,248); J.rect(M, y + 2, W - 2*M, 10, "F");
+  J.setFont("helvetica", "bold"); J.setFontSize(9.5); J.setTextColor.apply(J, ink); J.text("TOTAL DE LUMINARIAS", M + 3, y + 8.6);
+  J.setTextColor.apply(J, green); J.setFontSize(12);
+  J.text(meta[3][1], M + cols[0].w + cols[1].w + cols[2].w + cols[3].w + cols[4].w/2, y + 8.8, {align:"center"});
+  var n = J.getNumberOfPages();
+  for (var p=1; p<=n; p++) {
+    J.setPage(p); J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey);
+    J.text("ITELSA S.A.S. - Cómputo de luminarias - " + fecha, M, H - 10);
+    J.text("Página " + p + " de " + n, W - M, H - 10, {align:"right"});
+  }
+  var safe = c.proyecto.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
+  J.save("Computo_" + safe + "_" + (c.cerrado || cgHoy()) + ".pdf");
+}
+
+// ── Historial ──
+function renderCGHist(body) {
+  var list = D.compgen.slice().sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+  if (!list.length) { body.appendChild(cgEl("div", "cg-empty", "Todavia no hay computos.")); return; }
+  var tb = cgEl("div", "cg-hist");
+  list.forEach(function(c){
+    var r = cgEl("div", "cg-hrow");
+    var tx = cgEl("div"); tx.style.cssText = "flex:1;min-width:0";
+    tx.appendChild(cgEl("div", "cg-open-n", c.proyecto));
+    var tot = (c.items||[]).reduce(function(s, it){ return s + (parseInt(it.cant, 10) || 0); }, 0);
+    tx.appendChild(cgEl("div", "cg-open-m", (c.estado === "cerrado" ? "Cerrado el " + fmtFecha(c.cerrado) : "Abierto desde el " + fmtFecha(c.creado)) +
+      " - " + (c.items||[]).length + " tipos, " + tot + " luminarias - " + (memberName(c.cerradoPor || c.by) || "")));
+    r.appendChild(tx);
+    var st = cgEl("span", "cg-st " + (c.estado === "cerrado" ? "cerr" : "ab"), c.estado === "cerrado" ? "Cerrado" : "Abierto"); r.appendChild(st);
+    if (c.estado === "cerrado") {
+      var dl = cgEl("button", "btn"); dl.innerHTML = "<i class='ti ti-download' style='font-size:12px'></i> PDF"; dl.onclick = function(){ cgPdf(c); }; r.appendChild(dl);
+      var dup = cgEl("button", "btn"); dup.innerHTML = "<i class='ti ti-copy' style='font-size:12px'></i> Nuevo a partir de este"; dup.title = "Para un cambio de proyecto: copia las luminarias en un computo nuevo";
+      dup.onclick = function(){
+        var nc = {id:nid("cg"), proyecto:c.proyecto, creado:cgHoy(), items:JSON.parse(JSON.stringify(c.items||[])), estado:"abierto", by:currentUser, ts:Date.now(), basadoEn:c.id};
+        D.compgen.push(nc); cgSaveComp(nc); cgCurId = nc.id; cgView = "nuevo"; renderComputosGen();
+      };
+      r.appendChild(dup);
+    } else {
+      var go = cgEl("button", "btn", "Continuar"); go.onclick = function(){ cgCurId = c.id; cgView = "nuevo"; renderComputosGen(); }; r.appendChild(go);
+    }
+    var del = cgEl("button", "acc-ic"); del.innerHTML = "<i class='ti ti-trash'></i>"; del.title = "Eliminar";
+    del.onclick = function(){ if (!confirm("Eliminar el computo de \"" + c.proyecto + "\"?")) return; showSyncing(); deleteDoc(doc(db, "computosGen", c.id)).then(showSynced); };
+    r.appendChild(del);
+    tb.appendChild(r);
+  });
+  body.appendChild(tb);
+}
+
+// ── Base de luminarias ──
+function renderCGBase(body) {
+  var top = cgEl("div", "cg-add");
+  var si = document.createElement("input"); si.type = "search"; si.id = "cg-base-q"; si.placeholder = "Buscar en la base por nombre o codigo...";
+  si.oninput = function(){ renderCGBaseList(document.getElementById("cg-base-list")); };
+  var b = cgEl("button", "bs"); b.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Nueva luminaria"; b.onclick = function(){ openLumModal(null, "", false); };
+  top.appendChild(si); top.appendChild(b); body.appendChild(top);
+  var list = cgEl("div", "cg-base"); list.id = "cg-base-list"; body.appendChild(list);
+  renderCGBaseList(list);
+}
+function renderCGBaseList(list) {
+  if (!list) return; list.innerHTML = "";
+  var qEl = document.getElementById("cg-base-q"), q = cgNorm(qEl ? qEl.value.trim() : "");
+  var items = D.luminarias.filter(function(l){ return !q || cgNorm(l.nombre + " " + l.codigo).indexOf(q) >= 0; })
+    .sort(function(a,b){ return (a.nombre||"").localeCompare(b.nombre||""); });
+  if (!items.length) { list.appendChild(cgEl("div", "cg-empty", q ? "No hay luminarias que coincidan." : "La base esta vacia. Carga la primera con \"Nueva luminaria\".")); return; }
+  items.forEach(function(l){
+    var card = cgEl("div", "cg-lcard");
+    card.appendChild(cgThumb(l, 96));
+    card.appendChild(cgEl("div", "cg-opt-n", l.nombre));
+    card.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
+    card.onclick = function(){ openLumModal(l, "", false); };
+    list.appendChild(card);
+  });
+}
+function openLumModal(l, nombreInicial, elegirAlGuardar) {
+  cgLumEdit = {id: l ? l.id : null, elegir: !!elegirAlGuardar};
+  cgImgTmp = l && l.img ? {img:l.img, iw:l.iw, ih:l.ih} : null;
+  document.getElementById("lm-title").textContent = l ? "Editar luminaria" : "Nueva luminaria";
+  document.getElementById("lm-nombre").value = l ? l.nombre : (nombreInicial || "");
+  document.getElementById("lm-codigo").value = l ? (l.codigo || "") : "";
+  document.getElementById("lm-file").value = "";
+  document.getElementById("lm-del").style.display = l ? "inline-block" : "none";
+  cgLmPreview();
+  document.getElementById("mo-lum").classList.add("op");
+  setTimeout(function(){ document.getElementById(l || !nombreInicial ? "lm-nombre" : "lm-codigo").focus(); }, 50);
+}
+function cgLmPreview() {
+  var p = document.getElementById("lm-prev"); p.innerHTML = "";
+  if (cgImgTmp && cgImgTmp.img) { var im = document.createElement("img"); im.src = cgImgTmp.img; p.appendChild(im); }
+  else p.innerHTML = "<i class='ti ti-photo'></i><span>Sin imagen</span>";
+}
+// Achica la imagen (max 400 px, JPEG) para que entre en la base y en el PDF sin pesar
+function cgLoadImg(file) {
+  if (!file) return;
+  var rd = new FileReader();
+  rd.onload = function(){
+    var im = new Image();
+    im.onload = function(){
+      var max = 400, r = Math.min(1, max / Math.max(im.width, im.height));
+      var cv = document.createElement("canvas"); cv.width = Math.round(im.width * r); cv.height = Math.round(im.height * r);
+      var cx = cv.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(im, 0, 0, cv.width, cv.height);
+      cgImgTmp = {img: cv.toDataURL("image/jpeg", 0.82), iw: cv.width, ih: cv.height};
+      cgLmPreview();
+    };
+    im.onerror = function(){ alert("No se pudo leer la imagen. Proba con JPG o PNG."); };
+    im.src = rd.result;
+  };
+  rd.readAsDataURL(file);
+}
+window.cgLoadImg = cgLoadImg;
+function saveLuminaria() {
+  var nombre = document.getElementById("lm-nombre").value.trim();
+  var codigo = document.getElementById("lm-codigo").value.trim();
+  if (!nombre) { document.getElementById("lm-nombre").focus(); return; }
+  var dup = D.luminarias.filter(function(x){ return codigo && x.id !== cgLumEdit.id && cgNorm(x.codigo) === cgNorm(codigo); })[0];
+  if (dup && !confirm("Ya existe una luminaria con el codigo " + codigo + " (" + dup.nombre + "). Guardar igual?")) return;
+  var l = cgLumEdit.id ? Object.assign({}, cgLum(cgLumEdit.id)) : {id:nid("lum"), creado:cgHoy(), by:currentUser};
+  l.nombre = nombre; l.codigo = codigo;
+  if (cgImgTmp) { l.img = cgImgTmp.img; l.iw = cgImgTmp.iw; l.ih = cgImgTmp.ih; } else { delete l.img; delete l.iw; delete l.ih; }
+  l.ts = Date.now();
+  var i = D.luminarias.map(function(x){ return x.id; }).indexOf(l.id);
+  if (i >= 0) D.luminarias[i] = l; else D.luminarias.push(l);
+  cgSaveLum(l);
+  logActivity((cgLumEdit.id ? "edito" : "cargo") + " la luminaria " + nombre + (codigo ? " (" + codigo + ")" : ""), "Generador de computos", currentUser);
+  var elegir = cgLumEdit.elegir;
+  closeModal("mo-lum");
+  if (elegir && cgView === "nuevo") cgElegir(l);
+  else cgRefresh();
+}
+window.saveLuminaria = saveLuminaria;
+function deleteLuminaria() {
+  if (!cgLumEdit || !cgLumEdit.id) return;
+  if (!confirm("Eliminar esta luminaria de la base? Los computos ya hechos no se modifican.")) return;
+  showSyncing(); deleteDoc(doc(db, "luminarias", cgLumEdit.id)).then(showSynced);
+  closeModal("mo-lum");
+}
+window.deleteLuminaria = deleteLuminaria;
+window.cgQuitarImg = function(){ cgImgTmp = null; document.getElementById("lm-file").value = ""; cgLmPreview(); };
 
 // ── NOTIFICACION MANUAL ──────────────────────────────────────────
 var notifSel = [];
@@ -2417,6 +2921,7 @@ function buildInformesBlock(proj, isFin) {
 function renderBoard() {
   if (curDept === "marketing") { renderMarketingBoard(); return; }
   if (curDept === "accesos") { renderAccesosBoard(); return; }
+  if (curDept === "computos") { renderComputosGen(); return; }
   var c = document.getElementById("board-inner");
   if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
