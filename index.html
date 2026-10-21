@@ -205,6 +205,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
 .dbtn:hover{border-color:#9ca3af;color:#374151}
 .dbtn.act{color:#fff;border-color:transparent}
+.comp-box{background:#fff;border:1.5px solid #378ADD;border-left:5px solid #1d4ed8;border-radius:10px;padding:12px 14px;margin:0 0 14px}
+.comp-title{font-size:12px;font-weight:700;color:#1d4ed8;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.comp-row{display:grid;grid-template-columns:78px 140px 108px 1fr 108px 26px;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;margin-bottom:4px}
+.comp-row input{width:100%;font-size:12px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#374151;min-width:0}
+.comp-row input:focus{outline:none;border-color:#378ADD}
+.comp-hd{font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em;padding-top:0;padding-bottom:0}
+.comp-row:not(.comp-hd){background:#f9f9f8;border:1px solid #e5e7eb}
+.comp-row.comp-last{background:#eff6ff;border-color:#93c5fd}
+.comp-row.comp-ok{background:#f0fdf4;border-color:#86efac}
+.comp-n{font-size:12px;font-weight:600;color:#374151;white-space:nowrap}
+.comp-last .comp-n{color:#1d4ed8}
+.comp-tick{font-size:11px;font-weight:500;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fff;color:#9ca3af;cursor:pointer;white-space:nowrap}
+.comp-tick:disabled{cursor:default}
+.comp-tick.on.comp-entregado{background:#dbeafe;border-color:#3b82f6;color:#1d4ed8}
+.comp-tick.on.comp-aprobado{background:#dcfce7;border-color:#16a34a;color:#166534}
+.comp-link{display:flex;align-items:center;gap:6px;min-width:0}
+.comp-link a{color:#2563eb;font-size:14px;flex-shrink:0}
+@media (max-width:900px){.comp-row{grid-template-columns:1fr 1fr}.comp-hd{display:none}}
 .acc-lock{max-width:320px;margin:60px auto;background:#fff;border:1px solid var(--br);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .acc-lock-t{font-size:17px;font-weight:600;color:#1f2937}
 .acc-lock-s{font-size:12px;color:#9ca3af;margin-bottom:4px}
@@ -616,6 +634,7 @@ function syncLinkedFields(p) {
   linked.carpeta = p.carpeta;
   linked.notes = p.notes;
   linked.aspectos = p.aspectos || "";
+  linked.computos = JSON.parse(JSON.stringify(p.computos || []));
   saveProject(linked);
 }
 // Crea una copia espejo de una tarea nueva en el proyecto vinculado (Proyectos <-> Arquitectura),
@@ -1586,6 +1605,72 @@ function sendManualNotif() {
 }
 window.sendManualNotif = sendManualNotif;
 
+// ── COMPUTOS DE LUMINARIAS (Proyectos <-> Arquitectura, replicado) ──
+// Cada cambio de proyecto genera un computo nuevo: se suma una fila con fecha, entregado,
+// link de Dropbox y aprobado. El ultimo cargado queda marcado como "Vigente".
+function updComputos(fn) {
+  var p = getProj(); if (!p) return;
+  if (!p.computos) p.computos = [];
+  fn(p.computos); saveProject(p); syncLinkedFields(p);
+}
+function buildComputosBlock(proj, isFin) {
+  var w = document.createElement("div"); w.className = "comp-box";
+  var t = document.createElement("div"); t.className = "comp-title";
+  t.innerHTML = "<i class='ti ti-bulb' style='font-size:15px'></i> ";
+  t.appendChild(document.createTextNode("COMPUTOS DE LUMINARIAS APROBADOS"));
+  w.appendChild(t);
+  var list = proj.computos || [];
+  if (list.length) {
+    var hd = document.createElement("div"); hd.className = "comp-row comp-hd";
+    ["#", "Fecha", "Entregado", "Link de Dropbox", "Aprobado", ""].forEach(function(h){ var s = document.createElement("span"); s.textContent = h; hd.appendChild(s); });
+    w.appendChild(hd);
+  } else {
+    var em = document.createElement("div"); em.className = "gempty"; em.textContent = "Todavia no hay computos cargados."; w.appendChild(em);
+  }
+  list.forEach(function(cp, idx) {
+    var last = idx === list.length - 1;
+    var r = document.createElement("div"); r.className = "comp-row" + (last ? " comp-last" : "") + (cp.aprobado ? " comp-ok" : "");
+    var n = document.createElement("span"); n.className = "comp-n"; n.textContent = (idx + 1) + (last ? " Vigente" : ""); r.appendChild(n);
+    var f = document.createElement("input"); f.type = "date"; f.value = cp.fecha || ""; if (isFin) f.disabled = true;
+    f.onchange = function(){ var v = this.value; updComputos(function(a){ if (a[idx]) a[idx].fecha = v; }); };
+    r.appendChild(f);
+    function tick(field, lbl) {
+      var on = !!cp[field];
+      var b = document.createElement("button"); b.className = "comp-tick" + (on ? " on" : "") + " comp-" + field;
+      b.innerHTML = on ? "<i class='ti ti-check'></i> " : "";
+      b.appendChild(document.createTextNode(on ? lbl : "No"));
+      if (isFin) b.disabled = true;
+      b.onclick = function(){ updComputos(function(a){ if (a[idx]) a[idx][field] = !a[idx][field]; }); };
+      return b;
+    }
+    r.appendChild(tick("entregado", "Entregado"));
+    var lw = document.createElement("div"); lw.className = "comp-link";
+    var li = document.createElement("input"); li.type = "url"; li.placeholder = "https://www.dropbox.com/..."; li.value = cp.link || ""; if (isFin) li.disabled = true;
+    li.onchange = function(){ var v = this.value.trim(); updComputos(function(a){ if (a[idx]) a[idx].link = v; }); };
+    lw.appendChild(li);
+    if (cp.link) { var a = document.createElement("a"); a.href = cp.link; a.target = "_blank"; a.rel = "noopener"; a.title = "Abrir en Dropbox"; a.innerHTML = "<i class='ti ti-external-link'></i>"; lw.appendChild(a); }
+    r.appendChild(lw);
+    r.appendChild(tick("aprobado", "Aprobado"));
+    if (!isFin) {
+      var d = document.createElement("button"); d.className = "ctc-del"; d.title = "Quitar computo"; d.innerHTML = "<i class='ti ti-x'></i>";
+      d.onclick = function(){ if (confirm("Quitar el computo " + (idx + 1) + "?")) updComputos(function(a){ a.splice(idx, 1); }); };
+      r.appendChild(d);
+    } else r.appendChild(document.createElement("span"));
+    w.appendChild(r);
+  });
+  if (!isFin) {
+    var add = document.createElement("button"); add.className = "nb"; add.style.marginTop = "8px";
+    add.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> " + (list.length ? "Nuevo computo (cambio de proyecto)" : "Agregar computo");
+    add.onclick = function(){
+      var hoy = new Date(); function z(x){ return x < 10 ? "0" + x : "" + x; }
+      updComputos(function(a){ a.push({id:nid("cmp"), fecha: hoy.getFullYear() + "-" + z(hoy.getMonth()+1) + "-" + z(hoy.getDate()), entregado:false, link:"", aprobado:false}); });
+      logActivity("agrego un computo de luminarias", proj.name, currentUser);
+    };
+    w.appendChild(add);
+  }
+  return w;
+}
+
 // ── ASPECTOS IMPORTANTES (bloque resaltado debajo de "Necesario del proyecto") ──
 function buildAspectosBlock(proj, isFin) {
   var w = document.createElement("div"); w.className = "asp-box";
@@ -2472,6 +2557,8 @@ function renderBoard() {
 
   // Aspectos importantes: bloque resaltado (en Gestion va arriba de todo)
   if (!isGest) box.appendChild(buildAspectosBlock(proj, isFin));
+  // Computos de luminarias (Proyectos y Arquitectura, replicado entre ambos)
+  if (proj.section === "pipeline" || proj.section === "proyectos") box.appendChild(buildComputosBlock(proj, isFin));
 
   // Pipeline (PROYECTOS): datos al margen + obra
   if (proj.section === "pipeline") {
@@ -2748,6 +2835,7 @@ function onEntregaArqChange(val) {
         start: p.start || new Date().toISOString().slice(0,10), end: val,
         notes: "", section: "proyectos", priority: p.priority||"media",
         status: "activo", checklist: {}, necesario: Object.assign({}, p.necesario||{}),
+        aspectos: p.aspectos || "", computos: JSON.parse(JSON.stringify(p.computos || [])),
         dropbox: false, sourceProjectId: p.id
       };
       saveProject(arqProj);
