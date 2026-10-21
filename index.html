@@ -205,6 +205,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dbtn{padding:7px 18px;font-size:12px;font-weight:700;letter-spacing:0.04em;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f9f9f8;color:#9ca3af;transition:all 0.15s}
 .dbtn:hover{border-color:#9ca3af;color:#374151}
 .dbtn.act{color:#fff;border-color:transparent}
+.acc-lock{max-width:320px;margin:60px auto;background:#fff;border:1px solid var(--br);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.acc-lock-t{font-size:17px;font-weight:600;color:#1f2937}
+.acc-lock-s{font-size:12px;color:#9ca3af;margin-bottom:4px}
+.acc-lock input{width:100%;font-size:16px;letter-spacing:0.3em;text-align:center;padding:9px;border-radius:8px;border:1px solid #d1d5db;background:#f9f9f8}
+.acc-lock input:focus{outline:none;border-color:#475569}
+.acc-lock .bs{width:100%}
+.acc-err{font-size:12px;color:#b91c1c;min-height:14px}
+.acc-search{font-size:12px;padding:7px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;width:180px}
+.acc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;align-items:start}
+.acc-card{background:#fff;border:1px solid var(--br);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.acc-top{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.acc-name{font-size:14px;font-weight:600;color:#1f2937;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-cat{font-size:10px;font-weight:600;color:#475569;background:#f1f5f9;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.acc-row{display:flex;align-items:center;gap:6px;font-size:12px}
+.acc-lbl{color:#9ca3af;width:72px;flex-shrink:0}
+.acc-val{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#374151;font-family:ui-monospace,Menlo,Consolas,monospace}
+a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
+.acc-ic{border:none;background:transparent;color:#9ca3af;cursor:pointer;font-size:14px;padding:2px 3px;border-radius:5px}
+.acc-ic:hover{color:#374151;background:#f3f4f6}
+.acc-notas{font-size:12px;color:#6b7280;background:#f9f9f8;border-radius:7px;padding:6px 8px;white-space:pre-wrap}
+.acc-empty{grid-column:1/-1;text-align:center;padding:40px;color:#9ca3af;font-size:13px}
 .asp-box{background:#fff7ed;border:1.5px solid #f97316;border-left:5px solid #ea580c;border-radius:10px;padding:12px 14px;margin:2px 0 14px}
 .asp-title{font-size:12px;font-weight:700;color:#c2410c;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;margin-bottom:8px}
 .asp-ta{width:100%;min-height:70px;font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid #fdba74;background:#fff;color:#1f2937;resize:vertical;line-height:1.55;font-family:inherit}
@@ -331,6 +352,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="dbtn" id="dbtn-proyectos" onclick="switchDept('proyectos')">ARQUITECTURA</button>
     <button class="dbtn" id="dbtn-marketing" onclick="switchDept('marketing')">MARKETING</button>
     <button class="dbtn" id="dbtn-gestion" onclick="switchDept('gestion')">GESTION DE PROYECTOS</button>
+    <button class="dbtn" id="dbtn-accesos" onclick="switchDept('accesos')"><i class="ti ti-lock" style="font-size:11px"></i> ACCESOS</button>
   </div>
   <div class="bl">
     <div class="sb">
@@ -453,6 +475,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
 </div>
+<div class="mo" id="mo-acceso">
+  <div class="md">
+    <div class="mt" id="ac-title">Nuevo acceso</div>
+    <div class="fr"><div class="fg"><label>Nombre</label><input type="text" id="ac-nombre" placeholder="Ej: Mercado Libre"></div><div class="fg"><label>Categoria (opcional)</label><input type="text" id="ac-cat" placeholder="Ej: Ventas, Redes, Proveedores"></div></div>
+    <div class="fg"><label>Link</label><input type="text" id="ac-link" placeholder="https://..."></div>
+    <div class="fr"><div class="fg"><label>Usuario</label><input type="text" id="ac-usuario" autocomplete="off"></div><div class="fg"><label>Contraseña</label><input type="text" id="ac-clave" autocomplete="off"></div></div>
+    <div class="fg"><label>Notas</label><textarea id="ac-notas" placeholder="PIN, preguntas de seguridad, quien lo usa..."></textarea></div>
+    <div class="ma"><button class="bd" id="ac-del" style="display:none;margin-right:auto" onclick="deleteAcceso()">Eliminar</button><button class="bc" onclick="closeModal('mo-acceso')">Cancelar</button><button class="bs" onclick="saveAcceso()">Guardar</button></div>
+  </div>
+</div>
 <div class="mo" id="mo-notif">
   <div class="md">
     <div class="mt">Enviar notificacion</div>
@@ -536,7 +568,7 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
+var D = {accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
@@ -553,7 +585,8 @@ var DEPTS = [
   {sec:"pipeline",  label:"PROYECTOS",    color:"#7F77DD"},
   {sec:"proyectos", label:"ARQUITECTURA", color:"#378ADD"},
   {sec:"marketing", label:"MARKETING",    color:"#D4537E"},
-  {sec:"gestion",   label:"GESTION DE PROYECTOS", color:"#0F766E"}
+  {sec:"gestion",   label:"GESTION DE PROYECTOS", color:"#0F766E"},
+  {sec:"accesos",   label:"ACCESOS", color:"#475569"}
 ];
 var curDept = "pipeline";
 function getDept(sec) {
@@ -615,6 +648,7 @@ function debounce(fn, wait) {
   };
 }
 function switchDept(sec) {
+  if (curDept === "accesos" && sec !== "accesos") accLock(); // al salir de Accesos se vuelve a bloquear
   curDept = sec; selProj=null; selTask=null; filterMember=null; closeDetail();
   DEPTS.forEach(function(d) {
     var b = document.getElementById("dbtn-"+d.sec);
@@ -624,6 +658,9 @@ function switchDept(sec) {
     b.style.background = isAct ? d.color : "";
     b.style.borderColor = isAct ? d.color : "";
   });
+  var sbEl = document.querySelector(".sb");
+  if (sbEl) sbEl.style.display = sec === "accesos" ? "none" : "";
+  if (sec === "accesos" && curView !== "board") switchView("board");
   if (sec === "marketing") {
     document.getElementById("sidebar-projects").style.display = "none";
     document.getElementById("sidebar-marketing").style.display = "block";
@@ -1047,6 +1084,11 @@ function startListeners() {
     if (curDept === "pipeline" && curView === "board") renderBoard();
     if (curDept === "marketing" && curView === "board") renderMarketingBoard();
   });
+  onSnapshot(collection(db,"accesos"), function(snap) {
+    D.accesos = [];
+    snap.forEach(function(d) { D.accesos.push(d.data()); });
+    if (curDept === "accesos" && accKey) renderAccList();
+  });
   onSnapshot(collection(db,"mkprojects"), function(snap) {
     D.mkprojects = [];
     snap.forEach(function(d) { D.mkprojects.push(d.data()); });
@@ -1327,6 +1369,175 @@ function notifyEstadoFinal(p, status) {
     detalle: det
   });
 }
+
+// ── ACCESOS (usuarios, contraseñas y links) ──────────────────────
+// Todo se guarda CIFRADO en Firestore (coleccion "accesos") con AES-GCM. La clave sale del PIN
+// con PBKDF2; el PIN no esta escrito en el codigo: solo un texto de control cifrado con el.
+// Se desbloquea por sesion y se vuelve a bloquear al salir de la solapa o cambiar de usuario.
+var ACC_SALT = "YanlaquyXcN706IvcUxG/g==";
+var ACC_VERIF = {iv:"3vYC9gwbY/MB9fmS", ct:"M62TYdGu6WOAGgUgjPZO6S3XkikRxexiNfV9GuT3A+lS"};
+var ACC_ITER = 250000;
+var accKey = null, accCache = {}, accFiltro = "", accShow = {};
+function b64ToBuf(s){ var bin=atob(s), a=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); return a; }
+function bufToB64(buf){ var a=new Uint8Array(buf), s=""; for(var i=0;i<a.length;i++) s+=String.fromCharCode(a[i]); return btoa(s); }
+async function accDeriveKey(pin) {
+  var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pin), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64ToBuf(ACC_SALT), iterations:ACC_ITER, hash:"SHA-256"},
+    base, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+}
+async function accDecrypt(key, iv, ct) {
+  var pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64ToBuf(iv)}, key, b64ToBuf(ct));
+  return new TextDecoder().decode(pt);
+}
+async function accEncrypt(key, text) {
+  var iv = crypto.getRandomValues(new Uint8Array(12));
+  var ct = await crypto.subtle.encrypt({name:"AES-GCM", iv:iv}, key, new TextEncoder().encode(text));
+  return {iv:bufToB64(iv), ct:bufToB64(ct)};
+}
+function accLock() { accKey = null; accCache = {}; accShow = {}; }
+window.accLock = function(){ accLock(); renderBoard(); };
+
+async function accUnlock() {
+  var inp = document.getElementById("acc-pin"), err = document.getElementById("acc-err"), btn = document.getElementById("acc-btn");
+  if (!inp) return;
+  btn.disabled = true; btn.textContent = "Verificando..."; err.textContent = "";
+  try {
+    var k = await accDeriveKey(inp.value.trim());
+    var ok = await accDecrypt(k, ACC_VERIF.iv, ACC_VERIF.ct);
+    if (ok !== "itelsa-accesos-ok") throw new Error("pin");
+    accKey = k;
+    logActivity("entro a Accesos", "Accesos", currentUser);
+    renderBoard();
+  } catch (e) {
+    err.textContent = "Contraseña incorrecta.";
+    btn.disabled = false; btn.textContent = "Entrar"; inp.value = ""; inp.focus();
+  }
+}
+window.accUnlock = accUnlock;
+
+function renderAccesosBoard() {
+  var c = document.getElementById("board-inner"); c.innerHTML = "";
+  if (!accKey) {
+    var lk = document.createElement("div"); lk.className = "acc-lock";
+    lk.innerHTML = "<i class='ti ti-lock' style='font-size:30px;color:#475569'></i>" +
+      "<div class='acc-lock-t'>Accesos</div><div class='acc-lock-s'>Ingresa la contraseña para ver usuarios, contraseñas y links.</div>" +
+      "<input type='password' id='acc-pin' inputmode='numeric' autocomplete='off' placeholder='Contraseña'>" +
+      "<div id='acc-err' class='acc-err'></div>" +
+      "<button class='bs' id='acc-btn' onclick='accUnlock()'>Entrar</button>";
+    c.appendChild(lk);
+    var pin = document.getElementById("acc-pin");
+    pin.onkeydown = function(e){ if (e.key === "Enter") accUnlock(); };
+    setTimeout(function(){ pin.focus(); }, 50);
+    return;
+  }
+  var hdr = document.createElement("div"); hdr.className = "ch";
+  var left = document.createElement("div"); left.style.cssText = "display:flex;align-items:center;gap:8px";
+  left.innerHTML = "<i class='ti ti-key' style='font-size:18px;color:#475569'></i><span style='font-size:17px;font-weight:600;color:#1f2937'>Accesos</span>";
+  var acts = document.createElement("div"); acts.className = "ha";
+  var srch = document.createElement("input"); srch.type = "search"; srch.className = "acc-search"; srch.placeholder = "Buscar..."; srch.value = accFiltro;
+  srch.oninput = function(){ accFiltro = this.value; renderAccList(); };
+  var add = document.createElement("button"); add.className = "btn"; add.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Nuevo acceso"; add.onclick = function(){ openAccModal(null); };
+  var lock = document.createElement("button"); lock.className = "btn"; lock.innerHTML = "<i class='ti ti-lock' style='font-size:12px'></i> Bloquear"; lock.onclick = window.accLock;
+  acts.appendChild(srch); acts.appendChild(add); acts.appendChild(lock);
+  hdr.appendChild(left); hdr.appendChild(acts); c.appendChild(hdr);
+  var list = document.createElement("div"); list.id = "acc-list"; list.className = "acc-list"; c.appendChild(list);
+  renderAccList();
+}
+
+async function accDecryptAll() {
+  var out = [];
+  for (var i=0; i<(D.accesos||[]).length; i++) {
+    var d = D.accesos[i], ck = d.id + ":" + d.iv;
+    if (!accCache[ck]) {
+      try { accCache[ck] = JSON.parse(await accDecrypt(accKey, d.iv, d.ct)); }
+      catch (e) { accCache[ck] = {nombre:"(no se pudo leer)", _err:true}; }
+    }
+    out.push(Object.assign({id:d.id, ts:d.ts||0}, accCache[ck]));
+  }
+  out.sort(function(a,b){ return (a.cat||"").localeCompare(b.cat||"") || (a.nombre||"").localeCompare(b.nombre||""); });
+  return out;
+}
+function accCopy(txt, btn) {
+  if (!txt) return;
+  var done = function(){ var o = btn.innerHTML; btn.innerHTML = "<i class='ti ti-check'></i>"; setTimeout(function(){ btn.innerHTML = o; }, 1200); };
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, function(){}); else done();
+}
+async function renderAccList() {
+  var list = document.getElementById("acc-list"); if (!list || !accKey) return;
+  var items = await accDecryptAll();
+  if (!document.getElementById("acc-list")) return;
+  var f = accFiltro.trim().toLowerCase();
+  if (f) items = items.filter(function(it){ return [it.nombre,it.usuario,it.link,it.cat,it.notas].join(" ").toLowerCase().indexOf(f) >= 0; });
+  list.innerHTML = "";
+  if (!items.length) {
+    var em = document.createElement("div"); em.className = "acc-empty";
+    em.textContent = f ? "No hay accesos que coincidan con la busqueda." : "Todavia no hay accesos cargados. Usa \"Nuevo acceso\".";
+    list.appendChild(em); return;
+  }
+  items.forEach(function(it) {
+    var card = document.createElement("div"); card.className = "acc-card";
+    var top = document.createElement("div"); top.className = "acc-top";
+    var nm = document.createElement("div"); nm.className = "acc-name"; nm.textContent = it.nombre || "Sin nombre";
+    top.appendChild(nm);
+    if (it.cat) { var ct = document.createElement("span"); ct.className = "acc-cat"; ct.textContent = it.cat; top.appendChild(ct); }
+    var ed = document.createElement("button"); ed.className = "acc-ic"; ed.title = "Editar"; ed.innerHTML = "<i class='ti ti-pencil'></i>";
+    ed.onclick = function(){ openAccModal(it); };
+    top.appendChild(ed); card.appendChild(top);
+    function row(lbl, val, secret, isLink) {
+      if (!val) return;
+      var r = document.createElement("div"); r.className = "acc-row";
+      var l = document.createElement("span"); l.className = "acc-lbl"; l.textContent = lbl; r.appendChild(l);
+      var v;
+      if (isLink) { v = document.createElement("a"); v.href = /^https?:\/\//i.test(val) ? val : "https://" + val; v.target = "_blank"; v.rel = "noopener"; v.textContent = val; }
+      else { v = document.createElement("span"); v.textContent = secret && !accShow[it.id] ? "••••••••" : val; }
+      v.className = "acc-val"; r.appendChild(v);
+      if (secret) {
+        var eye = document.createElement("button"); eye.className = "acc-ic"; eye.title = accShow[it.id] ? "Ocultar" : "Mostrar";
+        eye.innerHTML = "<i class='ti ti-eye" + (accShow[it.id] ? "-off" : "") + "'></i>";
+        eye.onclick = function(){ accShow[it.id] = !accShow[it.id]; renderAccList(); };
+        r.appendChild(eye);
+      }
+      if (!isLink) { var cp = document.createElement("button"); cp.className = "acc-ic"; cp.title = "Copiar"; cp.innerHTML = "<i class='ti ti-copy'></i>"; cp.onclick = function(){ accCopy(val, cp); }; r.appendChild(cp); }
+      card.appendChild(r);
+    }
+    row("Link", it.link, false, true);
+    row("Usuario", it.usuario, false, false);
+    row("Contraseña", it.clave, true, false);
+    if (it.notas) { var n = document.createElement("div"); n.className = "acc-notas"; n.textContent = it.notas; card.appendChild(n); }
+    list.appendChild(card);
+  });
+}
+
+var accEditId = null;
+function openAccModal(it) {
+  accEditId = it ? it.id : null;
+  document.getElementById("ac-title").textContent = it ? "Editar acceso" : "Nuevo acceso";
+  ["nombre","cat","link","usuario","clave","notas"].forEach(function(f){ document.getElementById("ac-" + f).value = (it && it[f]) || ""; });
+  document.getElementById("ac-del").style.display = it ? "inline-block" : "none";
+  document.getElementById("mo-acceso").classList.add("op");
+  setTimeout(function(){ document.getElementById("ac-nombre").focus(); }, 50);
+}
+async function saveAcceso() {
+  if (!accKey) { closeModal("mo-acceso"); return; }
+  var data = {};
+  ["nombre","cat","link","usuario","clave","notas"].forEach(function(f){ data[f] = document.getElementById("ac-" + f).value.trim(); });
+  if (!data.nombre) { alert("Pone un nombre (ej: Mercado Libre, Hosting, Wifi oficina)."); return; }
+  var enc = await accEncrypt(accKey, JSON.stringify(data));
+  var id = accEditId || nid("acc");
+  showSyncing();
+  setDoc(doc(db, "accesos", id), {id:id, iv:enc.iv, ct:enc.ct, ts:Date.now(), by:currentUser}).then(showSynced);
+  logActivity((accEditId ? "edito" : "agrego") + " un acceso: " + data.nombre, "Accesos", currentUser);
+  closeModal("mo-acceso");
+}
+window.saveAcceso = saveAcceso;
+function deleteAcceso() {
+  if (!accEditId) return;
+  if (!confirm("Eliminar este acceso?")) return;
+  showSyncing(); deleteDoc(doc(db, "accesos", accEditId)).then(showSynced);
+  logActivity("elimino un acceso", "Accesos", currentUser);
+  closeModal("mo-acceso");
+}
+window.deleteAcceso = deleteAcceso;
 
 // ── NOTIFICACION MANUAL ──────────────────────────────────────────
 var notifSel = [];
@@ -1635,6 +1846,7 @@ function enterApp(id) {
 }
 
 function logout() {
+  accLock();
   // no user to remove from storage
   currentUser = null; selProj = null; selTask = null; filterMember = null;
   document.getElementById("app").style.display = "none";
@@ -2119,6 +2331,7 @@ function buildInformesBlock(proj, isFin) {
 // ── BOARD ────────────────────────────────────────────────────────
 function renderBoard() {
   if (curDept === "marketing") { renderMarketingBoard(); return; }
+  if (curDept === "accesos") { renderAccesosBoard(); return; }
   var c = document.getElementById("board-inner");
   if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
