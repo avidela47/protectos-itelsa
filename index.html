@@ -238,7 +238,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cg-sel-hint{margin-left:auto;font-size:11px;color:#0f766e}
 .cg-empty{text-align:center;padding:36px;color:#9ca3af;font-size:13px;background:#fff;border:1px dashed #d1d5db;border-radius:12px}
 .cg-table{background:#fff;border:1px solid var(--br);border-radius:12px;overflow:hidden}
-.cg-tr{display:grid;grid-template-columns:36px 52px 150px 1fr 90px 30px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #f3f4f6}
+.cg-tr{display:grid;grid-template-columns:32px 52px 130px 1fr 80px 30px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #f3f4f6}
 .cg-th{background:#0D1B2A;color:#fff;font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:8px 12px}
 .cg-num{font-size:12px;color:#9ca3af;text-align:center}
 .cg-cod{font-size:12px;font-weight:600;color:#0D1B2A;font-family:ui-monospace,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis}
@@ -258,6 +258,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .lm-prev{width:100%;height:150px;border:1px dashed #d1d5db;border-radius:10px;background:#f9f9f8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#9ca3af;font-size:12px;overflow:hidden;margin-bottom:8px}
 .lm-prev i{font-size:24px}
 .lm-prev img{max-width:100%;max-height:100%;object-fit:contain}
+.cg-opt-s{font-size:10.5px;color:#0f766e;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cg-sel{flex-wrap:wrap}
+.cg-specs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:5px}
+.cg-specs input{width:100%;font-size:11px;padding:4px 6px;border-radius:6px;border:1px solid #e5e7eb;background:#f9f9f8;color:#374151;min-width:0}
+.cg-specs input:focus{outline:none;border-color:#00695C;background:#fff}
+.cg-sel-specs{flex-basis:100%;margin-top:4px}
+.cg-spec{display:flex;flex-direction:column;gap:3px;font-size:10px;color:#0f766e;font-weight:500}
+.cg-spec input{font-size:12px;padding:6px 8px;background:#fff;border-color:#99f6e4}
+.cg-sel-note{flex-basis:100%;font-size:11px;color:#6b7280}
+.cg-nomc{min-width:0}
+.cg-sel-com{flex-basis:100%}
+.cg-com{width:100%;margin-top:5px;font-size:11.5px;padding:4px 7px;border-radius:6px;border:1px dashed #d1d5db;background:transparent;color:#0f766e;font-style:italic}
+.cg-com:focus{outline:none;border-style:solid;border-color:#00695C;background:#fff}
+.cg-obs{margin-top:12px}
+.lm-specs{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+@media (max-width:800px){.cg-specs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:800px){.cg-tr{grid-template-columns:28px 44px 1fr 70px 26px}.cg-tr .cg-cod{display:none}.cg-th span:nth-child(3){display:none}}
 .comp-box{background:#fff;border:1.5px solid #378ADD;border-left:5px solid #1d4ed8;border-radius:10px;padding:12px 14px;margin:0 0 14px}
 .comp-title{font-size:12px;font-weight:700;color:#1d4ed8;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;margin-bottom:10px}
@@ -550,11 +566,18 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
   </div>
 </div>
 <div class="mo" id="mo-lum">
-  <div class="md">
+  <div class="md" style="max-height:92vh;overflow-y:auto">
     <div class="mt" id="lm-title">Nueva luminaria</div>
     <div class="lm-prev" id="lm-prev"></div>
     <div class="fg"><label>Imagen</label><div style="display:flex;gap:8px;align-items:center"><input type="file" id="lm-file" accept="image/*" onchange="cgLoadImg(this.files[0])" style="flex:1"><button class="bc" type="button" onclick="cgQuitarImg()">Quitar</button></div></div>
     <div class="fr"><div class="fg"><label>Nombre</label><input type="text" id="lm-nombre" placeholder="Ej: Proyector SYD 448"></div><div class="fg"><label>Codigo</label><input type="text" id="lm-codigo" placeholder="Ej: SYD448-5K-30"></div></div>
+    <div class="lm-specs">
+      <div class="fg"><label>Potencia</label><input type="text" id="lm-potencia" placeholder="Ej: 200 W"></div>
+      <div class="fg"><label>Angulo</label><input type="text" id="lm-angulo" list="cg-dl-angulo" placeholder="Ej: 30°"></div>
+      <div class="fg"><label>Temperatura de color</label><input type="text" id="lm-temperatura" list="cg-dl-temperatura" placeholder="Ej: 3000K / RGB / RGBW"></div>
+      <div class="fg"><label>Protocolo de comunicacion</label><input type="text" id="lm-protocolo" list="cg-dl-protocolo" placeholder="Ej: DMX512 / DALI"></div>
+      <div class="fg"><label>Tension de entrada</label><input type="text" id="lm-tension" list="cg-dl-tension" placeholder="Ej: 220 V AC"></div>
+    </div>
     <div class="ma"><button class="bd" id="lm-del" style="display:none;margin-right:auto" onclick="deleteLuminaria()">Eliminar</button><button class="bc" onclick="closeModal('mo-lum')">Cancelar</button><button class="bs" onclick="saveLuminaria()">Guardar</button></div>
   </div>
 </div>
@@ -1638,7 +1661,36 @@ window.deleteAcceso = deleteAcceso;
 // ── GENERADOR DE COMPUTOS ────────────────────────────────────────
 // Base de luminarias (coleccion "luminarias": imagen comprimida, nombre, codigo) + computos
 // (coleccion "computosGen": proyecto, items, estado abierto/cerrado). Al cerrar se descarga el PDF.
+var cgPickSpecs = {};
 var cgView = "nuevo", cgCurId = null, cgPick = null, cgHi = 0, cgImgTmp = null, cgLumEdit = null;
+// Especificaciones por luminaria. En la base quedan como valores por defecto; en cada
+// computo se copian a la fila y se pueden cambiar (la misma luminaria con otro angulo o
+// temperatura va en una fila aparte).
+var CG_SPECS = [
+  {k:"potencia",    l:"Potencia",          pdf:"POTENCIA",   ph:"Ej: 200 W",      opts:[]},
+  {k:"angulo",      l:"Angulo",            pdf:"ÁNGULO",     ph:"Ej: 30°",        opts:["10°","15°","25°","30°","45°","60°","90°","120°","Asimetrico"]},
+  {k:"temperatura", l:"Temperatura de color", pdf:"TEMP. COLOR", ph:"Ej: 3000K / RGBW", opts:["2700K","3000K","4000K","5000K","5700K","6500K","RGB","RGBW","RGBA","Tunable White"]},
+  {k:"protocolo",   l:"Protocolo de comunicacion", pdf:"PROTOCOLO", ph:"Ej: DMX512", opts:["Sin control (On/Off)","DMX512","DMX-RDM","DALI","DALI-2","0-10V","1-10V","PWM","Casambi","Zigbee","Bluetooth Mesh"]},
+  {k:"tension",     l:"Tension de entrada", pdf:"TENSIÓN",   ph:"Ej: 220 V AC",   opts:["220 V AC","100-277 V AC","380 V AC","12 V DC","24 V DC","48 V DC"]}
+];
+function cgSpecsOf(o) { var r = {}; CG_SPECS.forEach(function(s){ r[s.k] = (o && o[s.k]) || ""; }); return r; }
+function cgSpecsKey(o) { return CG_SPECS.map(function(s){ return cgNorm((o && o[s.k]) || "").trim(); }).join("|"); }
+function cgSpecsTxt(o) { return CG_SPECS.map(function(s){ return (o && o[s.k]) || ""; }).filter(Boolean).join(" · "); }
+function cgSpecInput(spec, val, onSave, small) {
+  var i = document.createElement("input"); i.type = "text"; i.value = val || ""; i.placeholder = small ? spec.l : spec.ph;
+  i.title = spec.l; if (spec.opts.length) i.setAttribute("list", "cg-dl-" + spec.k);
+  i.onchange = function(){ onSave(this.value.trim()); };
+  return i;
+}
+function cgEnsureDatalists() {
+  if (document.getElementById("cg-dl-angulo")) return;
+  CG_SPECS.forEach(function(s){
+    if (!s.opts.length) return;
+    var dl = document.createElement("datalist"); dl.id = "cg-dl-" + s.k;
+    s.opts.forEach(function(o){ var op = document.createElement("option"); op.value = o; dl.appendChild(op); });
+    document.body.appendChild(dl);
+  });
+}
 function cgNorm(s) { return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 function cgHoy() { var d = new Date(); function z(n){ return n < 10 ? "0" + n : "" + n; } return d.getFullYear() + "-" + z(d.getMonth()+1) + "-" + z(d.getDate()); }
 function cgLum(id) { for (var i=0; i<D.luminarias.length; i++) if (D.luminarias[i].id === id) return D.luminarias[i]; return null; }
@@ -1654,6 +1706,7 @@ function cgThumb(l, size) {
 }
 
 function renderComputosGen() {
+  cgEnsureDatalists();
   var c = document.getElementById("board-inner"); c.innerHTML = "";
   var hdr = cgEl("div", "ch");
   var left = cgEl("div"); left.style.cssText = "display:flex;align-items:center;gap:8px";
@@ -1766,13 +1819,14 @@ function cgDropdown() {
   var q = cgNorm(si.value.trim()); dd.innerHTML = "";
   if (!q) { dd.style.display = "none"; return; }
   var words = q.split(/\s+/);
-  var res = D.luminarias.filter(function(l){ var h = cgNorm(l.nombre + " " + l.codigo); return words.every(function(w){ return h.indexOf(w) >= 0; }); })
+  var res = D.luminarias.filter(function(l){ var h = cgNorm(l.nombre + " " + l.codigo + " " + cgSpecsTxt(l)); return words.every(function(w){ return h.indexOf(w) >= 0; }); })
     .sort(function(a,b){ return (a.nombre||"").localeCompare(b.nombre||""); }).slice(0, 8);
   if (cgHi >= res.length + 1) cgHi = res.length;
   res.forEach(function(l, i){
     var o = cgEl("div", "cg-opt" + (i === cgHi ? " hi" : ""));
     o.appendChild(cgThumb(l, 34));
     var tx = cgEl("div", "cg-opt-tx"); tx.appendChild(cgEl("div", "cg-opt-n", l.nombre)); tx.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
+    if (cgSpecsTxt(l)) tx.appendChild(cgEl("div", "cg-opt-s", cgSpecsTxt(l)));
     o.appendChild(tx);
     o.onmousedown = function(e){ if (e && e.preventDefault) e.preventDefault(); cgElegir(l); };
     dd.appendChild(o);
@@ -1785,7 +1839,7 @@ function cgDropdown() {
   dd.style.display = "block";
 }
 function cgElegir(l) {
-  cgPick = l.id;
+  cgPick = l.id; cgPickSpecs = cgSpecsOf(l);
   var si = document.getElementById("cg-search"), dd = document.getElementById("cg-dd"), qi = document.getElementById("cg-qty");
   if (si) si.value = l.nombre + (l.codigo ? " - " + l.codigo : "");
   if (dd) dd.style.display = "none";
@@ -1801,6 +1855,19 @@ function cgShowSel() {
   var tx = cgEl("div"); tx.appendChild(cgEl("div", "cg-opt-n", l.nombre)); tx.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
   s.appendChild(tx);
   s.appendChild(cgEl("span", "cg-sel-hint", "Pone la cantidad y Enter"));
+  var sp = cgEl("div", "cg-specs cg-sel-specs");
+  CG_SPECS.forEach(function(spec){
+    var f = cgEl("label", "cg-spec"); f.appendChild(cgEl("span", null, spec.l));
+    f.appendChild(cgSpecInput(spec, cgPickSpecs[spec.k], function(v){ cgPickSpecs[spec.k] = v; }));
+    sp.appendChild(f);
+  });
+  s.appendChild(sp);
+  var cm = cgEl("label", "cg-spec cg-sel-com"); cm.appendChild(cgEl("span", null, "Comentario (opcional)"));
+  var ci = document.createElement("input"); ci.type = "text"; ci.id = "cg-sel-com"; ci.placeholder = "Ej: para tribuna norte, con visera antideslumbrante...";
+  ci.value = cgPickSpecs.comentario || ""; ci.onchange = function(){ cgPickSpecs.comentario = this.value.trim(); };
+  ci.onkeydown = function(e){ if (e.key === "Enter") cgAgregar(); };
+  cm.appendChild(ci); s.appendChild(cm);
+  s.appendChild(cgEl("div", "cg-sel-note", "Si en este proyecto varia algun dato (otro angulo, otra temperatura...), cambialo aca antes de agregar: queda como fila aparte."));
 }
 function cgAgregar() {
   var c = cgCur(); if (!c) return;
@@ -1809,11 +1876,15 @@ function cgAgregar() {
   var q = parseInt(qi.value, 10); if (!q || q < 1) { qi.focus(); qi.select(); return; }
   var l = cgLum(cgPick); if (!l) return;
   if (!c.items) c.items = [];
-  var ex = c.items.filter(function(it){ return it.lumId === l.id; })[0];
+  // inputs que todavia no dispararon onchange
+  document.querySelectorAll(".cg-sel-specs input").forEach(function(inp, i){ cgPickSpecs[CG_SPECS[i].k] = inp.value.trim(); });
+  var comEl = document.getElementById("cg-sel-com"); var com = comEl ? comEl.value.trim() : "";
+  var key = cgSpecsKey(cgPickSpecs) + "|" + cgNorm(com);
+  var ex = c.items.filter(function(it){ return it.lumId === l.id && cgSpecsKey(it) + "|" + cgNorm(it.comentario || "") === key; })[0];
   if (ex) ex.cant = (parseInt(ex.cant, 10) || 0) + q;
-  else c.items.push({lumId:l.id, nombre:l.nombre, codigo:l.codigo || "", cant:q});
+  else c.items.push(Object.assign({lumId:l.id, nombre:l.nombre, codigo:l.codigo || "", cant:q, comentario:com}, cgSpecsOf(cgPickSpecs)));
   c.ts = Date.now(); cgSaveComp(c);
-  cgPick = null; si.value = ""; qi.value = "1"; cgShowSel();
+  cgPick = null; cgPickSpecs = {}; si.value = ""; qi.value = "1"; cgShowSel();
   renderCGItems(document.getElementById("cg-items"));
   si.focus();
 }
@@ -1824,7 +1895,7 @@ function renderCGItems(box) {
   if (!items.length) { box.appendChild(cgEl("div", "cg-empty", "Todavia no agregaste luminarias. Busca arriba, elegila y pone la cantidad.")); return; }
   var tb = cgEl("div", "cg-table");
   var hd = cgEl("div", "cg-tr cg-th");
-  ["#", "", "Codigo", "Luminaria", "Cantidad", ""].forEach(function(h){ hd.appendChild(cgEl("span", null, h)); });
+  ["#", "", "Codigo", "Luminaria y especificaciones", "Cantidad", ""].forEach(function(h){ hd.appendChild(cgEl("span", null, h)); });
   tb.appendChild(hd);
   var total = 0;
   items.forEach(function(it, idx){
@@ -1834,7 +1905,16 @@ function renderCGItems(box) {
     r.appendChild(cgEl("span", "cg-num", String(idx + 1)));
     r.appendChild(cgThumb(l, 40));
     r.appendChild(cgEl("span", "cg-cod", l.codigo || it.codigo || "-"));
-    r.appendChild(cgEl("span", "cg-nom", l.nombre || it.nombre));
+    var nc = cgEl("div", "cg-nomc"); nc.appendChild(cgEl("div", "cg-nom", l.nombre || it.nombre));
+    var sp = cgEl("div", "cg-specs");
+    CG_SPECS.forEach(function(spec){
+      sp.appendChild(cgSpecInput(spec, it[spec.k], function(v){ var cc = cgCur(); if (!cc || !cc.items[idx]) return; cc.items[idx][spec.k] = v; cc.ts = Date.now(); cgSaveComp(cc); }, true));
+    });
+    nc.appendChild(sp);
+    var rc = document.createElement("input"); rc.type = "text"; rc.className = "cg-com"; rc.placeholder = "Agregar comentario..."; rc.value = it.comentario || "";
+    rc.onchange = function(){ var v = this.value.trim(); var cc = cgCur(); if (!cc || !cc.items[idx]) return; cc.items[idx].comentario = v; cc.ts = Date.now(); cgSaveComp(cc); };
+    nc.appendChild(rc);
+    r.appendChild(nc);
     var q = document.createElement("input"); q.type = "number"; q.min = "1"; q.value = it.cant; q.className = "cg-q";
     q.onchange = function(){ var v = parseInt(this.value, 10); var cc = cgCur(); if (!cc || !cc.items[idx]) return; if (!v || v < 1) { this.value = cc.items[idx].cant; return; } cc.items[idx].cant = v; cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
     r.appendChild(q);
@@ -1849,6 +1929,13 @@ function renderCGItems(box) {
   tf.appendChild(cgEl("span", "cg-tot", String(total))); tf.appendChild(cgEl("span"));
   tb.appendChild(tf);
   box.appendChild(tb);
+  var ob = cgEl("div", "cg-obs");
+  ob.appendChild(cgEl("label", "glbl", "Observaciones generales del computo"));
+  var ota = document.createElement("textarea"); ota.className = "na"; ota.style.minHeight = "60px"; ota.placeholder = "Comentarios para todo el computo (salen en el PDF)...";
+  ota.value = c.obs || "";
+  var so = debounce(function(){ var cc = cgCur(); if (!cc) return; cc.obs = ota.value; cc.ts = Date.now(); cgSaveComp(cc); }, 400);
+  ota.oninput = so; ota.onchange = so;
+  ob.appendChild(ota); box.appendChild(ob);
 }
 function cgCerrar() {
   var c = cgCur(); if (!c) return;
@@ -1894,33 +1981,50 @@ async function cgPdf(c) {
     J.setFont("helvetica", "bold"); J.setFontSize(10.5); J.setTextColor.apply(J, ink); J.text(m[1], M + i*cw, y + 9.5);
   });
   y += 17;
-  var cols = [{t:"#", w:10, a:"center"}, {t:"IMAGEN", w:24, a:"center"}, {t:"CÓDIGO", w:36, a:"left"}, {t:"LUMINARIA", w:76, a:"left"}, {t:"CANTIDAD", w:28, a:"center"}];
-  var rowH = 20;
+  var cols = [{t:"#", w:7, a:"center"}, {t:"IMAGEN", w:19, a:"center"}, {t:"CÓDIGO / LUMINARIA", w:44, a:"left"},
+              {t:"POTENCIA", w:16, a:"left", k:"potencia"}, {t:"ÁNGULO", w:15, a:"left", k:"angulo"}, {t:"TEMP. COLOR", w:19, a:"left", k:"temperatura"},
+              {t:"PROTOCOLO", w:19, a:"left", k:"protocolo"}, {t:"TENSIÓN", w:21, a:"left", k:"tension"}, {t:"CANT.", w:14, a:"center"}];
   function th() {
     J.setFillColor.apply(J, ink); J.rect(M, y, W - 2*M, 8, "F");
-    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor(255,255,255);
-    var x = M; cols.forEach(function(col){ J.text(col.t, col.a === "center" ? x + col.w/2 : x + 3, y + 5.3, {align: col.a === "center" ? "center" : "left"}); x += col.w; });
+    J.setFont("helvetica", "bold"); J.setFontSize(6.6); J.setTextColor(255,255,255);
+    var x = M; cols.forEach(function(col){ J.text(col.t, col.a === "center" ? x + col.w/2 : x + 2, y + 5.2, {align: col.a === "center" ? "center" : "left"}); x += col.w; });
     y += 8;
   }
   th();
   for (var i=0; i<c.items.length; i++) {
     var it = c.items[i], l = cgLum(it.lumId) || {};
+    J.setFont("helvetica", "normal"); J.setFontSize(8);
+    var nl = J.splitTextToSize(l.nombre || it.nombre || "", cols[2].w - 4).slice(0,3);
+    J.setFontSize(7.3);
+    var specLines = cols.map(function(col){ return col.k ? J.splitTextToSize(it[col.k] || "-", col.w - 3).slice(0,4) : null; });
+    var maxSpec = Math.max.apply(null, specLines.map(function(x){ return x ? x.length : 0; }));
+    J.setFont("helvetica", "italic"); J.setFontSize(7);
+    var cl = it.comentario ? J.splitTextToSize(it.comentario, cols[2].w - 4).slice(0,4) : [];
+    var rowH = Math.max(20, 9 + nl.length * 3.6 + cl.length * 3.2, 8 + maxSpec * 3.3);
     if (y + rowH > H - 22) { J.addPage(); header(); y = 32; th(); }
     if (i % 2 === 1) { J.setFillColor(244,247,248); J.rect(M, y, W - 2*M, rowH, "F"); }
-    var x = M, cy = y + rowH/2 + 1.3;
-    J.setFont("helvetica", "normal"); J.setFontSize(9); J.setTextColor.apply(J, grey); J.text(String(i+1), x + cols[0].w/2, cy, {align:"center"}); x += cols[0].w;
+    var x = M, cy = y + rowH/2 + 1.2;
+    J.setFont("helvetica", "normal"); J.setFontSize(8); J.setTextColor.apply(J, grey); J.text(String(i+1), x + cols[0].w/2, cy, {align:"center"}); x += cols[0].w;
     if (l.img) {
       var sz = (l.iw && l.ih) ? {w:l.iw, h:l.ih} : await cgImgSize(l.img);
-      if (sz) { var bw = 18, bh = 16, r = Math.min(bw/sz.w, bh/sz.h), iw = sz.w*r, ih = sz.h*r;
+      if (sz) { var bw = 15, bh = 15, r = Math.min(bw/sz.w, bh/sz.h), iw = sz.w*r, ih = sz.h*r;
         try { J.addImage(l.img, "JPEG", x + (cols[1].w - iw)/2, y + (rowH - ih)/2, iw, ih); } catch(e) {} }
     }
     x += cols[1].w;
-    J.setFont("helvetica", "bold"); J.setFontSize(9); J.setTextColor.apply(J, ink);
-    J.text(J.splitTextToSize(l.codigo || it.codigo || "-", cols[2].w - 5).slice(0,2), x + 3, cy - (String(l.codigo || it.codigo || "").length > 18 ? 2 : 0)); x += cols[2].w;
-    J.setFont("helvetica", "normal"); J.setFontSize(9);
-    var nl = J.splitTextToSize(l.nombre || it.nombre || "", cols[3].w - 5).slice(0,3);
-    J.text(nl, x + 3, cy - (nl.length - 1) * 2); x += cols[3].w;
-    J.setFont("helvetica", "bold"); J.setFontSize(11); J.setTextColor.apply(J, green); J.text(String(it.cant), x + cols[4].w/2, cy, {align:"center"});
+    var ty = y + (rowH - (4 + nl.length * 3.6 + cl.length * 3.2)) / 2 + 3;
+    J.setFont("helvetica", "bold"); J.setFontSize(7.8); J.setTextColor.apply(J, ink);
+    J.text(J.splitTextToSize(l.codigo || it.codigo || "-", cols[2].w - 4)[0], x + 2, ty);
+    J.setFont("helvetica", "normal"); J.setFontSize(8); J.setTextColor(55,65,81);
+    J.text(nl, x + 2, ty + 4);
+    if (cl.length) { J.setFont("helvetica", "italic"); J.setFontSize(7); J.setTextColor.apply(J, green); J.text(cl, x + 2, ty + 4 + nl.length * 3.6); }
+    x += cols[2].w;
+    for (var k=3; k<cols.length-1; k++) {
+      var ln = specLines[k];
+      J.setFont("helvetica", "normal"); J.setFontSize(7.3); J.setTextColor.apply(J, ln.length === 1 && ln[0] === "-" ? grey : ink);
+      J.text(ln, x + 2, y + (rowH - ln.length * 3.3) / 2 + 2.6);
+      x += cols[k].w;
+    }
+    J.setFont("helvetica", "bold"); J.setFontSize(10.5); J.setTextColor.apply(J, green); J.text(String(it.cant), x + cols[cols.length-1].w/2, cy, {align:"center"});
     J.setDrawColor(229,231,235); J.setLineWidth(0.15); J.line(M, y + rowH, W - M, y + rowH);
     y += rowH;
   }
@@ -1928,7 +2032,18 @@ async function cgPdf(c) {
   J.setFillColor(244,247,248); J.rect(M, y + 2, W - 2*M, 10, "F");
   J.setFont("helvetica", "bold"); J.setFontSize(9.5); J.setTextColor.apply(J, ink); J.text("TOTAL DE LUMINARIAS", M + 3, y + 8.6);
   J.setTextColor.apply(J, green); J.setFontSize(12);
-  J.text(meta[3][1], M + cols[0].w + cols[1].w + cols[2].w + cols[3].w + cols[4].w/2, y + 8.8, {align:"center"});
+  J.text(meta[3][1], W - M - cols[cols.length-1].w/2, y + 8.8, {align:"center"});
+  y += 14;
+  if (c.obs && c.obs.trim()) {
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5);
+    var ol = J.splitTextToSize(c.obs.trim(), W - 2*M - 8);
+    var oh = 10 + ol.length * 4;
+    if (y + oh > H - 22) { J.addPage(); header(); y = 32; }
+    J.setFillColor(244,247,248); J.rect(M, y, W - 2*M, oh, "F");
+    J.setFillColor.apply(J, green); J.rect(M, y, 0.9, oh, "F");
+    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green); J.text("OBSERVACIONES", M + 4, y + 5.5);
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, ink); J.text(ol, M + 4, y + 10.5);
+  }
   var n = J.getNumberOfPages();
   for (var p=1; p<=n; p++) {
     J.setPage(p); J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey);
@@ -1985,7 +2100,7 @@ function renderCGBase(body) {
 function renderCGBaseList(list) {
   if (!list) return; list.innerHTML = "";
   var qEl = document.getElementById("cg-base-q"), q = cgNorm(qEl ? qEl.value.trim() : "");
-  var items = D.luminarias.filter(function(l){ return !q || cgNorm(l.nombre + " " + l.codigo).indexOf(q) >= 0; })
+  var items = D.luminarias.filter(function(l){ return !q || cgNorm(l.nombre + " " + l.codigo + " " + cgSpecsTxt(l)).indexOf(q) >= 0; })
     .sort(function(a,b){ return (a.nombre||"").localeCompare(b.nombre||""); });
   if (!items.length) { list.appendChild(cgEl("div", "cg-empty", q ? "No hay luminarias que coincidan." : "La base esta vacia. Carga la primera con \"Nueva luminaria\".")); return; }
   items.forEach(function(l){
@@ -1993,6 +2108,7 @@ function renderCGBaseList(list) {
     card.appendChild(cgThumb(l, 96));
     card.appendChild(cgEl("div", "cg-opt-n", l.nombre));
     card.appendChild(cgEl("div", "cg-opt-c", l.codigo || "sin codigo"));
+    if (cgSpecsTxt(l)) card.appendChild(cgEl("div", "cg-opt-s", cgSpecsTxt(l)));
     card.onclick = function(){ openLumModal(l, "", false); };
     list.appendChild(card);
   });
@@ -2003,6 +2119,8 @@ function openLumModal(l, nombreInicial, elegirAlGuardar) {
   document.getElementById("lm-title").textContent = l ? "Editar luminaria" : "Nueva luminaria";
   document.getElementById("lm-nombre").value = l ? l.nombre : (nombreInicial || "");
   document.getElementById("lm-codigo").value = l ? (l.codigo || "") : "";
+  CG_SPECS.forEach(function(sp){ document.getElementById("lm-" + sp.k).value = (l && l[sp.k]) || ""; });
+  cgEnsureDatalists();
   document.getElementById("lm-file").value = "";
   document.getElementById("lm-del").style.display = l ? "inline-block" : "none";
   cgLmPreview();
@@ -2041,6 +2159,7 @@ function saveLuminaria() {
   if (dup && !confirm("Ya existe una luminaria con el codigo " + codigo + " (" + dup.nombre + "). Guardar igual?")) return;
   var l = cgLumEdit.id ? Object.assign({}, cgLum(cgLumEdit.id)) : {id:nid("lum"), creado:cgHoy(), by:currentUser};
   l.nombre = nombre; l.codigo = codigo;
+  CG_SPECS.forEach(function(sp){ l[sp.k] = document.getElementById("lm-" + sp.k).value.trim(); });
   if (cgImgTmp) { l.img = cgImgTmp.img; l.iw = cgImgTmp.iw; l.ih = cgImgTmp.ih; } else { delete l.img; delete l.iw; delete l.ih; }
   l.ts = Date.now();
   var i = D.luminarias.map(function(x){ return x.id; }).indexOf(l.id);
