@@ -284,9 +284,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cg-sel-note{flex-basis:100%;font-size:11px;color:#6b7280}
 .cg-nomc{min-width:0}
 .cg-sel-com{flex-basis:100%}
+.cg-pl{margin-top:16px;background:#fff;border:1px solid var(--br);border-radius:12px;padding:12px 14px}
+.cg-pl-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.cg-pl-t{font-size:14px;font-weight:600;color:#0D1B2A;display:flex;align-items:center;gap:6px}
+.cg-pl-s{font-size:11px;color:#9ca3af;margin-top:2px}
+.cg-pl-btns{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cg-pl-btns .btn{display:flex;align-items:center;gap:5px}
+.cg-pl-chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 8px}
+.cg-chip{display:flex;align-items:center;gap:6px;border:1px solid #e5e7eb;background:#f9f9f8;border-radius:999px;padding:4px 10px 4px 4px;font-size:11.5px;color:#374151;cursor:pointer}
+.cg-chip.act{border-color:#0D1B2A;background:#fff;box-shadow:0 0 0 2px rgba(13,27,42,0.12)}
+.cg-chip .cg-dot{width:20px;height:20px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cg-chip .cg-cnt{font-size:10.5px;color:#9ca3af}
+.cg-chip .cg-cnt.ok{color:#059669;font-weight:600}
+.cg-pl-hint{font-size:11.5px;color:#6b7280;margin-bottom:8px}
+.cg-pl-wrap{position:relative;overflow:auto;max-height:72vh;border:1px solid #e5e7eb;border-radius:10px;background:#f3f4f6}
+.cg-pl-stage{position:relative;cursor:crosshair;line-height:0}
+.cg-pl-stage img{width:100%;display:block;user-select:none;-webkit-user-drag:none}
+.cg-mk{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2px solid #fff;color:#fff;font-size:9.5px;font-weight:700;line-height:16px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.45);cursor:pointer;box-sizing:border-box}
+.cg-mk:hover{transform:scale(1.25)}
+.cg-pl-empty{padding:26px;text-align:center;color:#9ca3af;font-size:12.5px;border:1px dashed #d1d5db;border-radius:10px;margin-top:10px}
 .cg-com{width:100%;margin-top:5px;font-size:11.5px;padding:4px 7px;border-radius:6px;border:1px dashed #d1d5db;background:transparent;color:#0f766e;font-style:italic}
 .cg-com:focus{outline:none;border-style:solid;border-color:#00695C;background:#fff}
 .cg-obs{margin-top:12px}
+.cg-alc{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cg-alc-c{background:#fff;border:1px solid var(--br);border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:8px}
+.cg-alc-r{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cg-alc-t{font-size:13px;font-weight:600;color:#0D1B2A;display:flex;align-items:center;gap:6px}
+.cg-yn{display:flex;background:#f3f4f6;border-radius:8px;padding:2px;gap:2px}
+.cg-yn button{border:none;background:transparent;font-size:12px;font-weight:600;color:#6b7280;padding:5px 12px;border-radius:6px;cursor:pointer}
+.cg-yn button.si{background:#00695C;color:#fff}
+.cg-yn button.no{background:#fff;color:#b91c1c;box-shadow:0 1px 2px rgba(0,0,0,0.08)}
+.cg-alc-c textarea{width:100%;box-sizing:border-box;font-family:inherit;font-size:12.5px;padding:7px 9px;border-radius:8px;border:1px solid #d1d5db;min-height:58px;resize:vertical;color:#374151}
+@media (max-width:900px){.cg-alc{grid-template-columns:1fr}}
 .lm-specs{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
 @media (max-width:800px){.cg-specs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:800px){.cg-tr{grid-template-columns:28px 44px 1fr 70px 26px}.cg-tr .cg-cod{display:none}.cg-th span:nth-child(3){display:none}}
@@ -1760,7 +1789,7 @@ function cgRefresh() {
   if (curDept !== "computos" || curView !== "board") return;
   var ae = document.activeElement, body = document.getElementById("cg-body");
   var typing = ae && body && body.contains(ae) && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA");
-  if (cgView === "nuevo") { var it = document.getElementById("cg-items"); if (it && (!typing || !it.contains(ae))) renderCGItems(it); }
+  if (cgView === "nuevo") { var it = document.getElementById("cg-items"); if (it && (!typing || !it.contains(ae))) renderCGItems(it); renderCGPlano(document.getElementById("cg-plano")); }
   else if (cgView === "base") { var bl = document.getElementById("cg-base-list"); if (bl) renderCGBaseList(bl); }
   else if (!typing) renderComputosGen();
 }
@@ -1844,6 +1873,8 @@ function renderCGNuevo(body) {
 
   var items = cgEl("div"); items.id = "cg-items"; body.appendChild(items);
   renderCGItems(items);
+  var pl = cgEl("div", "cg-pl"); pl.id = "cg-plano"; body.appendChild(pl);
+  renderCGPlano(pl);
   setTimeout(function(){ si.focus(); }, 50);
 }
 function cgDropdown() {
@@ -1914,7 +1945,7 @@ function cgAgregar() {
   var key = cgSpecsKey(cgPickSpecs) + "|" + cgNorm(com);
   var ex = c.items.filter(function(it){ return it.lumId === l.id && cgSpecsKey(it) + "|" + cgNorm(it.comentario || "") === key; })[0];
   if (ex) ex.cant = (parseInt(ex.cant, 10) || 0) + q;
-  else c.items.push(Object.assign({lumId:l.id, nombre:l.nombre, codigo:l.codigo || "", cant:q, comentario:com}, cgSpecsOf(cgPickSpecs)));
+  else c.items.push(Object.assign({uid:nid("it"), lumId:l.id, nombre:l.nombre, codigo:l.codigo || "", cant:q, comentario:com}, cgSpecsOf(cgPickSpecs)));
   c.ts = Date.now(); cgSaveComp(c);
   cgPick = null; cgPickSpecs = {}; si.value = ""; qi.value = "1"; cgShowSel();
   renderCGItems(document.getElementById("cg-items"));
@@ -1924,7 +1955,7 @@ function renderCGItems(box) {
   if (!box) return; var c = cgCur(); if (!c) return;
   box.innerHTML = "";
   var items = c.items || [];
-  if (!items.length) { box.appendChild(cgEl("div", "cg-empty", "Todavia no agregaste luminarias. Busca arriba, elegila y pone la cantidad.")); return; }
+  if (!items.length) { box.appendChild(cgEl("div", "cg-empty", "Todavia no agregaste luminarias. Busca arriba, elegila y pone la cantidad.")); renderCGPlano(document.getElementById("cg-plano")); return; }
   var tb = cgEl("div", "cg-table");
   var hd = cgEl("div", "cg-tr cg-th");
   ["#", "", "Codigo", "Luminaria y especificaciones", "Cantidad", ""].forEach(function(h){ hd.appendChild(cgEl("span", null, h)); });
@@ -1951,7 +1982,7 @@ function renderCGItems(box) {
     q.onchange = function(){ var v = parseInt(this.value, 10); var cc = cgCur(); if (!cc || !cc.items[idx]) return; if (!v || v < 1) { this.value = cc.items[idx].cant; return; } cc.items[idx].cant = v; cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
     r.appendChild(q);
     var d = cgEl("button", "ctc-del"); d.innerHTML = "<i class='ti ti-x'></i>"; d.title = "Quitar";
-    d.onclick = function(){ var cc = cgCur(); if (!cc) return; cc.items.splice(idx, 1); cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
+    d.onclick = function(){ var cc = cgCur(); if (!cc) return; var gone = cc.items.splice(idx, 1)[0]; if (gone && gone.uid && cc.marcas) cc.marcas = cc.marcas.filter(function(m){ return m.u !== gone.uid; }); cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
     r.appendChild(d);
     tb.appendChild(r);
   });
@@ -1961,6 +1992,28 @@ function renderCGItems(box) {
   tf.appendChild(cgEl("span", "cg-tot", String(total))); tf.appendChild(cgEl("span"));
   tb.appendChild(tf);
   box.appendChild(tb);
+  // Alcance: mano de obra y elevador (Si/No + especificacion cuando es Si)
+  var alc = cgEl("div", "cg-alc");
+  [["mo", "ti-tool", "Incluye mano de obra", "Especificacion de tareas incluidas (montaje, cableado, conexionado, puesta en marcha, retiro de lo existente...)"],
+   ["elev", "ti-crane", "Necesita elevador", "Especificacion del elevador (tipo, altura de trabajo, dias estimados, quien lo provee...)"]].forEach(function(cfg){
+    var k = cfg[0], card = cgEl("div", "cg-alc-c"), row = cgEl("div", "cg-alc-r");
+    var t = cgEl("div", "cg-alc-t"); t.innerHTML = "<i class='ti " + cfg[1] + "' style='font-size:15px;color:#00695C'></i>"; t.appendChild(document.createTextNode(cfg[2]));
+    var yn = cgEl("div", "cg-yn"), val = c[k];
+    [["si", "Si"], ["no", "No"]].forEach(function(o){
+      var b = cgEl("button", val === o[0] ? o[0] : "", o[1]);
+      b.onclick = function(){ var cc = cgCur(); if (!cc) return; cc[k] = cc[k] === o[0] ? "" : o[0]; cc.ts = Date.now(); cgSaveComp(cc); renderCGItems(box); };
+      yn.appendChild(b);
+    });
+    row.appendChild(t); row.appendChild(yn); card.appendChild(row);
+    if (val === "si") {
+      var ta2 = document.createElement("textarea"); ta2.placeholder = cfg[3]; ta2.value = c[k + "Esp"] || "";
+      var sv2 = debounce(function(){ var cc = cgCur(); if (!cc) return; cc[k + "Esp"] = ta2.value; cc.ts = Date.now(); cgSaveComp(cc); }, 400);
+      ta2.oninput = sv2; ta2.onchange = sv2;
+      card.appendChild(ta2);
+    }
+    alc.appendChild(card);
+  });
+  box.appendChild(alc);
   var ob = cgEl("div", "cg-obs");
   ob.appendChild(cgEl("label", "glbl", "Observaciones generales del computo"));
   var ota = document.createElement("textarea"); ota.className = "na"; ota.style.minHeight = "60px"; ota.placeholder = "Comentarios para todo el computo (salen en el PDF)...";
@@ -1968,6 +2021,7 @@ function renderCGItems(box) {
   var so = debounce(function(){ var cc = cgCur(); if (!cc) return; cc.obs = ota.value; cc.ts = Date.now(); cgSaveComp(cc); }, 400);
   ota.oninput = so; ota.onchange = so;
   ob.appendChild(ota); box.appendChild(ob);
+  renderCGPlano(document.getElementById("cg-plano"));
 }
 function cgCerrar() {
   var c = cgCur(); if (!c) return;
@@ -1978,6 +2032,178 @@ function cgCerrar() {
   logActivity("cerro un computo de luminarias", c.proyecto, currentUser);
   cgPdf(c);
   cgCurId = null; cgView = "historial"; renderComputosGen();
+}
+
+// ── PLANO DEL COMPUTO: ubicacion de cada luminaria ──
+// El plano (imagen o 1ra pagina de un PDF) se guarda comprimido en la coleccion "gfiles";
+// el computo guarda c.plano = {fileId,name,w,h} y c.marcas = [{u:uid del item, x, y}] con x/y de 0 a 1.
+var CG_COLORS = ["#E53935","#1E88E5","#43A047","#FB8C00","#8E24AA","#00ACC1","#F4511E","#3949AB","#7CB342","#D81B60","#6D4C41","#546E7A","#FDD835","#00897B","#5E35B1","#C0CA33"];
+var cgPlanoCache = {}, cgMarkSel = null, cgZoom = 1;
+function cgItemColor(idx) { return CG_COLORS[idx % CG_COLORS.length]; }
+function cgEnsureUids(c) {
+  var changed = false;
+  (c.items || []).forEach(function(it){ if (!it.uid) { it.uid = nid("it"); changed = true; } });
+  return changed;
+}
+function cgLoadPlano(fileId) {
+  if (cgPlanoCache[fileId]) return Promise.resolve(cgPlanoCache[fileId]);
+  return getDoc(doc(db, "gfiles", fileId)).then(function(snap){
+    if (!snap.exists()) return null;
+    cgPlanoCache[fileId] = snap.data().data; return cgPlanoCache[fileId];
+  }).catch(function(e){ console.warn(e); return null; });
+}
+function cgLoadPdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  return new Promise(function(res, rej){
+    var sc = document.createElement("script");
+    sc.src = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js";
+    sc.onload = function(){ window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js"; res(window.pdfjsLib); };
+    sc.onerror = rej; document.head.appendChild(sc);
+  });
+}
+// Lleva cualquier fuente (img o canvas) a un JPEG que entre en un documento de Firestore (< ~950 KB)
+function cgCanvasToJpeg(src, sw, sh) {
+  var max = 2400, r = Math.min(1, max / Math.max(sw, sh));
+  for (var tries = 0; tries < 6; tries++) {
+    var cv = document.createElement("canvas"); cv.width = Math.round(sw * r); cv.height = Math.round(sh * r);
+    var cx = cv.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(src, 0, 0, cv.width, cv.height);
+    var q = 0.78, url = cv.toDataURL("image/jpeg", q);
+    while (url.length > 950000 && q > 0.45) { q -= 0.1; url = cv.toDataURL("image/jpeg", q); }
+    if (url.length <= 950000) return {data:url, w:cv.width, h:cv.height};
+    r *= 0.8;
+  }
+  return null;
+}
+function cgSubirPlano(file) {
+  var c = cgCur(); if (!c || !file) return;
+  var esPdf = /pdf$/i.test(file.type) || /\.pdf$/i.test(file.name);
+  var st = document.getElementById("cg-pl-status"); if (st) st.textContent = "Procesando el plano...";
+  var fin = function(res){
+    if (!res) { alert("No se pudo procesar el plano. Proba con una imagen JPG/PNG o un PDF mas liviano."); if (st) st.textContent = ""; return; }
+    var cc = cgCur(); if (!cc) return;
+    var oldId = cc.plano && cc.plano.fileId, fid = nid("gf");
+    showSyncing();
+    setDoc(doc(db, "gfiles", fid), {id:fid, compId:cc.id, tipo:"plano", name:file.name, type:"image/jpeg", data:res.data, w:res.w, h:res.h})
+      .then(function(){
+        cgPlanoCache[fid] = res.data;
+        var c2 = cgCur() || cc;
+        c2.plano = {fileId:fid, name:file.name, w:res.w, h:res.h, subido: ahoraTexto() + " por " + currentUserName()};
+        if (!c2.marcas) c2.marcas = [];
+        if (oldId && c2.marcas.length && !confirm("Mantener las ubicaciones ya marcadas sobre el plano nuevo? (Aceptar = mantener, Cancelar = borrarlas)")) c2.marcas = [];
+        cgEnsureUids(c2); c2.ts = Date.now(); cgSaveComp(c2);
+        if (oldId) deleteDoc(doc(db, "gfiles", oldId));
+        logActivity("subio el plano del computo", c2.proyecto, currentUser);
+        renderCGPlano(document.getElementById("cg-plano"));
+      })
+      .catch(function(err){ console.warn(err); alert("No se pudo guardar el plano. Proba con un archivo mas liviano."); showSynced(); if (st) st.textContent = ""; });
+  };
+  if (esPdf) {
+    cgLoadPdfJs().then(function(lib){
+      return file.arrayBuffer().then(function(buf){ return lib.getDocument({data:buf}).promise; })
+        .then(function(pdf){ return pdf.getPage(1); })
+        .then(function(page){
+          var v1 = page.getViewport({scale:1}), sc = 2400 / Math.max(v1.width, v1.height), vp = page.getViewport({scale:sc});
+          var cv = document.createElement("canvas"); cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+          var cx = cv.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height);
+          return page.render({canvasContext:cx, viewport:vp}).promise.then(function(){ fin(cgCanvasToJpeg(cv, cv.width, cv.height)); });
+        });
+    }).catch(function(e){ console.warn(e); fin(null); });
+  } else {
+    var rd = new FileReader();
+    rd.onload = function(){ var im = new Image(); im.onload = function(){ fin(cgCanvasToJpeg(im, im.naturalWidth, im.naturalHeight)); }; im.onerror = function(){ fin(null); }; im.src = rd.result; };
+    rd.readAsDataURL(file);
+  }
+}
+function cgQuitarPlano() {
+  var c = cgCur(); if (!c || !c.plano) return;
+  if (!confirm("Quitar el plano y todas las ubicaciones marcadas?")) return;
+  var oldId = c.plano.fileId; delete c.plano; c.marcas = []; c.ts = Date.now(); cgSaveComp(c);
+  if (oldId) deleteDoc(doc(db, "gfiles", oldId));
+  renderCGPlano(document.getElementById("cg-plano"));
+}
+function renderCGPlano(box) {
+  if (!box) return; var c = cgCur(); if (!c) return;
+  var oldWrap = box.querySelector(".cg-pl-wrap"), sl = oldWrap ? oldWrap.scrollLeft : 0, stp = oldWrap ? oldWrap.scrollTop : 0;
+  box.innerHTML = ""; box.className = "cg-pl";
+  var items = c.items || [];
+  if (cgEnsureUids(c)) { c.ts = Date.now(); cgSaveComp(c); }
+  var marcas = c.marcas || [];
+  var h = cgEl("div", "cg-pl-h");
+  var ht = cgEl("div");
+  var tt = cgEl("div", "cg-pl-t"); tt.innerHTML = "<i class='ti ti-map-pin' style='font-size:15px;color:#00695C'></i> Plano y ubicacion de luminarias <span style='font-weight:400;color:#9ca3af;font-size:12px'>(opcional)</span>";
+  ht.appendChild(tt);
+  var sub = cgEl("div", "cg-pl-s"); sub.id = "cg-pl-status";
+  sub.textContent = c.plano ? (c.plano.name || "Plano") + (c.plano.subido ? " - subido el " + c.plano.subido : "") : "Subi el plano (imagen o PDF) y marca donde va cada luminaria. Sale en el PDF del computo.";
+  ht.appendChild(sub); h.appendChild(ht);
+  var btns = cgEl("div", "cg-pl-btns");
+  var fi = document.createElement("input"); fi.type = "file"; fi.accept = "image/*,application/pdf,.pdf"; fi.style.display = "none";
+  fi.onchange = function(){ if (this.files && this.files[0]) cgSubirPlano(this.files[0]); };
+  var up = cgEl("button", "btn"); up.innerHTML = "<i class='ti ti-upload' style='font-size:12px'></i> " + (c.plano ? "Cambiar plano" : "Subir plano");
+  up.onclick = function(){ fi.click(); };
+  btns.appendChild(fi);
+  if (c.plano) {
+    var zm = cgEl("button", "btn"); zm.innerHTML = "<i class='ti ti-zoom-out' style='font-size:12px'></i>"; zm.title = "Alejar";
+    zm.onclick = function(){ cgZoom = Math.max(1, cgZoom - 0.5); renderCGPlano(box); };
+    var zp = cgEl("button", "btn"); zp.innerHTML = "<i class='ti ti-zoom-in' style='font-size:12px'></i>"; zp.title = "Acercar";
+    zp.onclick = function(){ cgZoom = Math.min(4, cgZoom + 0.5); renderCGPlano(box); };
+    var zl = cgEl("span", "cg-pl-s", Math.round(cgZoom * 100) + "%"); zl.style.margin = "0 2px";
+    btns.appendChild(zm); btns.appendChild(zl); btns.appendChild(zp);
+  }
+  btns.appendChild(up);
+  if (c.plano) {
+    var rm = cgEl("button", "btn"); rm.innerHTML = "<i class='ti ti-trash' style='font-size:12px'></i> Quitar";
+    rm.onclick = cgQuitarPlano; btns.appendChild(rm);
+  }
+  h.appendChild(btns); box.appendChild(h);
+  if (!c.plano) return;
+  if (!items.length) { box.appendChild(cgEl("div", "cg-pl-empty", "Agrega luminarias al computo para poder ubicarlas en el plano.")); }
+  if (cgMarkSel && !items.some(function(it){ return it.uid === cgMarkSel; })) cgMarkSel = null;
+  if (!cgMarkSel && items.length) cgMarkSel = items[0].uid;
+  var chips = cgEl("div", "cg-pl-chips");
+  items.forEach(function(it, idx){
+    var n = marcas.filter(function(m){ return m.u === it.uid; }).length, cant = parseInt(it.cant, 10) || 0;
+    var ch = cgEl("button", "cg-chip" + (cgMarkSel === it.uid ? " act" : ""));
+    var dot = cgEl("span", "cg-dot", String(idx + 1)); dot.style.background = cgItemColor(idx);
+    ch.appendChild(dot);
+    ch.appendChild(cgEl("span", null, it.codigo || it.nombre || "Luminaria"));
+    ch.appendChild(cgEl("span", "cg-cnt" + (n >= cant && cant ? " ok" : ""), n + "/" + cant));
+    ch.title = (it.nombre || "") + (it.comentario ? " - " + it.comentario : "");
+    ch.onclick = function(){ cgMarkSel = it.uid; renderCGPlano(box); };
+    chips.appendChild(ch);
+  });
+  box.appendChild(chips);
+  if (items.length) box.appendChild(cgEl("div", "cg-pl-hint", "Elegi la luminaria arriba y hace clic en el plano donde va. Clic sobre un punto para borrarlo. No es obligatorio ubicar todas."));
+  var wrap = cgEl("div", "cg-pl-wrap");
+  var stage = cgEl("div", "cg-pl-stage");
+  var asp = (c.plano.w && c.plano.h) ? c.plano.w / c.plano.h : 1.4;
+  // 100% = plano entero a la vista; con zoom se agranda y se recorre con scroll
+  stage.style.width = "min(" + (cgZoom * 100) + "%, calc(" + (70 * cgZoom).toFixed(1) + "vh * " + asp.toFixed(4) + "))"; stage.style.margin = "0 auto";
+  var img = document.createElement("img"); img.alt = "Plano"; img.draggable = false;
+  stage.appendChild(img);
+  cgLoadPlano(c.plano.fileId).then(function(src){
+    if (src) { img.src = src; img.onload = function(){ wrap.scrollLeft = sl; wrap.scrollTop = stp; }; }
+    else { stage.innerHTML = ""; stage.appendChild(cgEl("div", "cg-pl-empty", "No se pudo cargar el plano.")); }
+  });
+  marcas.forEach(function(m, mi){
+    var idx = -1; items.forEach(function(it, i){ if (it.uid === m.u) idx = i; });
+    if (idx < 0) return;
+    var mk = cgEl("div", "cg-mk", String(idx + 1));
+    mk.style.left = (m.x * 100) + "%"; mk.style.top = (m.y * 100) + "%"; mk.style.background = cgItemColor(idx);
+    mk.title = "#" + (idx + 1) + " " + (items[idx].codigo || items[idx].nombre || "") + " - clic para borrar";
+    mk.onclick = function(e){ e.stopPropagation(); var cc = cgCur(); if (!cc) return; cc.marcas.splice(mi, 1); cc.ts = Date.now(); cgSaveComp(cc); renderCGPlano(box); };
+    stage.appendChild(mk);
+  });
+  stage.onclick = function(e){
+    if (!items.length || !cgMarkSel) return;
+    var r = stage.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    if (x < 0 || x > 1 || y < 0 || y > 1) return;
+    var cc = cgCur(); if (!cc) return;
+    if (!cc.marcas) cc.marcas = [];
+    cc.marcas.push({u:cgMarkSel, x:Math.round(x * 10000) / 10000, y:Math.round(y * 10000) / 10000});
+    cc.ts = Date.now(); cgSaveComp(cc); renderCGPlano(box);
+  };
+  wrap.appendChild(stage); box.appendChild(wrap);
 }
 
 // ── PDF (A4 vertical, formato de informe ITELSA) ──
@@ -2066,6 +2292,26 @@ async function cgPdf(c) {
   J.setTextColor.apply(J, green); J.setFontSize(12);
   J.text(meta[3][1], W - M - cols[cols.length-1].w/2, y + 8.8, {align:"center"});
   y += 14;
+  // Alcance: mano de obra y elevador
+  if (c.mo || c.elev) {
+    var alcRows = [];
+    if (c.mo) alcRows.push({t:"MANO DE OBRA", v:c.mo === "si" ? "Incluida" : "No incluida", esp:c.mo === "si" ? (c.moEsp || "").trim() : ""});
+    if (c.elev) alcRows.push({t:"ELEVADOR", v:c.elev === "si" ? "Se necesita" : "No se necesita", esp:c.elev === "si" ? (c.elevEsp || "").trim() : ""});
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5);
+    var alcH = 9; alcRows.forEach(function(r){ r.ln = r.esp ? J.splitTextToSize(r.esp, W - 2*M - 40) : []; alcH += 6 + r.ln.length * 4 + (r.ln.length ? 1.5 : 0); });
+    if (y + alcH > H - 22) { J.addPage(); header(); y = 32; }
+    J.setFillColor(244,247,248); J.rect(M, y, W - 2*M, alcH, "F");
+    J.setFillColor.apply(J, green); J.rect(M, y, 0.9, alcH, "F");
+    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green); J.text("ALCANCE", M + 4, y + 5.5);
+    var ay2 = y + 11;
+    alcRows.forEach(function(r){
+      J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, grey); J.text(r.t, M + 4, ay2);
+      J.setFontSize(9); J.setTextColor.apply(J, ink); J.text(r.v, M + 32, ay2);
+      if (r.ln.length) { J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor(55,65,81); J.text(r.ln, M + 32, ay2 + 5); }
+      ay2 += 6 + r.ln.length * 4 + (r.ln.length ? 1.5 : 0);
+    });
+    y += alcH + 4;
+  }
   if (c.obs && c.obs.trim()) {
     J.setFont("helvetica", "normal"); J.setFontSize(8.5);
     var ol = J.splitTextToSize(c.obs.trim(), W - 2*M - 8);
@@ -2076,11 +2322,61 @@ async function cgPdf(c) {
     J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green); J.text("OBSERVACIONES", M + 4, y + 5.5);
     J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, ink); J.text(ol, M + 4, y + 10.5);
   }
+  // Plano con la ubicacion de cada luminaria (hoja A4 horizontal)
+  if (c.plano && c.plano.fileId) {
+    var psrc = await cgLoadPlano(c.plano.fileId);
+    if (psrc) {
+      var PW = 297, PH = 210;
+      J.addPage("a4", "landscape");
+      if (logo && logoSz) { var plh = 10, plw = plh * logoSz.w / logoSz.h; if (plw > 34) { plw = 34; plh = plw * logoSz.h / logoSz.w; } try { J.addImage(logo, "PNG", M, 9, plw, plh); } catch(e) {} }
+      J.setFont("helvetica", "bold"); J.setFontSize(9); J.setTextColor.apply(J, green); J.text("UBICACIÓN DE LUMINARIAS", PW - M, 13, {align:"right"});
+      J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, grey); J.text(J.splitTextToSize(c.proyecto, 120)[0], PW - M, 18, {align:"right"});
+      J.setDrawColor(209,213,219); J.setLineWidth(0.2); J.line(M, 22, PW - M, 22);
+      J.setDrawColor.apply(J, green); J.setLineWidth(0.6); J.line(M, 22, M + 14, 22);
+      var legW = 64, ax = M, ay = 27, aw = PW - 2*M - legW - 6, ah = PH - ay - 16;
+      var pw0 = c.plano.w || 1000, ph0 = c.plano.h || 700, sc = Math.min(aw / pw0, ah / ph0), iw = pw0 * sc, ih = ph0 * sc;
+      var ix = ax + (aw - iw) / 2, iy = ay + (ah - ih) / 2;
+      try { J.addImage(psrc, "JPEG", ix, iy, iw, ih); } catch(e) {}
+      J.setDrawColor(209,213,219); J.setLineWidth(0.2); J.rect(ix, iy, iw, ih);
+      var hex2rgb = function(hx){ return [parseInt(hx.substr(1,2),16), parseInt(hx.substr(3,2),16), parseInt(hx.substr(5,2),16)]; };
+      var idxOf = {}; c.items.forEach(function(it, i){ if (it.uid) idxOf[it.uid] = i; });
+      var mr = Math.max(1.3, Math.min(2.4, iw / 120));
+      (c.marcas || []).forEach(function(m){
+        var i2 = idxOf[m.u]; if (i2 == null) return;
+        var mx = ix + m.x * iw, my = iy + m.y * ih;
+        J.setFillColor.apply(J, hex2rgb(cgItemColor(i2))); J.setDrawColor(255,255,255); J.setLineWidth(0.35);
+        J.circle(mx, my, mr, "FD");
+        J.setFont("helvetica", "bold"); J.setFontSize(mr * 2.6); J.setTextColor(255,255,255);
+        J.text(String(i2 + 1), mx, my + mr * 0.36, {align:"center"});
+      });
+      // Referencias
+      var lx = PW - M - legW, ly = ay;
+      J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green); J.text("REFERENCIAS", lx, ly + 3); ly += 7;
+      var rowH2 = c.items.length > 14 ? Math.max(5.2, (ah - 10) / c.items.length) : 9;
+      c.items.forEach(function(it, i){
+        if (ly > PH - 18) return;
+        var nUb = (c.marcas || []).filter(function(m){ return m.u === it.uid; }).length;
+        J.setFillColor.apply(J, hex2rgb(cgItemColor(i))); J.circle(lx + 2.4, ly + 1.2, 2.2, "F");
+        J.setFont("helvetica", "bold"); J.setFontSize(6.5); J.setTextColor(255,255,255); J.text(String(i + 1), lx + 2.4, ly + 2.1, {align:"center"});
+        J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, ink);
+        J.text(J.splitTextToSize(it.codigo || it.nombre || "-", legW - 22)[0], lx + 6.5, ly + 1);
+        J.setFont("helvetica", "normal"); J.setFontSize(6.5); J.setTextColor.apply(J, grey);
+        var sub2 = [it.potencia, it.angulo].filter(Boolean).join(" · ");
+        if (rowH2 >= 8 && sub2) J.text(J.splitTextToSize(sub2, legW - 22)[0], lx + 6.5, ly + 4.4);
+        J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green);
+        J.text(nUb + " / " + it.cant, PW - M, ly + 1.5, {align:"right"});
+        ly += rowH2;
+      });
+      J.setFont("helvetica", "italic"); J.setFontSize(6.5); J.setTextColor.apply(J, grey);
+      J.text(J.splitTextToSize("Ubicadas en plano / cantidad computada.", legW), lx, Math.min(ly + 3, PH - 14));
+    }
+  }
   var n = J.getNumberOfPages();
   for (var p=1; p<=n; p++) {
     J.setPage(p); J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey);
-    J.text("ITELSA S.A.S. - Cómputo de luminarias - " + fecha, M, H - 10);
-    J.text("Página " + p + " de " + n, W - M, H - 10, {align:"right"});
+    var pgW = J.internal.pageSize.getWidth(), pgH = J.internal.pageSize.getHeight();
+    J.text("ITELSA S.A.S. - Cómputo de luminarias - " + fecha, M, pgH - 10);
+    J.text("Página " + p + " de " + n, pgW - M, pgH - 10, {align:"right"});
   }
   var safe = c.proyecto.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
   J.save("Computo_" + safe + "_" + (c.cerrado || cgHoy()) + ".pdf");
@@ -2105,6 +2401,7 @@ function renderCGHist(body) {
       var dup = cgEl("button", "btn"); dup.innerHTML = "<i class='ti ti-copy' style='font-size:12px'></i> Nuevo a partir de este"; dup.title = "Para un cambio de proyecto: copia las luminarias en un computo nuevo";
       dup.onclick = function(){
         var nc = {id:nid("cg"), proyecto:c.proyecto, creado:cgHoy(), items:JSON.parse(JSON.stringify(c.items||[])), estado:"abierto", by:currentUser, ts:Date.now(), basadoEn:c.id};
+        if (c.plano) { nc.plano = JSON.parse(JSON.stringify(c.plano)); nc.marcas = JSON.parse(JSON.stringify(c.marcas || [])); }
         D.compgen.push(nc); cgSaveComp(nc); cgCurId = nc.id; cgView = "nuevo"; renderComputosGen();
       };
       r.appendChild(dup);
