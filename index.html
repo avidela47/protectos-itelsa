@@ -450,9 +450,16 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
 .mk-cal-chip.task{background:#ecfdf5;border-color:#6ee7c8;color:#047857;font-weight:600}
 .mk-cal-chip.task:hover{border-color:#1D9E75}
 .mk-cal-chip.pl{border-left:3px solid #9ca3af}
-.mk-cal-chip.pl.e1{background:#fffbeb;border-color:#fcd34d;border-left-color:#d97706;color:#92400e}
-.mk-cal-chip.pl.e2{background:#ecfeff;border-color:#67e8f9;border-left-color:#0891b2;color:#155e75}
-.mk-cal-chip.pl.e3{background:#f0fdf4;border-color:#86efac;border-left-color:#16a34a;color:#166534;font-weight:600}
+.mk-cal-chip.pl.e1{background:#fff7ed;border-color:#fdba74;border-left-color:#ea580c;color:#9a3412;font-weight:600}
+.mk-cal-chip.pl.e2{background:#f0fdf4;border-color:#86efac;border-left-color:#16a34a;color:#166534;font-weight:600}
+.mk-cal-chip .pg{font-size:9px;margin-right:3px}
+.rp-bar .rp-add{background:#fff;color:#009688;border:1px solid #009688;border-radius:8px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.dt-row{display:flex;gap:10px}.dt-row .fg{flex:1}
+.dt-est{display:flex;gap:6px;flex-wrap:wrap}
+.dt-est button{border:1px solid #d1d5db;background:#fff;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:#6b7280}
+.dt-est button.on.e0{background:#f3f4f6;border-color:#9ca3af;color:#374151}
+.dt-est button.on.e1{background:#fff7ed;border-color:#ea580c;color:#9a3412}
+.dt-est button.on.e2{background:#f0fdf4;border-color:#16a34a;color:#166534}
 .mk-cal-chip .cn{font-weight:700;margin-right:3px}
 .rp-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 12px;font-size:11px;color:#6b7280}
 .rp-bar .rp-f{border:1px solid #d1d5db;background:#fff;border-radius:20px;padding:3px 9px;font-size:11px;cursor:pointer;color:#374151}
@@ -632,11 +639,14 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
 <div class="mo" id="mo-daytask">
   <div class="md">
     <div class="mt" id="dt-title-lbl">Nueva publicacion</div>
-    <div class="fg"><label>Fecha</label><input type="text" id="dt-date" disabled></div>
-    <div class="fg"><label>Que se quiere publicar</label><input type="text" id="dt-title" placeholder="Titulo / descripcion..."></div>
+    <div class="dt-row">
+      <div class="fg"><label>Fecha (cambiala para mover la publicacion)</label><input type="date" id="dt-date"></div>
+      <div class="fg"><label>Donde se publica</label><select id="dt-canal"><option value="IG">Instagram ITELSA</option><option value="LI">LinkedIn ITELSA</option><option value="CS">LinkedIn Candelaria</option><option value="BLOG">Blog</option><option value="NEWS">Newsletter</option><option value="OTRO">Otro</option></select></div>
+    </div>
+    <div class="fg"><label>Que se quiere publicar</label><input type="text" id="dt-title" placeholder="Titulo / idea..."></div>
+    <div class="fg"><label>Estado</label><div class="dt-est" id="dt-est"></div></div>
     <div class="dt-pl" id="dt-plan"></div>
-    <div class="fg" id="dt-est-wrap" style="display:none"><label>Estado de producción</label><select id="dt-est"><option>Idea</option><option>En producción</option><option>Listo</option><option>Publicado</option></select></div>
-    <div class="fg"><label>Estado</label><div class="mk-prog" id="dt-prog-toggle" style="display:inline-flex"></div></div>
+    <div class="fg"><label>Programacion</label><div class="mk-prog" id="dt-prog-toggle" style="display:inline-flex"></div></div>
     <div class="fg"><label>Anotaciones</label><textarea id="dt-notas" placeholder="Notas..."></textarea></div>
     <div class="ma">
       <button class="bd" id="dt-del-btn" style="display:none;margin-right:auto">Eliminar</button>
@@ -1015,20 +1025,14 @@ function buildMonthCalendar(monthDate, monthKey) {
     var num = document.createElement("div"); num.className = "mk-cal-daynum"; num.textContent = day;
     cell.appendChild(num);
     var items = (D.content||[]).filter(function(it){ return it.date===dateStr; });
-    items = items.filter(function(it){ return !it.planId || rpCanal==="Todos" || it.canal===rpCanal; });
+    items = items.filter(function(it){ return !it.deleted && (rpCanal==="Todos" || it.canal===rpCanal); });
     items.sort(function(a,b){ return (RP_ORD[a.canal]||9)-(RP_ORD[b.canal]||9); });
     items.forEach(function(it) {
       var chip = document.createElement("div");
-      if (it.planId) {
-        var ei = RP_EST.indexOf(it.estado||"Idea");
-        chip.className = "mk-cal-chip pl e" + (ei<0?0:ei);
-        chip.innerHTML = "<span class='cn'>" + (RP_CH[it.canal]||it.canal) + "</span>" + rpEsc(it.title||"");
-        chip.title = (it.estado||"Idea") + (it.programada ? " · Programada" : "") + " · " + (it.title||"");
-      } else {
-      chip.className = "mk-cal-chip" + (it.programada ? " on" : "");
-      chip.textContent = it.title || "(sin titulo)";
-      }
-      if (it.notas && !it.planId) chip.title = it.notas;
+      var ei = rpEstIdx(it);
+      chip.className = "mk-cal-chip pl e" + ei;
+      chip.innerHTML = (it.programada ? "<i class='ti ti-calendar-check pg'></i>" : "") + (it.canal ? "<span class='cn'>" + rpEsc(RP_CH[it.canal]||it.canal) + "</span>" : "") + rpEsc(it.title||"(sin titulo)");
+      chip.title = RP_EST[ei] + (it.programada ? " · Programada" : "") + " · " + (it.title||"") + (it.notas ? "\n" + it.notas : "");
       chip.onclick = (function(itId, itDate){ return function(){ openDayTask(itDate, itId); }; })(it.id, it.date);
       cell.appendChild(chip);
     });
@@ -1057,9 +1061,10 @@ function buildMonthCalendar(monthDate, monthKey) {
 // ── PLAN DE REDES (calendario mensual de contenidos con ordenes de copy y diseno) ──
 // window.REDES_PLAN trae las piezas planificadas. "Cargar plan" las guarda como publicaciones
 // en "content" (id fijo = id de la pieza, no duplica). Los detalles y las ordenes se leen del plan.
-var RP_EST = ["Idea","En producción","Listo","Publicado"];
-var RP_CH = {IG:"IG", LI:"LI", CS:"CANDE", BLOG:"BLOG", NEWS:"NEWS"};
-var RP_CHL = {IG:"Instagram ITELSA", LI:"LinkedIn ITELSA", CS:"LinkedIn Candelaria", BLOG:"Blog", NEWS:"Newsletter"};
+var RP_EST = ["Pendiente","En proceso","Publicado"];
+function rpEstIdx(it){ var e = it && it.estado; if (e==="Publicado") return 2; if (e==="En proceso"||e==="En producción"||e==="Listo") return 1; return 0; }
+var RP_CH = {IG:"IG", LI:"LI", CS:"CANDE", BLOG:"BLOG", NEWS:"NEWS", OTRO:"OTRO"};
+var RP_CHL = {IG:"Instagram ITELSA", LI:"LinkedIn ITELSA", CS:"LinkedIn Candelaria", BLOG:"Blog", NEWS:"Newsletter", OTRO:"Otro"};
 var RP_ORD = {IG:1, LI:2, CS:3, BLOG:4, NEWS:5};
 var rpCanal = "Todos";
 function rpEsc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
@@ -1067,14 +1072,19 @@ function rpPlanById(id){ var P=window.REDES_PLAN||[]; for (var i=0;i<P.length;i+
 function rpContentById(id){ for (var i=0;i<(D.content||[]).length;i++){ if (D.content[i].id===id) return D.content[i]; } return null; }
 function buildRedesBar(monthKey) {
   var P = (window.REDES_PLAN||[]).filter(function(p){ return p.f.slice(0,7)===monthKey; });
-  var loaded = (D.content||[]).filter(function(c){ return c.planId && c.month===monthKey; });
+  var monthItems = (D.content||[]).filter(function(c){ return !c.deleted && (c.month===monthKey || (c.date||"").slice(0,7)===monthKey); });
+  var loaded = monthItems;
   if (!P.length && !loaded.length) return null;
   var bar = document.createElement("div"); bar.className = "rp-bar";
-  var missing = P.filter(function(p){ return !rpContentById(p.id); });
+  var missing = P.filter(function(p){ return !rpContentById(p.id); }); // los eliminados quedan marcados y no se vuelven a cargar
   var lab = document.createElement("span"); lab.className = "rp-cnt";
-  var cnt = [0,0,0,0]; loaded.forEach(function(c){ var e=RP_EST.indexOf(c.estado||"Idea"); cnt[e<0?0:e]++; });
-  lab.textContent = "Plan de redes: " + loaded.length + " piezas · " + RP_EST.map(function(e,i){ return e + " " + cnt[i]; }).join(" · ");
+  var cnt = [0,0,0]; loaded.forEach(function(c){ cnt[rpEstIdx(c)]++; });
+  lab.textContent = "Publicaciones del mes: " + loaded.length + " · " + RP_EST.map(function(e,i){ return e + " " + cnt[i]; }).join(" · ");
   bar.appendChild(lab);
+  var add = document.createElement("button"); add.className = "rp-add";
+  add.innerHTML = "<i class='ti ti-plus' style='font-size:11px'></i> Agregar idea";
+  add.onclick = function(){ var td = new Date().toISOString().slice(0,10); openDayTask(td.slice(0,7)===monthKey ? td : monthKey + "-01", null); };
+  bar.appendChild(add);
   if (missing.length) {
     var imp = document.createElement("button"); imp.className = "rp-imp";
     imp.textContent = "Cargar plan de redes (" + missing.length + " piezas)";
@@ -1092,14 +1102,13 @@ function buildRedesBar(monthKey) {
 function rpImport(list) {
   list.forEach(function(p){
     saveContentItem({ id: p.id, planId: p.id, canal: p.ch, date: p.f, month: p.f.slice(0,7),
-      title: p.t, notas: "", programada: false, estado: "Idea" });
+      title: p.t, notas: "", programada: false, estado: "Pendiente" });
   });
 }
 function renderDtPlan(it) {
-  var box = document.getElementById("dt-plan"), ew = document.getElementById("dt-est-wrap");
+  var box = document.getElementById("dt-plan");
   var p = it && it.planId ? rpPlanById(it.planId) : null;
-  if (!p) { box.style.display = "none"; box.innerHTML = ""; ew.style.display = "none"; return; }
-  ew.style.display = "block"; document.getElementById("dt-est").value = it.estado || "Idea";
+  if (!p) { box.style.display = "none"; box.innerHTML = ""; return; }
   box.style.display = "flex";
   box.innerHTML =
     "<div class='pills'><span class='pill'>" + rpEsc(RP_CHL[p.ch]) + "</span><span class='pill'>" + rpEsc(p.p) + "</span><span class='pill'>" + rpEsc(p.v) + "</span><span class='pill'>" + rpEsc(p.fmt) + "</span><span class='pill'>" + rpEsc(p.h) + " h</span></div>" +
@@ -1133,15 +1142,34 @@ function openDayTask(dateStr, itemId) {
   document.getElementById("dt-notas").value = it ? (it.notas||"") : "";
   dtProgramada = it ? !!it.programada : false;
   renderDtProgToggle();
+  document.getElementById("dt-canal").value = (it && it.canal) ? it.canal : (rpCanal!=="Todos" ? rpCanal : "IG");
+  dtEstado = rpEstIdx(it); renderDtEst();
   renderDtPlan(it);
   var delBtn = document.getElementById("dt-del-btn");
   delBtn.style.display = it ? "inline-block" : "none";
-  delBtn.onclick = function(){ if (dtEditingId) { deleteContentItem(dtEditingId); closeModal("mo-daytask"); } };
+  delBtn.onclick = function(){
+    if (!dtEditingId) return;
+    if (!confirm("¿Eliminar esta publicacion del calendario?")) return;
+    var cur = rpContentById(dtEditingId);
+    if (cur && cur.planId) { var del = {}; for (var k in cur) del[k] = cur[k]; del.deleted = true; saveContentItem(del); }
+    else deleteContentItem(dtEditingId);
+    closeModal("mo-daytask");
+  };
   document.getElementById("mo-daytask").classList.add("op");
   setTimeout(function(){ document.getElementById("dt-title").focus(); }, 50);
 }
 window.openDayTask = openDayTask;
 
+var dtEstado = 0;
+function renderDtEst() {
+  var el = document.getElementById("dt-est"); el.innerHTML = "";
+  RP_EST.forEach(function(e, i){
+    var b = document.createElement("button"); b.type = "button";
+    b.className = "e" + i + (dtEstado===i ? " on" : ""); b.textContent = e;
+    b.onclick = function(){ dtEstado = i; renderDtEst(); };
+    el.appendChild(b);
+  });
+}
 function renderDtProgToggle() {
   var el = document.getElementById("dt-prog-toggle");
   el.className = "mk-prog" + (dtProgramada ? " on" : "");
@@ -1154,10 +1182,14 @@ function saveDayTaskModal() {
   if (!title) return;
   var prev = null;
   if (dtEditingId) { for (var pi=0; pi<D.content.length; pi++){ if (D.content[pi].id===dtEditingId){ prev=D.content[pi]; break; } } }
+  var newDate = document.getElementById("dt-date").value || dtEditingDate;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) { alert("Elegí una fecha valida."); return; }
   var it = { id: dtEditingId || nid("ct") };
-  if (prev && prev.planId) { it.planId = prev.planId; it.canal = prev.canal; it.estado = document.getElementById("dt-est").value; }
-  it.date = dtEditingDate;
-  it.month = dtEditingDate.slice(0,7);
+  if (prev && prev.planId) it.planId = prev.planId;
+  it.canal = document.getElementById("dt-canal").value;
+  it.estado = RP_EST[dtEstado];
+  it.date = newDate;
+  it.month = newDate.slice(0,7);
   it.title = title;
   it.notas = document.getElementById("dt-notas").value;
   it.programada = dtProgramada;
