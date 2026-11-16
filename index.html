@@ -480,6 +480,74 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
 .mk-cal-add{margin-top:auto;align-self:flex-start;background:transparent;border:1px dashed #d1d5db;border-radius:6px;font-size:10px;color:#9ca3af;cursor:pointer;padding:2px 6px}
 .mk-cal-add:hover{background:#fff;color:#374151}
 
+/* ===================== WEEKLYS ===================== */
+.wk-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wk-tt{font-size:20px;font-weight:700;color:#0D1B2A;display:flex;align-items:center;gap:8px}
+.wk-sub{font-size:12px;color:#6b7280;margin-top:3px}
+.wk-actions{display:flex;gap:8px;flex-wrap:wrap}
+.wk-btn{display:flex;align-items:center;gap:6px;border-radius:9px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #0D1B2A;background:#0D1B2A;color:#fff}
+.wk-btn.sec{background:#fff;color:#0D1B2A}
+.wk-btn.ok{background:#009688;border-color:#009688}
+.wk-btn.sm{padding:5px 10px;font-size:12px}
+.wk-btn.danger{background:#fff;color:#b91c1c;border-color:#fecaca}
+.wk-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.wk-kpi{background:#fff;border:1px solid var(--br);border-radius:12px;padding:12px 14px}
+.wk-kpi .n{font-size:26px;font-weight:700;color:#0D1B2A;line-height:1.1}
+.wk-kpi .l{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.wk-kpi.k-red .n{color:#DC2626}.wk-kpi.k-or .n{color:#EA580C}.wk-kpi.k-gr .n{color:#009688}
+.wk-filt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:14px}
+.wk-chip{border:1px solid #d1d5db;background:#fff;border-radius:20px;padding:4px 11px;font-size:12px;cursor:pointer;color:#374151}
+.wk-chip.on{background:#0D1B2A;color:#fff;border-color:#0D1B2A}
+.wk-filt select{font-size:12px;padding:5px 9px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.wk-form{background:#fff;border:1px solid #0D1B2A;border-radius:12px;padding:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:10px}
+.wk-form .ft{font-size:14px;font-weight:700;color:#0D1B2A}
+.wk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.wk-grid .w2{grid-column:span 2}.wk-grid .w4{grid-column:1/-1}
+.wk-f{display:flex;flex-direction:column;gap:4px}
+.wk-f label{font-size:10.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em}
+.wk-f input,.wk-f select,.wk-f textarea,.wk-in{font-family:inherit;font-size:13px;padding:7px 9px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#1f2937;width:100%;box-sizing:border-box}
+.wk-f textarea{min-height:60px;resize:vertical}
+.wk-sec{margin:20px 0 10px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em}
+.wk-sec .cnt{background:#f3f4f6;border-radius:20px;padding:1px 8px;font-size:11px;color:#6b7280}
+.wk-lvl{margin:14px 0 8px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.wk-lvl .dot{width:10px;height:10px;border-radius:50%}
+.wk-card{background:#fff;border:1px solid var(--br);border-left:6px solid #64748B;border-radius:12px;margin-bottom:8px;overflow:hidden}
+.wk-card.critica{border-left-color:#DC2626;background:#fff7f7}
+.wk-card.alta{border-left-color:#EA580C}
+.wk-card.media{border-left-color:#CA8A04}
+.wk-card.baja{border-left-color:#64748B}
+.wk-ch{padding:12px 14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.wk-ch:hover{background:rgba(13,27,42,0.02)}
+.wk-main{flex:1;min-width:0}
+.wk-title{font-size:15.5px;font-weight:700;color:#0D1B2A;line-height:1.3}
+.wk-meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:6px;font-size:12px;color:#6b7280;align-items:center}
+.wk-meta .venc{color:#DC2626;font-weight:700}
+.wk-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:#eef2f7;color:#334155;text-transform:uppercase;letter-spacing:.03em}
+.wk-badge.p-critica{background:#DC2626;color:#fff}.wk-badge.p-alta{background:#EA580C;color:#fff}.wk-badge.p-media{background:#FEF3C7;color:#92400E}.wk-badge.p-baja{background:#E2E8F0;color:#334155}
+.wk-badge.e-pendiente{background:#f3f4f6;color:#374151}.wk-badge.e-en-curso{background:#E0F2F1;color:#00695C}.wk-badge.e-bloqueada{background:#FEE2E2;color:#991B1B}.wk-badge.e-resuelta{background:#DCFCE7;color:#166534}
+.wk-last{font-size:12px;color:#4b5563;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.wk-body{border-top:1px solid #eef0f2;padding:12px 14px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.wk-blk{border:1px solid #eef0f2;border-radius:10px;padding:10px 12px}
+.wk-blk .bt{font-size:11px;font-weight:700;color:#0D1B2A;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.wk-log{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.wk-log .e{font-size:12.5px;color:#374151;line-height:1.45;padding-left:10px;border-left:2px solid #B2DFDB}
+.wk-log .e .w{font-size:10.5px;color:#9ca3af}
+.wk-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.wk-people{display:flex;flex-wrap:wrap;gap:6px}
+.wk-people label{display:flex;align-items:center;gap:4px;font-size:12px;color:#374151;border:1px solid #e5e7eb;border-radius:20px;padding:3px 9px;cursor:pointer;text-transform:none;letter-spacing:0;font-weight:500}
+.wk-note{font-size:11.5px;color:#6b7280}
+.wk-empty{padding:16px;text-align:center;color:#9ca3af;font-size:12.5px;border:1px dashed #d1d5db;border-radius:10px;background:#fff}
+.wk-meet{background:#fff;border:1px solid var(--br);border-radius:12px;margin-bottom:8px}
+.wk-meet .mh{padding:10px 14px;display:flex;gap:10px;align-items:center;cursor:pointer;flex-wrap:wrap}
+.wk-meet .md2{font-size:13px;font-weight:700;color:#0D1B2A}
+.wk-meet .mb2{padding:0 14px 12px;font-size:12.5px;color:#374151;white-space:pre-wrap;line-height:1.5}
+.wk-res{background:#fff;border:1px solid var(--br);border-radius:10px;padding:10px 14px;margin-bottom:6px;display:flex;gap:12px;align-items:flex-start}
+.wk-res .rt{font-size:13.5px;font-weight:600;color:#374151;text-decoration:line-through;text-decoration-color:#9ca3af}
+.wk-res .rr{font-size:12.5px;color:#166534;margin-top:4px;white-space:pre-wrap}
+.wk-wk{font-size:11px;font-weight:700;color:#9ca3af;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.05em}
+@media (max-width:900px){.wk-kpis{grid-template-columns:1fr 1fr}.wk-grid{grid-template-columns:1fr 1fr}.wk-grid .w2{grid-column:1/-1}}
+
 /* ===================== CELULAR Y TABLET ===================== */
 .hb,.sb-ov{display:none}
 body.sb-lock{overflow:hidden}
@@ -566,6 +634,7 @@ body.sb-lock{overflow:hidden}
   </div>
   <div class="sb-ov" id="sb-ov" onclick="closeSb()"></div>
   <div class="dbar" id="dept-bar">
+    <button class="dbtn" id="dbtn-weeklys" onclick="switchDept('weeklys')"><i class="ti ti-target-arrow" style="font-size:11px"></i> WEEKLYS</button>
     <button class="dbtn" id="dbtn-pipeline" onclick="switchDept('pipeline')">PROYECTOS</button>
     <button class="dbtn" id="dbtn-marketing" onclick="switchDept('marketing')">MARKETING &amp; TASK</button>
     <button class="dbtn" id="dbtn-gestion" onclick="switchDept('gestion')">GESTION DE PROYECTOS</button>
@@ -824,7 +893,7 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {luminarias:[], compgen:[], accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
+var D = {weeklys:[], luminarias:[], compgen:[], accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
@@ -838,6 +907,7 @@ var mktExpandedIds = {}; // que tareas generales estan desplegadas, sobrevive a 
 // guardados en Firestore) pero ahora se muestra como "ARQUITECTURA".
 // "pipeline" es la nueva pestaña generica PROYECTOS.
 var DEPTS = [
+  {sec:"weeklys",   label:"WEEKLYS",      color:"#0D1B2A"},
   {sec:"pipeline",  label:"PROYECTOS",    color:"#7F77DD"},
   {sec:"proyectos", label:"ARQUITECTURA", color:"#378ADD"},
   {sec:"marketing", label:"MARKETING & TASK", color:"#D4537E"},
@@ -918,7 +988,7 @@ function switchDept(sec) {
     b.style.borderColor = isAct ? d.color : "";
   });
   var sbEl = document.querySelector(".sb");
-  var _sinSidebar = sec === "accesos" || sec === "computos";
+  var _sinSidebar = sec === "accesos" || sec === "computos" || sec === "weeklys";
   if (sbEl) sbEl.style.display = _sinSidebar ? "none" : "";
   if (_sinSidebar && curView !== "board") switchView("board");
   if (sec === "marketing") {
@@ -1445,6 +1515,12 @@ function startListeners() {
     checkReminders();
     if (curDept === "pipeline" && curView === "board") renderBoard();
     if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+  });
+  onSnapshot(collection(db,"weeklys"), function(snap) {
+    D.weeklys = [];
+    snap.forEach(function(d) { D.weeklys.push(d.data()); });
+    wkCheckAlarms();
+    wkRefresh();
   });
   onSnapshot(collection(db,"luminarias"), function(snap) {
     D.luminarias = [];
@@ -3572,10 +3648,449 @@ function buildInformesBlock(proj, isFin) {
 }
 
 // ── BOARD ────────────────────────────────────────────────────────
+
+// ── WEEKLYS: prioridades macro de la empresa (administracion, proyectos, fabrica...) ──
+// Coleccion "weeklys". Dos tipos de documento:
+//  kind:"item" -> una prioridad: titulo, area, prioridad, estado, responsable (id del equipo), lider (texto),
+//                 limite (fecha), detalle, seguimiento [{ts,by,texto}], alarma {fecha,ids,repetir,enviada},
+//                 resolucion, resueltoTs, resueltoPor, meetId, semana (lunes ISO de alta), creadoPor, ts
+//  kind:"meet" -> un meet con un lider: fecha, area, lider, participantes, notas, creadoPor, ts
+// Las alarmas y el aviso de vencimiento se disparan desde el navegador de quien tenga el tablero abierto
+// ese dia (igual que los recordatorios de Proyectos).
+var WK_AREAS = ["Administracion","Compras","Proyectos","Fabrica","Procesos","Comercial","Marketing","Calidad","RRHH","Otra"];
+var WK_PRI = [
+  {k:"critica", l:"Critica", c:"#DC2626"},
+  {k:"alta",    l:"Alta",    c:"#EA580C"},
+  {k:"media",   l:"Media",   c:"#CA8A04"},
+  {k:"baja",    l:"Baja",    c:"#64748B"}
+];
+var WK_EST = [["pendiente","Pendiente"],["en-curso","En curso"],["bloqueada","Bloqueada"]];
+var wkOpen = {}, wkMeetOpen = {}, wkForm = null, wkFormMeet = null, wkFArea = "", wkFResp = "", wkResolving = null, wkShowAllMeets = false, wkShowAllRes = false;
+
+function wkToday() { var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function wkMonday(iso) {
+  var d = iso ? new Date(iso + "T12:00:00") : new Date();
+  var day = (d.getDay() + 6) % 7; d.setDate(d.getDate() - day);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+function wkAddDays(iso, n) { var d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function wkWeekLabel(mon) { return "Semana del " + fmtFecha(mon).slice(0,5) + " al " + fmtFecha(wkAddDays(mon, 6)); }
+function wkItems() { return (D.weeklys || []).filter(function(x){ return x.kind === "item"; }); }
+function wkMeets() { return (D.weeklys || []).filter(function(x){ return x.kind === "meet"; }); }
+function wkPri(k) { for (var i=0;i<WK_PRI.length;i++) if (WK_PRI[i].k===k) return WK_PRI[i]; return WK_PRI[2]; }
+function wkName(id) { var m = TEAM.filter(function(t){ return t.id === id; })[0]; return m ? m.name : ""; }
+function wkSave(x) { x.ts = Date.now(); showSyncing(); setDoc(doc(db, "weeklys", x.id), JSON.parse(JSON.stringify(x))).then(showSynced).catch(function(e){ console.warn(e); alert("No se pudo guardar en Weeklys. Revisa la conexion."); }); }
+function wkDel(id) { showSyncing(); deleteDoc(doc(db, "weeklys", id)).then(showSynced); }
+function wkFind(id) { return (D.weeklys || []).filter(function(x){ return x.id === id; })[0] || null; }
+function wkEmailsOf(ids) { var out = []; (ids || []).forEach(function(id){ var e = TEAM_EMAILS[id]; if (e && out.indexOf(e) < 0) out.push(e); }); return out; }
+function wkVencida(it) { return it.limite && it.estado !== "resuelta" && it.limite < wkToday(); }
+function wkDetalle(it) {
+  var d = ["Prioridad: " + wkPri(it.prioridad).l, "Area: " + (it.area || "-")];
+  if (it.responsable) d.push("Responsable: " + wkName(it.responsable));
+  if (it.lider) d.push("Lider / referente: " + it.lider);
+  d.push("Fecha limite: " + (it.limite ? fmtFecha(it.limite) : "sin fecha"));
+  var est = WK_EST.filter(function(e){ return e[0] === it.estado; })[0];
+  d.push("Estado: " + (it.estado === "resuelta" ? "Resuelta" : (est ? est[1] : "Pendiente")));
+  if (it.detalle) d.push("Detalle: " + it.detalle);
+  var last = (it.seguimiento || []).slice(-1)[0];
+  if (last) d.push("Ultimo seguimiento (" + new Date(last.ts).toLocaleDateString("es-AR") + "): " + last.texto);
+  return d;
+}
+
+// Alarmas por mail + aviso automatico cuando una prioridad se vence sin resolver
+function wkCheckAlarms() {
+  if (!currentUser) return;
+  var today = wkToday();
+  wkItems().forEach(function(it) {
+    if (it.estado === "resuelta") return;
+    var changed = false;
+    var a = it.alarma;
+    if (a && a.fecha && a.fecha <= today && a.enviada !== a.fecha) {
+      var dest = wkEmailsOf(a.ids && a.ids.length ? a.ids : [it.responsable, it.creadoPor]);
+      sendToList(dest, {
+        asunto: "Recordatorio Weekly: " + it.titulo,
+        titulo: "Prioridad pendiente de resolver",
+        mensaje: "Recordatorio de la prioridad \"" + it.titulo + "\" (" + (it.area || "") + "), que sigue sin resolverse. Entra al tablero, pestana WEEKLYS, para cargar el seguimiento o marcarla como resuelta.",
+        detalle: wkDetalle(it),
+        quien: "Tablero ITELSA"
+      });
+      a.enviada = a.fecha; a.enviadaTs = Date.now();
+      if (a.repetir === "semanal") { var f = a.fecha; while (f <= today) f = wkAddDays(f, 7); a.fecha = f; }
+      changed = true;
+    }
+    if (it.limite && it.limite < today && it.avisoVencido !== it.limite) {
+      sendToList(wkEmailsOf([it.responsable, it.creadoPor, "t1"]), {
+        asunto: "Weekly vencida: " + it.titulo,
+        titulo: "Una prioridad se vencio sin resolver",
+        mensaje: "La prioridad \"" + it.titulo + "\" tenia fecha limite el " + fmtFecha(it.limite) + " y todavia no esta resuelta.",
+        detalle: wkDetalle(it),
+        quien: "Tablero ITELSA"
+      });
+      it.avisoVencido = it.limite; changed = true;
+    }
+    if (changed) wkSave(it);
+  });
+}
+
+function wkRefresh() {
+  if (curDept !== "weeklys" || curView !== "board") return;
+  var ae = document.activeElement, root = document.getElementById("wk-root");
+  var typing = ae && root && root.contains(ae) && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT");
+  if (!typing) renderWeeklys();
+}
+
+function wkField(lbl, el, cls) { var f = cgEl("div", "wk-f" + (cls ? " " + cls : "")); f.appendChild(cgEl("label", null, lbl)); f.appendChild(el); return f; }
+function wkSelect(opts, val, blank) {
+  var s = document.createElement("select");
+  if (blank) { var o0 = document.createElement("option"); o0.value = ""; o0.textContent = blank; s.appendChild(o0); }
+  opts.forEach(function(o){ var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1]; if (o[0] === val) op.selected = true; s.appendChild(op); });
+  return s;
+}
+function wkInput(type, val, ph) { var i = document.createElement(type === "textarea" ? "textarea" : "input"); if (type !== "textarea") i.type = type; i.value = val || ""; if (ph) i.placeholder = ph; return i; }
+function wkTeamOpts() { return TEAM.map(function(m){ return [m.id, m.name]; }); }
+function wkAreaOpts() { return WK_AREAS.map(function(a){ return [a, a]; }); }
+function wkPriOpts() { return WK_PRI.map(function(p){ return [p.k, p.l]; }); }
+
+function renderWeeklys() {
+  var c = document.getElementById("board-inner"); c.innerHTML = "";
+  var root = cgEl("div"); root.id = "wk-root"; c.appendChild(root);
+  var mon = wkMonday(), today = wkToday();
+  var items = wkItems(), abiertas = items.filter(function(i){ return i.estado !== "resuelta"; });
+  var resueltas = items.filter(function(i){ return i.estado === "resuelta"; });
+
+  // Encabezado
+  var h = cgEl("div", "wk-hdr"), hl = cgEl("div");
+  var tt = cgEl("div", "wk-tt"); tt.innerHTML = "<i class='ti ti-target-arrow' style='font-size:20px;color:#009688'></i> Weeklys";
+  hl.appendChild(tt); hl.appendChild(cgEl("div", "wk-sub", wkWeekLabel(mon) + " · Prioridades de la empresa: administracion, proyectos, fabrica, compras, procesos..."));
+  var acts = cgEl("div", "wk-actions");
+  var bm = cgEl("button", "wk-btn sec"); bm.innerHTML = "<i class='ti ti-users'></i> Registrar meet";
+  bm.onclick = function(){ wkFormMeet = wkFormMeet ? null : {fecha:today, area:"", lider:"", participantes:"", notas:""}; wkForm = null; renderWeeklys(); };
+  var bn = cgEl("button", "wk-btn"); bn.innerHTML = "<i class='ti ti-plus'></i> Nueva prioridad";
+  bn.onclick = function(){ wkForm = wkForm ? null : {titulo:"", area:"", prioridad:"alta", responsable:"", lider:"", limite:"", detalle:"", meetId:""}; wkFormMeet = null; renderWeeklys(); };
+  acts.appendChild(bm); acts.appendChild(bn);
+  h.appendChild(hl); h.appendChild(acts); root.appendChild(h);
+
+  if (wkFormMeet) root.appendChild(wkMeetForm());
+  if (wkForm) root.appendChild(wkItemForm());
+
+  // Indicadores
+  var k = cgEl("div", "wk-kpis");
+  [[abiertas.length, "Abiertas", ""],
+   [abiertas.filter(function(i){ return i.prioridad === "critica" || i.prioridad === "alta"; }).length, "Criticas y altas", "k-or"],
+   [abiertas.filter(wkVencida).length, "Vencidas", "k-red"],
+   [resueltas.filter(function(i){ return i.resueltoTs && wkMonday(new Date(i.resueltoTs - new Date().getTimezoneOffset()*60000).toISOString().slice(0,10)) === mon; }).length, "Resueltas esta semana", "k-gr"]
+  ].forEach(function(x){ var b = cgEl("div", "wk-kpi " + x[2]); b.appendChild(cgEl("div", "n", String(x[0]))); b.appendChild(cgEl("div", "l", x[1])); k.appendChild(b); });
+  root.appendChild(k);
+
+  // Filtros
+  var f = cgEl("div", "wk-filt");
+  var areasUsadas = WK_AREAS.filter(function(a){ return items.some(function(i){ return i.area === a; }); });
+  [["", "Todas las areas"]].concat(areasUsadas.map(function(a){ return [a, a]; })).forEach(function(o){
+    var ch = cgEl("button", "wk-chip" + (wkFArea === o[0] ? " on" : ""), o[1]);
+    ch.onclick = function(){ wkFArea = o[0]; renderWeeklys(); };
+    f.appendChild(ch);
+  });
+  var fr = wkSelect(wkTeamOpts(), wkFResp, "Todos los responsables");
+  fr.onchange = function(){ wkFResp = this.value; renderWeeklys(); };
+  f.appendChild(fr); root.appendChild(f);
+  var pasa = function(i){ return (!wkFArea || i.area === wkFArea) && (!wkFResp || i.responsable === wkFResp); };
+
+  // Prioridades abiertas, agrupadas por nivel
+  var ab = abiertas.filter(pasa);
+  var sh = cgEl("div", "wk-sec"); sh.appendChild(document.createTextNode("Prioridades abiertas")); sh.appendChild(cgEl("span", "cnt", String(ab.length))); root.appendChild(sh);
+  if (!ab.length) root.appendChild(cgEl("div", "wk-empty", abiertas.length ? "No hay prioridades abiertas con este filtro." : "Todavia no hay prioridades cargadas. Usa \"Nueva prioridad\" o registra un meet."));
+  WK_PRI.forEach(function(p){
+    var grp = ab.filter(function(i){ return (i.prioridad || "media") === p.k; });
+    if (!grp.length) return;
+    grp.sort(function(a, b){ return (a.limite || "9999") < (b.limite || "9999") ? -1 : 1; });
+    var lv = cgEl("div", "wk-lvl"); lv.style.color = p.c;
+    var dt = cgEl("span", "dot"); dt.style.background = p.c; lv.appendChild(dt); lv.appendChild(document.createTextNode(p.l + " · " + grp.length));
+    root.appendChild(lv);
+    grp.forEach(function(it){ root.appendChild(wkCard(it)); });
+  });
+
+  // Meets con lideres
+  var meets = wkMeets().sort(function(a, b){ return (b.fecha || "") < (a.fecha || "") ? -1 : 1; });
+  var mh = cgEl("div", "wk-sec"); mh.appendChild(document.createTextNode("Meets con lideres de area")); mh.appendChild(cgEl("span", "cnt", String(meets.length))); root.appendChild(mh);
+  if (!meets.length) root.appendChild(cgEl("div", "wk-empty", "Todavia no registraste meets."));
+  (wkShowAllMeets ? meets : meets.slice(0, 6)).forEach(function(m){ root.appendChild(wkMeetCard(m)); });
+  if (meets.length > 6) { var vm = cgEl("button", "wk-btn sec sm", wkShowAllMeets ? "Ver menos" : "Ver todos los meets (" + meets.length + ")"); vm.onclick = function(){ wkShowAllMeets = !wkShowAllMeets; renderWeeklys(); }; root.appendChild(vm); }
+
+  // Resueltas (quedan registradas abajo)
+  var rs = resueltas.filter(pasa).sort(function(a, b){ return (b.resueltoTs || 0) - (a.resueltoTs || 0); });
+  var rh = cgEl("div", "wk-sec"); rh.appendChild(document.createTextNode("Resueltas")); rh.appendChild(cgEl("span", "cnt", String(rs.length))); root.appendChild(rh);
+  if (!rs.length) root.appendChild(cgEl("div", "wk-empty", "Lo que se vaya resolviendo queda registrado aca."));
+  var lastWk = "";
+  (wkShowAllRes ? rs : rs.slice(0, 15)).forEach(function(it){
+    var wk = it.resueltoTs ? wkMonday(new Date(it.resueltoTs - new Date().getTimezoneOffset()*60000).toISOString().slice(0,10)) : "";
+    if (wk !== lastWk) { root.appendChild(cgEl("div", "wk-wk", wk ? wkWeekLabel(wk) : "Sin fecha")); lastWk = wk; }
+    root.appendChild(wkResRow(it));
+  });
+  if (rs.length > 15) { var vr = cgEl("button", "wk-btn sec sm", wkShowAllRes ? "Ver menos" : "Ver todas las resueltas (" + rs.length + ")"); vr.onclick = function(){ wkShowAllRes = !wkShowAllRes; renderWeeklys(); }; root.appendChild(vr); }
+}
+
+function wkItemForm() {
+  var F = wkForm, box = cgEl("div", "wk-form");
+  box.appendChild(cgEl("div", "ft", "Nueva prioridad"));
+  var g = cgEl("div", "wk-grid");
+  var ti = wkInput("text", F.titulo, "Que hay que resolver (ej.: Definir proveedor de chapa para gabinetes)"); ti.oninput = function(){ F.titulo = this.value; };
+  var ar = wkSelect(wkAreaOpts(), F.area, "Elegir area..."); ar.onchange = function(){ F.area = this.value; };
+  var pr = wkSelect(wkPriOpts(), F.prioridad); pr.onchange = function(){ F.prioridad = this.value; };
+  var rp = wkSelect(wkTeamOpts(), F.responsable, "Sin asignar"); rp.onchange = function(){ F.responsable = this.value; };
+  var ld = wkInput("text", F.lider, "Lider o referente del area"); ld.oninput = function(){ F.lider = this.value; };
+  var li = wkInput("date", F.limite); li.onchange = function(){ F.limite = this.value; };
+  var meets = wkMeets().sort(function(a, b){ return (b.fecha || "") < (a.fecha || "") ? -1 : 1; }).slice(0, 20);
+  var mt = wkSelect(meets.map(function(m){ return [m.id, fmtFecha(m.fecha) + " · " + (m.area || "") + (m.lider ? " · " + m.lider : "")]; }), F.meetId, "Sin meet");
+  mt.onchange = function(){ F.meetId = this.value; };
+  var de = wkInput("textarea", F.detalle, "Contexto, que se necesita, de quien depende..."); de.oninput = function(){ F.detalle = this.value; };
+  g.appendChild(wkField("Prioridad / tema", ti, "w4"));
+  g.appendChild(wkField("Area", ar)); g.appendChild(wkField("Nivel de prioridad", pr));
+  g.appendChild(wkField("Responsable (recibe los mails)", rp)); g.appendChild(wkField("Fecha limite", li));
+  g.appendChild(wkField("Lider / referente", ld, "w2")); g.appendChild(wkField("Surgio del meet", mt, "w2"));
+  g.appendChild(wkField("Detalle", de, "w4"));
+  box.appendChild(g);
+  var row = cgEl("div", "wk-row"); row.style.justifyContent = "flex-end";
+  var cx = cgEl("button", "wk-btn sec sm", "Cancelar"); cx.onclick = function(){ wkForm = null; renderWeeklys(); };
+  var ok = cgEl("button", "wk-btn ok sm"); ok.innerHTML = "<i class='ti ti-check'></i> Guardar prioridad";
+  ok.onclick = function(){
+    if (!F.titulo.trim()) { ti.focus(); return; }
+    if (!F.area) { ar.focus(); return; }
+    var it = {id:nid("wk"), kind:"item", titulo:F.titulo.trim(), area:F.area, prioridad:F.prioridad, estado:"pendiente",
+      responsable:F.responsable, lider:F.lider.trim(), limite:F.limite, detalle:F.detalle.trim(), meetId:F.meetId || "",
+      seguimiento:[], semana:wkMonday(), creadoPor:currentUser, creado:wkToday()};
+    wkSave(it);
+    logActivity("cargo una prioridad en Weeklys: " + it.titulo, "Weeklys", currentUser);
+    if (it.responsable && it.responsable !== currentUser) sendToList(wkEmailsOf([it.responsable]), {
+      asunto: "Nueva prioridad semanal: " + it.titulo,
+      titulo: "Te asignaron una prioridad de la semana",
+      mensaje: currentUserName() + " cargo la prioridad \"" + it.titulo + "\" en Weeklys y te dejo como responsable.",
+      detalle: wkDetalle(it)
+    });
+    var keepMeet = F.meetId;
+    wkForm = keepMeet ? {titulo:"", area:F.area, prioridad:"alta", responsable:"", lider:F.lider, limite:"", detalle:"", meetId:keepMeet} : null;
+    renderWeeklys();
+  };
+  row.appendChild(cx); row.appendChild(ok); box.appendChild(row);
+  if (F.meetId) box.appendChild(cgEl("div", "wk-note", "Carga las prioridades que surgieron de este meet: el formulario queda abierto para cargar varias seguidas. Cancelar para cerrarlo."));
+  setTimeout(function(){ if (!F.titulo) ti.focus(); }, 30);
+  return box;
+}
+
+function wkMeetForm() {
+  var F = wkFormMeet, box = cgEl("div", "wk-form");
+  box.appendChild(cgEl("div", "ft", "Registrar meet con lider de area"));
+  var g = cgEl("div", "wk-grid");
+  var fe = wkInput("date", F.fecha); fe.onchange = function(){ F.fecha = this.value; };
+  var ar = wkSelect(wkAreaOpts(), F.area, "Elegir area..."); ar.onchange = function(){ F.area = this.value; };
+  var ld = wkInput("text", F.lider, "Nombre del lider"); ld.oninput = function(){ F.lider = this.value; };
+  var pa = wkInput("text", F.participantes, "Quienes participaron"); pa.oninput = function(){ F.participantes = this.value; };
+  var no = wkInput("textarea", F.notas, "Temas tratados, acuerdos, bloqueos..."); no.style.minHeight = "110px"; no.oninput = function(){ F.notas = this.value; };
+  g.appendChild(wkField("Fecha", fe)); g.appendChild(wkField("Area", ar)); g.appendChild(wkField("Lider", ld, "w2"));
+  g.appendChild(wkField("Participantes", pa, "w4")); g.appendChild(wkField("Minuta / notas", no, "w4"));
+  box.appendChild(g);
+  var row = cgEl("div", "wk-row"); row.style.justifyContent = "flex-end";
+  var cx = cgEl("button", "wk-btn sec sm", "Cancelar"); cx.onclick = function(){ wkFormMeet = null; renderWeeklys(); };
+  var ok = cgEl("button", "wk-btn ok sm"); ok.innerHTML = "<i class='ti ti-check'></i> Guardar y cargar prioridades";
+  ok.onclick = function(){
+    if (!F.area) { ar.focus(); return; }
+    var m = {id:nid("wm"), kind:"meet", fecha:F.fecha || wkToday(), area:F.area, lider:F.lider.trim(), participantes:F.participantes.trim(), notas:F.notas.trim(), creadoPor:currentUser};
+    wkSave(m);
+    logActivity("registro un meet de Weeklys (" + m.area + ")", "Weeklys", currentUser);
+    wkFormMeet = null;
+    wkForm = {titulo:"", area:m.area, prioridad:"alta", responsable:"", lider:m.lider, limite:"", detalle:"", meetId:m.id};
+    (D.weeklys = D.weeklys || []).push(m); // para que aparezca ya en el selector del formulario
+    renderWeeklys();
+  };
+  row.appendChild(cx); row.appendChild(ok); box.appendChild(row);
+  return box;
+}
+
+function wkCard(it) {
+  var p = wkPri(it.prioridad), card = cgEl("div", "wk-card " + p.k);
+  var head = cgEl("div", "wk-ch"), main = cgEl("div", "wk-main");
+  main.appendChild(cgEl("div", "wk-title", it.titulo));
+  var meta = cgEl("div", "wk-meta");
+  meta.appendChild(cgEl("span", "wk-badge", it.area || "Sin area"));
+  var est = WK_EST.filter(function(e){ return e[0] === (it.estado || "pendiente"); })[0] || WK_EST[0];
+  meta.appendChild(cgEl("span", "wk-badge e-" + est[0], est[1]));
+  if (it.responsable) meta.appendChild(cgEl("span", null, "Resp.: " + wkName(it.responsable)));
+  if (it.lider) meta.appendChild(cgEl("span", null, "Lider: " + it.lider));
+  if (it.limite) meta.appendChild(cgEl("span", wkVencida(it) ? "venc" : null, (wkVencida(it) ? "Vencida el " : "Limite: ") + fmtFecha(it.limite)));
+  if (it.alarma && it.alarma.fecha) { var al = cgEl("span"); al.innerHTML = "<i class='ti ti-bell' style='font-size:12px'></i> " + fmtFecha(it.alarma.fecha) + (it.alarma.repetir === "semanal" ? " (semanal)" : ""); meta.appendChild(al); }
+  main.appendChild(meta);
+  var last = (it.seguimiento || []).slice(-1)[0];
+  if (last) main.appendChild(cgEl("div", "wk-last", "Ultimo seguimiento: " + last.texto));
+  var right = cgEl("div", "wk-right");
+  right.appendChild(cgEl("span", "wk-badge p-" + p.k, p.l));
+  var chev = cgEl("i", "ti " + (wkOpen[it.id] ? "ti-chevron-up" : "ti-chevron-down")); chev.style.color = "#9ca3af"; right.appendChild(chev);
+  head.appendChild(main); head.appendChild(right);
+  head.onclick = function(){ wkOpen[it.id] = !wkOpen[it.id]; renderWeeklys(); };
+  card.appendChild(head);
+  if (wkOpen[it.id]) card.appendChild(wkCardBody(it));
+  return card;
+}
+
+function wkCardBody(it) {
+  var b = cgEl("div", "wk-body");
+  var save = debounce(function(){ var cur = wkFind(it.id) || it; Object.assign(cur, it); wkSave(cur); }, 500);
+  // Datos
+  var g = cgEl("div", "wk-grid");
+  var ti = wkInput("text", it.titulo); ti.oninput = function(){ it.titulo = this.value; save(); };
+  var ar = wkSelect(wkAreaOpts(), it.area); ar.onchange = function(){ it.area = this.value; save(); };
+  var pr = wkSelect(wkPriOpts(), it.prioridad); pr.onchange = function(){ it.prioridad = this.value; wkSave(it); renderWeeklys(); };
+  var es = wkSelect(WK_EST, it.estado || "pendiente"); es.onchange = function(){ it.estado = this.value; wkSave(it); renderWeeklys(); };
+  var rp = wkSelect(wkTeamOpts(), it.responsable, "Sin asignar"); rp.onchange = function(){ it.responsable = this.value; save(); };
+  var li = wkInput("date", it.limite); li.onchange = function(){ it.limite = this.value; save(); };
+  var ld = wkInput("text", it.lider, "Lider o referente"); ld.oninput = function(){ it.lider = this.value; save(); };
+  var de = wkInput("textarea", it.detalle, "Detalle"); de.oninput = function(){ it.detalle = this.value; save(); };
+  g.appendChild(wkField("Prioridad / tema", ti, "w4"));
+  g.appendChild(wkField("Area", ar)); g.appendChild(wkField("Nivel", pr)); g.appendChild(wkField("Estado", es)); g.appendChild(wkField("Fecha limite", li));
+  g.appendChild(wkField("Responsable", rp, "w2")); g.appendChild(wkField("Lider / referente", ld, "w2"));
+  g.appendChild(wkField("Detalle", de, "w4"));
+  b.appendChild(g);
+  var meet = it.meetId ? wkFind(it.meetId) : null;
+  if (meet) b.appendChild(cgEl("div", "wk-note", "Surgio del meet del " + fmtFecha(meet.fecha) + " con " + (meet.lider || meet.area) + "."));
+
+  // Seguimiento
+  var sg = cgEl("div", "wk-blk"); var st = cgEl("div", "bt"); st.innerHTML = "<i class='ti ti-timeline'></i> Seguimiento"; sg.appendChild(st);
+  var log = cgEl("div", "wk-log");
+  (it.seguimiento || []).forEach(function(e){
+    var r = cgEl("div", "e"); r.appendChild(cgEl("div", "w", new Date(e.ts).toLocaleDateString("es-AR") + " · " + (wkName(e.by) || "")));
+    r.appendChild(document.createTextNode(e.texto)); log.appendChild(r);
+  });
+  if (!(it.seguimiento || []).length) log.appendChild(cgEl("div", "wk-note", "Sin novedades cargadas."));
+  sg.appendChild(log);
+  var sr = cgEl("div", "wk-row");
+  var si = wkInput("text", "", "Novedad, avance o bloqueo..."); si.className = "wk-in"; si.style.flex = "1";
+  var sb = cgEl("button", "wk-btn sm", "Agregar");
+  var addSeg = function(){ var t = si.value.trim(); if (!t) return; (it.seguimiento = it.seguimiento || []).push({ts:Date.now(), by:currentUser, texto:t}); if (it.estado === "pendiente") it.estado = "en-curso"; wkSave(it); renderWeeklys(); };
+  sb.onclick = addSeg; si.onkeydown = function(e){ if (e.key === "Enter") addSeg(); };
+  sr.appendChild(si); sr.appendChild(sb); sg.appendChild(sr);
+  b.appendChild(sg);
+
+  // Alarma por mail
+  var al = cgEl("div", "wk-blk"); var at = cgEl("div", "bt"); at.innerHTML = "<i class='ti ti-bell'></i> Alarma por mail"; al.appendChild(at);
+  var A = it.alarma || {fecha:"", ids:[], repetir:"no"};
+  if (!it.alarma) { A.ids = [it.responsable, currentUser].filter(function(x, i, arr){ return x && arr.indexOf(x) === i; }); }
+  var ar2 = cgEl("div", "wk-row");
+  var af = wkInput("date", A.fecha); af.className = "wk-in"; af.style.width = "170px";
+  var rep = wkSelect([["no","Una sola vez"],["semanal","Repetir cada semana hasta resolver"]], A.repetir || "no"); rep.className = "wk-in"; rep.style.width = "auto";
+  ar2.appendChild(cgEl("span", "wk-note", "Enviar el")); ar2.appendChild(af); ar2.appendChild(rep);
+  al.appendChild(ar2);
+  var pp = cgEl("div", "wk-people"); pp.style.marginTop = "8px";
+  TEAM.forEach(function(m){
+    var lb = document.createElement("label"); var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = (A.ids || []).indexOf(m.id) >= 0;
+    cb.onchange = function(){ var ids = A.ids || []; if (this.checked) { if (ids.indexOf(m.id) < 0) ids.push(m.id); } else ids = ids.filter(function(x){ return x !== m.id; }); A.ids = ids; };
+    lb.appendChild(cb); lb.appendChild(document.createTextNode(m.name)); pp.appendChild(lb);
+  });
+  al.appendChild(pp);
+  var ar3 = cgEl("div", "wk-row"); ar3.style.marginTop = "8px";
+  var asv = cgEl("button", "wk-btn sm", it.alarma ? "Actualizar alarma" : "Programar alarma");
+  asv.onclick = function(){
+    if (!af.value) { af.focus(); return; }
+    if (!(A.ids || []).length) { alert("Elegi al menos una persona para el mail."); return; }
+    it.alarma = {fecha:af.value, ids:A.ids, repetir:rep.value, enviada:(it.alarma && it.alarma.fecha === af.value) ? it.alarma.enviada : ""};
+    wkSave(it); wkCheckAlarms(); renderWeeklys();
+  };
+  ar3.appendChild(asv);
+  if (it.alarma) {
+    var aq = cgEl("button", "wk-btn sec sm", "Quitar alarma"); aq.onclick = function(){ delete it.alarma; wkSave(it); renderWeeklys(); }; ar3.appendChild(aq);
+    if (it.alarma.enviadaTs) ar3.appendChild(cgEl("span", "wk-note", "Ultimo envio: " + new Date(it.alarma.enviadaTs).toLocaleDateString("es-AR")));
+  }
+  al.appendChild(ar3);
+  al.appendChild(cgEl("div", "wk-note", "Ademas, si pasa la fecha limite sin resolverse, se avisa automaticamente al responsable, a quien la cargo y a Sofia."));
+  b.appendChild(al);
+
+  // Resolver / eliminar
+  var fin = cgEl("div", "wk-row"); fin.style.justifyContent = "space-between";
+  var del = cgEl("button", "wk-btn danger sm"); del.innerHTML = "<i class='ti ti-trash'></i> Eliminar";
+  del.onclick = function(){ if (confirm("Eliminar esta prioridad? Si ya se resolvio, conviene marcarla como resuelta para que quede registrada.")) { wkDel(it.id); delete wkOpen[it.id]; } };
+  fin.appendChild(del);
+  if (wkResolving === it.id) {
+    var rbox = cgEl("div"); rbox.style.cssText = "flex:1;display:flex;flex-direction:column;gap:6px;min-width:260px";
+    var rt = wkInput("textarea", "", "Como se resolvio (queda registrado)"); rt.className = "wk-in"; rt.style.minHeight = "60px";
+    var rr = cgEl("div", "wk-row"); rr.style.justifyContent = "flex-end";
+    var rc = cgEl("button", "wk-btn sec sm", "Cancelar"); rc.onclick = function(){ wkResolving = null; renderWeeklys(); };
+    var rk = cgEl("button", "wk-btn ok sm"); rk.innerHTML = "<i class='ti ti-check'></i> Confirmar resuelta";
+    rk.onclick = function(){
+      it.estado = "resuelta"; it.resolucion = rt.value.trim(); it.resueltoTs = Date.now(); it.resueltoPor = currentUser;
+      wkSave(it); wkResolving = null; delete wkOpen[it.id];
+      logActivity("resolvio en Weeklys: " + it.titulo, "Weeklys", currentUser);
+      sendToList(wkEmailsOf([it.responsable, it.creadoPor].filter(function(x){ return x && x !== currentUser; })), {
+        asunto: "Weekly resuelta: " + it.titulo,
+        titulo: "Se resolvio una prioridad de la semana",
+        mensaje: currentUserName() + " marco como resuelta \"" + it.titulo + "\"." + (it.resolucion ? " " + it.resolucion : ""),
+        detalle: wkDetalle(it)
+      });
+      renderWeeklys();
+    };
+    rr.appendChild(rc); rr.appendChild(rk); rbox.appendChild(rt); rbox.appendChild(rr); fin.appendChild(rbox);
+    setTimeout(function(){ rt.focus(); }, 30);
+  } else {
+    var ok = cgEl("button", "wk-btn ok sm"); ok.innerHTML = "<i class='ti ti-circle-check'></i> Marcar como resuelta";
+    ok.onclick = function(){ wkResolving = it.id; renderWeeklys(); };
+    fin.appendChild(ok);
+  }
+  b.appendChild(fin);
+  return b;
+}
+
+function wkMeetCard(m) {
+  var card = cgEl("div", "wk-meet"), h = cgEl("div", "mh");
+  h.appendChild(cgEl("span", "md2", fmtFecha(m.fecha)));
+  h.appendChild(cgEl("span", "wk-badge", m.area || "-"));
+  if (m.lider) h.appendChild(cgEl("span", "wk-note", "con " + m.lider));
+  var vinc = wkItems().filter(function(i){ return i.meetId === m.id; });
+  if (vinc.length) h.appendChild(cgEl("span", "wk-note", vinc.length + " prioridad" + (vinc.length > 1 ? "es" : "")));
+  var sp = cgEl("span"); sp.style.flex = "1"; h.appendChild(sp);
+  var chev = cgEl("i", "ti " + (wkMeetOpen[m.id] ? "ti-chevron-up" : "ti-chevron-down")); chev.style.color = "#9ca3af"; h.appendChild(chev);
+  h.onclick = function(){ wkMeetOpen[m.id] = !wkMeetOpen[m.id]; renderWeeklys(); };
+  card.appendChild(h);
+  if (wkMeetOpen[m.id]) {
+    var body = cgEl("div", "mb2");
+    if (m.participantes) body.appendChild(cgEl("div", "wk-note", "Participantes: " + m.participantes));
+    var no = wkInput("textarea", m.notas, "Minuta / notas"); no.className = "wk-in"; no.style.cssText = "min-height:90px;margin-top:6px";
+    no.oninput = debounce(function(){ m.notas = no.value; wkSave(m); }, 500);
+    body.appendChild(no);
+    if (vinc.length) {
+      var ul = cgEl("div"); ul.style.marginTop = "8px";
+      vinc.forEach(function(i){ var r = cgEl("div", "wk-note", (i.estado === "resuelta" ? "Resuelta · " : "Abierta · ") + i.titulo); ul.appendChild(r); });
+      body.appendChild(ul);
+    }
+    var rr = cgEl("div", "wk-row"); rr.style.marginTop = "8px";
+    var add = cgEl("button", "wk-btn sm"); add.innerHTML = "<i class='ti ti-plus'></i> Prioridad de este meet";
+    add.onclick = function(){ wkForm = {titulo:"", area:m.area, prioridad:"alta", responsable:"", lider:m.lider || "", limite:"", detalle:"", meetId:m.id}; wkFormMeet = null; renderWeeklys(); window.scrollTo(0, 0); var ct = document.querySelector(".ct"); if (ct) ct.scrollTop = 0; };
+    var del = cgEl("button", "wk-btn danger sm", "Eliminar meet");
+    del.onclick = function(){ if (confirm("Eliminar este meet? Las prioridades que surgieron de el se mantienen.")) wkDel(m.id); };
+    rr.appendChild(add); rr.appendChild(del); body.appendChild(rr);
+    card.appendChild(body);
+  }
+  return card;
+}
+
+function wkResRow(it) {
+  var r = cgEl("div", "wk-res"), main = cgEl("div", "wk-main");
+  main.appendChild(cgEl("div", "rt", it.titulo));
+  var meta = cgEl("div", "wk-meta");
+  meta.appendChild(cgEl("span", "wk-badge", it.area || "-"));
+  meta.appendChild(cgEl("span", "wk-badge p-" + wkPri(it.prioridad).k, wkPri(it.prioridad).l));
+  meta.appendChild(cgEl("span", null, "Resuelta el " + (it.resueltoTs ? new Date(it.resueltoTs).toLocaleDateString("es-AR") : "-") + (it.resueltoPor ? " por " + wkName(it.resueltoPor) : "")));
+  if (it.responsable) meta.appendChild(cgEl("span", null, "Resp.: " + wkName(it.responsable)));
+  if ((it.seguimiento || []).length) meta.appendChild(cgEl("span", null, it.seguimiento.length + " seguimiento" + (it.seguimiento.length > 1 ? "s" : "")));
+  main.appendChild(meta);
+  if (it.resolucion) main.appendChild(cgEl("div", "rr", it.resolucion));
+  var re = cgEl("button", "wk-btn sec sm", "Reabrir");
+  re.onclick = function(){ it.estado = "en-curso"; (it.seguimiento = it.seguimiento || []).push({ts:Date.now(), by:currentUser, texto:"Reabierta" + (it.resolucion ? " (resolucion anterior: " + it.resolucion + ")" : "")}); delete it.resueltoTs; delete it.resueltoPor; it.resolucion = ""; wkSave(it); wkOpen[it.id] = true; renderWeeklys(); };
+  r.appendChild(main); r.appendChild(re);
+  return r;
+}
+
 function renderBoard() {
   if (curDept === "marketing") { renderMarketingBoard(); return; }
   if (curDept === "accesos") { renderAccesosBoard(); return; }
   if (curDept === "computos") { renderComputosGen(); return; }
+  if (curDept === "weeklys") { renderWeeklys(); return; }
   var c = document.getElementById("board-inner");
   if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
