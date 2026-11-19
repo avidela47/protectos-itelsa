@@ -548,6 +548,43 @@ a.acc-val{color:#2563eb;font-family:inherit;text-decoration:none}
 .wk-wk{font-size:11px;font-weight:700;color:#9ca3af;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.05em}
 @media (max-width:900px){.wk-kpis{grid-template-columns:1fr 1fr}.wk-grid{grid-template-columns:1fr 1fr}.wk-grid .w2{grid-column:1/-1}}
 
+/* ===================== COMPUTO PRIVADO ===================== */
+.cz-new{background:#fff;border:1px solid var(--br);border-radius:12px;padding:14px;margin-bottom:6px}
+.cz-new-t{font-size:14px;font-weight:700;color:#0D1B2A;margin-bottom:8px}
+.cz-new-r{display:flex;gap:8px;flex-wrap:wrap}
+.cz-sel{flex:1;min-width:240px;font-size:13px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#1f2937}
+.cz-hint{font-size:11.5px;color:#6b7280;margin-top:6px}
+.cz-list{display:flex;flex-direction:column;gap:6px}
+.cz-li{background:#fff;border:1px solid var(--br);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.cz-li-m{flex:1;min-width:0}
+.cz-li-t{font-size:14px;font-weight:600;color:#1f2937}
+.cz-li-tot{font-size:14px;font-weight:700;color:#00695C;white-space:nowrap;margin-right:6px}
+.cz-top{display:grid;grid-template-columns:2fr 170px auto;gap:10px;align-items:end;margin-bottom:4px}
+.cz-mon{display:flex;background:#f3f4f6;border-radius:8px;padding:2px;gap:2px}
+.cz-mon button{border:none;background:transparent;font-size:12.5px;font-weight:600;color:#6b7280;padding:7px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.cz-mon button.on{background:#0D1B2A;color:#fff}
+.cz-wrap{overflow-x:auto;margin-top:12px;border:1px solid #cfd5dc;border-radius:6px;background:#fff}
+.cz-t{width:100%;border-collapse:collapse;table-layout:fixed;min-width:760px;font-size:12.5px}
+.cz-t th{background:#0D1B2A;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:7px 8px;text-align:left;border-right:1px solid #22344a}
+.cz-t th.r,.cz-t td.r{text-align:right}
+.cz-t td{border:1px solid #e1e5ea;padding:0;vertical-align:top;color:#1f2937}
+.cz-t td.n{text-align:center;color:#9ca3af;font-size:11px;padding-top:7px;background:#f8fafb}
+.cz-t td.sub{padding:7px 8px;font-weight:600;background:#f8fafb;white-space:nowrap}
+.cz-t td input,.cz-t td textarea{width:100%;box-sizing:border-box;border:none;background:transparent;font:inherit;padding:6px 8px;color:#1f2937;resize:none;outline:none;display:block}
+.cz-t td.r input{text-align:right}
+.cz-t td input:focus,.cz-t td textarea:focus{background:#E0F2F1;box-shadow:inset 0 0 0 2px #009688}
+.cz-t tr.lum td input:first-child{font-weight:600}
+.cz-t td textarea{font-size:11.5px;color:#4b5563;line-height:1.4;overflow:hidden}
+.cz-t tr.blank td{background:#fcfcfd}
+.cz-t td.x{text-align:center;padding-top:4px}
+.cz-t td.x button{border:none;background:transparent;color:#c0c4ca;cursor:pointer;font-size:13px}
+.cz-t td.x button:hover{color:#b91c1c}
+.cz-t tfoot td{background:#F0F7F6;font-weight:700;padding:9px 8px;color:#0D1B2A;border-color:#d5e5e2}
+.cz-t tfoot td.r{color:#00695C;font-size:14px}
+@media (max-width:700px){.cz-top{grid-template-columns:1fr}}
+.cz-warn{margin-top:10px;background:#FFF7ED;border:1px solid #FDBA74;color:#9A3412;border-radius:8px;padding:8px 12px;font-size:12.5px;display:flex;gap:6px;align-items:center}
+.cz-warn-s{font-size:11.5px;color:#C2410C;font-weight:600;margin-top:3px}
+
 /* ===================== CELULAR Y TABLET ===================== */
 .hb,.sb-ov{display:none}
 body.sb-lock{overflow:hidden}
@@ -640,6 +677,7 @@ body.sb-lock{overflow:hidden}
     <button class="dbtn" id="dbtn-gestion" onclick="switchDept('gestion')">GESTION DE PROYECTOS</button>
     <button class="dbtn" id="dbtn-accesos" onclick="switchDept('accesos')"><i class="ti ti-lock" style="font-size:11px"></i> ACCESOS</button>
     <button class="dbtn" id="dbtn-computos" onclick="switchDept('computos')">GENERADOR DE COMPUTOS</button>
+    <button class="dbtn" id="dbtn-cotiz" onclick="switchDept('cotiz')"><i class="ti ti-lock" style="font-size:11px"></i> COMPUTO PRIVADO</button>
   </div>
   <div class="bl">
     <div class="sb">
@@ -893,7 +931,7 @@ var NECESARIOS = [
   {id:"n_video",     label:"Video presentacion"}
 ];
 
-var D = {weeklys:[], luminarias:[], compgen:[], accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
+var D = {cotiz:[], weeklys:[], luminarias:[], compgen:[], accesos:[], projects:[], tasks:[], links:[], activity:[], content:[], mktasks:[], reminders:[], mkprojects:[]};
 var _lastSeenNotif = 0;
 var selProj=null, selTask=null, filterMember=null, curView="board";
 var nPC=COLORS[0], nPM=[], nPS="proyectos", currentUser=null;
@@ -913,7 +951,8 @@ var DEPTS = [
   {sec:"marketing", label:"MARKETING & TASK", color:"#D4537E"},
   {sec:"gestion",   label:"GESTION DE PROYECTOS", color:"#0F766E"},
   {sec:"accesos",   label:"ACCESOS", color:"#475569"},
-  {sec:"computos",  label:"GENERADOR DE COMPUTOS", color:"#00695C"}
+  {sec:"computos",  label:"GENERADOR DE COMPUTOS", color:"#00695C"},
+  {sec:"cotiz",     label:"COMPUTO PRIVADO", color:"#0D1B2A"}
 ];
 var curDept = "pipeline";
 var projSearch = "";
@@ -977,7 +1016,8 @@ function debounce(fn, wait) {
   };
 }
 function switchDept(sec) {
-  if (curDept === "accesos" && sec !== "accesos") accLock(); // al salir de Accesos se vuelve a bloquear
+  if (curDept === "accesos" && sec !== "accesos") accLock();
+  if (curDept === "cotiz" && sec !== "cotiz") czLock(); // al salir del computo privado se vuelve a bloquear // al salir de Accesos se vuelve a bloquear
   curDept = sec; selProj=null; selTask=null; filterMember=null; closeDetail();
   DEPTS.forEach(function(d) {
     var b = document.getElementById("dbtn-"+d.sec);
@@ -988,7 +1028,7 @@ function switchDept(sec) {
     b.style.borderColor = isAct ? d.color : "";
   });
   var sbEl = document.querySelector(".sb");
-  var _sinSidebar = sec === "accesos" || sec === "computos" || sec === "weeklys";
+  var _sinSidebar = sec === "accesos" || sec === "computos" || sec === "weeklys" || sec === "cotiz";
   if (sbEl) sbEl.style.display = _sinSidebar ? "none" : "";
   if (_sinSidebar && curView !== "board") switchView("board");
   if (sec === "marketing") {
@@ -1515,6 +1555,11 @@ function startListeners() {
     checkReminders();
     if (curDept === "pipeline" && curView === "board") renderBoard();
     if (curDept === "marketing" && curView === "board") renderMarketingBoard();
+  });
+  onSnapshot(collection(db,"cotizaciones"), function(snap) {
+    D.cotiz = [];
+    snap.forEach(function(d) { D.cotiz.push(d.data()); });
+    czRefresh();
   });
   onSnapshot(collection(db,"weeklys"), function(snap) {
     D.weeklys = [];
@@ -2664,11 +2709,21 @@ function renderCGHist(body) {
     tx.appendChild(cgEl("div", "cg-open-n", c.proyecto));
     var tot = (c.items||[]).reduce(function(s, it){ return s + (parseInt(it.cant, 10) || 0); }, 0);
     tx.appendChild(cgEl("div", "cg-open-m", (c.estado === "cerrado" ? "Cerrado el " + fmtFecha(c.cerrado) : "Abierto desde el " + fmtFecha(c.creado)) +
-      " - " + (c.items||[]).length + " tipos, " + tot + " luminarias - " + (memberName(c.cerradoPor || c.by) || "")));
+      " - " + (c.items||[]).length + " tipos, " + tot + " luminarias - " + (memberName(c.cerradoPor || c.by) || "") +
+      ((c.reaperturas || []).length ? " - modificado " + c.reaperturas.length + (c.reaperturas.length > 1 ? " veces" : " vez") : "")));
     r.appendChild(tx);
     var st = cgEl("span", "cg-st " + (c.estado === "cerrado" ? "cerr" : "ab"), c.estado === "cerrado" ? "Cerrado" : "Abierto"); r.appendChild(st);
     if (c.estado === "cerrado") {
       var dl = cgEl("button", "btn"); dl.innerHTML = "<i class='ti ti-download' style='font-size:12px'></i> PDF"; dl.onclick = function(){ cgPdf(c); }; r.appendChild(dl);
+      var ed = cgEl("button", "btn"); ed.innerHTML = "<i class='ti ti-pencil' style='font-size:12px'></i> Editar"; ed.title = "Reabre este computo para corregirlo; al volver a cerrarlo se actualiza el PDF";
+      ed.onclick = function(){
+        if (!confirm("Reabrir el computo de \"" + c.proyecto + "\" para modificarlo? Cuando termines, cerralo de nuevo para actualizar el PDF.")) return;
+        (c.reaperturas = c.reaperturas || []).push({ts:Date.now(), by:currentUser, cerradoAntes:c.cerrado || ""});
+        c.estado = "abierto"; c.ts = Date.now(); cgSaveComp(c);
+        logActivity("reabrio para editar un computo de luminarias", c.proyecto, currentUser);
+        cgCurId = c.id; cgView = "nuevo"; renderComputosGen();
+      };
+      r.appendChild(ed);
       var dup = cgEl("button", "btn"); dup.innerHTML = "<i class='ti ti-copy' style='font-size:12px'></i> Nuevo a partir de este"; dup.title = "Para un cambio de proyecto: copia las luminarias en un computo nuevo";
       dup.onclick = function(){
         var nc = {id:nid("cg"), proyecto:c.proyecto, creado:cgHoy(), items:JSON.parse(JSON.stringify(c.items||[])), estado:"abierto", by:currentUser, ts:Date.now(), basadoEn:c.id};
@@ -4086,11 +4141,331 @@ function wkResRow(it) {
   return r;
 }
 
+
+// ── COMPUTO PRIVADO (valorizado) ──────────────────────────────────
+// Pestaña con contraseña. Toma un computo cerrado y arma una planilla tipo Excel con precios.
+// Los datos se guardan CIFRADOS (AES-GCM, clave derivada de la contraseña) en la coleccion "cotizaciones":
+// en Firestore solo queda {id, iv, ct, ts}; sin la contraseña no se pueden leer los precios.
+var CZ_SALT = "CEagfhyhPL4oL8HnLGHLtQ==", CZ_ITER = 150000;
+var CZ_VERIF = {iv:"7fgDJ7iAcqUWP8Cz", ct:"hExZb9mLfBLY9krcCSaoM8RrYRqr3Yd3EZdtSYpn+w=="};
+var czKey = null, czCache = {}, czList = [], czCurId = null, czBlank = 3, czPick = "";
+async function czDeriveKey(pin) {
+  var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pin), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64ToBuf(CZ_SALT), iterations:CZ_ITER, hash:"SHA-256"},
+    base, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+}
+function czLock() { czKey = null; czCache = {}; czList = []; czCurId = null; }
+window.czLock = function(){ czLock(); renderBoard(); };
+async function czUnlock() {
+  var inp = document.getElementById("cz-pin"), err = document.getElementById("cz-err"), btn = document.getElementById("cz-btn");
+  if (!inp) return;
+  btn.disabled = true; btn.textContent = "Verificando..."; err.textContent = "";
+  try {
+    var k = await czDeriveKey(inp.value.trim());
+    if (await accDecrypt(k, CZ_VERIF.iv, CZ_VERIF.ct) !== "itelsa-cotiz-ok") throw new Error("pin");
+    czKey = k;
+    logActivity("entro a Computo privado", "Computo privado", currentUser);
+    await czDecryptAll(); renderBoard();
+  } catch (e) {
+    err.textContent = "Contraseña incorrecta.";
+    btn.disabled = false; btn.textContent = "Entrar"; inp.value = ""; inp.focus();
+  }
+}
+window.czUnlock = czUnlock;
+async function czDecryptAll() {
+  var out = [];
+  for (var i=0; i<(D.cotiz||[]).length; i++) {
+    var d = D.cotiz[i], ck = d.id + ":" + d.iv;
+    if (!czCache[ck]) { try { czCache[ck] = JSON.parse(await accDecrypt(czKey, d.iv, d.ct)); } catch (e) { czCache[ck] = null; } }
+    if (czCache[ck]) out.push(JSON.parse(JSON.stringify(czCache[ck])));
+  }
+  out.sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+  czList = out;
+}
+function czCur() { for (var i=0; i<czList.length; i++) if (czList[i].id === czCurId) return czList[i]; return null; }
+async function czSaveNow(z) {
+  if (!czKey) return;
+  z.ts = Date.now();
+  var enc = await accEncrypt(czKey, JSON.stringify(z));
+  czCache[z.id + ":" + enc.iv] = JSON.parse(JSON.stringify(z));
+  showSyncing();
+  setDoc(doc(db, "cotizaciones", z.id), {id:z.id, iv:enc.iv, ct:enc.ct, ts:z.ts}).then(showSynced).catch(function(e){ console.warn(e); alert("No se pudo guardar el computo privado."); });
+}
+var czSave = debounce(function(){ var z = czCur(); if (z) czSaveNow(z); }, 600);
+async function czRefresh() {
+  if (curDept !== "cotiz" || !czKey) return;
+  await czDecryptAll();
+  if (curView !== "board") return;
+  var ae = document.activeElement, root = document.getElementById("cz-root");
+  var typing = ae && root && root.contains(ae) && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT");
+  if (!typing) renderCotiz();
+}
+
+// Numeros: acepta "1.234,50", "1234.5", "$ 1.234"
+function czNum(v) {
+  if (v == null) return 0; if (typeof v === "number") return v;
+  var s = String(v).replace(/[^\d,.\-]/g, ""); if (!s) return 0;
+  if (s.indexOf(",") >= 0) s = s.replace(/\./g, "").replace(",", ".");
+  else if ((s.match(/\./g) || []).length > 1 || /\.\d{3}$/.test(s)) s = s.replace(/\./g, "");
+  var n = parseFloat(s); return isNaN(n) ? 0 : n;
+}
+function czFmt(n, mon) { var t = (Math.round(n * 100) / 100).toLocaleString("es-AR", {minimumFractionDigits:2, maximumFractionDigits:2}); return (mon === "ARS" ? "$ " : "US$ ") + t; }
+function czFmtN(n) { return (Math.round(n * 100) / 100).toLocaleString("es-AR", {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function czTotal(z) { return (z.items || []).reduce(function(s, it){ return s + czNum(it.cant) * czNum(it.pu); }, 0); }
+function czSpecs(it) { return [it.potencia, it.angulo, it.temperatura, it.protocolo, it.tension].filter(Boolean).join(" · ") + (it.comentario ? (it.potencia || it.angulo ? " · " : "") + it.comentario : ""); }
+
+function czNuevoDesde(compId) {
+  var c = (D.compgen || []).filter(function(x){ return x.id === compId; })[0]; if (!c) return;
+  var items = (c.items || []).map(function(it){
+    return {uid:nid("zi"), tipo:"lum", src:it.uid || "", desc:(it.codigo ? it.codigo + " - " : "") + (it.nombre || ""), det:czSpecs(it), cant:String(it.cant || ""), pu:""};
+  });
+  if (c.mo === "si") items.push({uid:nid("zi"), tipo:"mo", desc:"Mano de obra", det:(c.moEsp || "").trim(), cant:"1", pu:""});
+  if (c.elev === "si") items.push({uid:nid("zi"), tipo:"elev", desc:"Elevador", det:(c.elevEsp || "").trim(), cant:"1", pu:""});
+  var z = {id:nid("cz"), compId:c.id, proyecto:c.proyecto, fecha:cgHoy(), moneda:"USD", items:items,
+    notas:(c.obs || "").trim(), compFecha:c.cerrado || c.creado || "", compTs:c.ts || 0, creadoPor:currentUser};
+  czList.unshift(z); czCurId = z.id; czBlank = 3; czSaveNow(z);
+  logActivity("creo un computo privado de " + c.proyecto, "Computo privado", currentUser);
+  renderCotiz();
+}
+
+// Trae los cambios del computo original (cantidades, especificaciones, luminarias nuevas o quitadas,
+// mano de obra y elevador) sin perder los precios ya cargados ni los items agregados a mano.
+function czSincronizar(z) {
+  var c = (D.compgen || []).filter(function(x){ return x.id === z.compId; })[0];
+  if (!c) { alert("No se encontro el computo original (puede haberse eliminado)."); return; }
+  var desc = function(it){ return (it.codigo ? it.codigo + " - " : "") + (it.nombre || ""); };
+  var usados = {}, nuevos = 0, quitados = [];
+  (c.items || []).forEach(function(it){
+    var row = z.items.filter(function(r){ return r.tipo === "lum" && !usados[r.uid] && ((it.uid && r.src === it.uid) || r.desc === desc(it)); })[0];
+    if (row) { row.src = it.uid || row.src; row.desc = desc(it); row.det = czSpecs(it); row.cant = String(it.cant || ""); usados[row.uid] = true; }
+    else { var nr = {uid:nid("zi"), tipo:"lum", src:it.uid || "", desc:desc(it), det:czSpecs(it), cant:String(it.cant || ""), pu:""}; usados[nr.uid] = true;
+      var lastLum = -1; z.items.forEach(function(r, i){ if (r.tipo === "lum") lastLum = i; }); z.items.splice(lastLum + 1, 0, nr); nuevos++; }
+  });
+  z.items.forEach(function(r){ if (r.tipo === "lum" && !usados[r.uid]) quitados.push(r); });
+  if (quitados.length && confirm("Estas luminarias ya no estan en el computo original:\n- " + quitados.map(function(r){ return r.desc; }).join("\n- ") + "\n\nQuitarlas de la planilla? (Cancelar = dejarlas)"))
+    z.items = z.items.filter(function(r){ return quitados.indexOf(r) < 0; });
+  [["mo","Mano de obra"],["elev","Elevador"]].forEach(function(k){
+    var row = z.items.filter(function(r){ return r.tipo === k[0]; })[0];
+    if (c[k[0]] === "si") { var det = (c[k[0] + "Esp"] || "").trim(); if (row) row.det = det; else z.items.push({uid:nid("zi"), tipo:k[0], desc:k[1], det:det, cant:"1", pu:""}); }
+  });
+  z.compTs = c.ts || Date.now(); z.compFecha = c.cerrado || c.creado || z.compFecha;
+  czSaveNow(z); renderCotiz();
+  alert("Planilla actualizada desde el computo." + (nuevos ? " Se agregaron " + nuevos + " luminaria(s) nueva(s) sin precio." : "") + " Los precios cargados se mantuvieron.");
+}
+function czCompCambio(z) {
+  var c = z.compId ? (D.compgen || []).filter(function(x){ return x.id === z.compId; })[0] : null;
+  return !!(c && z.compTs && (c.ts || 0) > z.compTs);
+}
+
+function renderCotiz() {
+  var c = document.getElementById("board-inner"); c.innerHTML = "";
+  if (!czKey) {
+    var lk = document.createElement("div"); lk.className = "acc-lock";
+    lk.innerHTML = "<i class='ti ti-lock' style='font-size:30px;color:#0D1B2A'></i>" +
+      "<div class='acc-lock-t'>Computo privado</div><div class='acc-lock-s'>Ingresa la contraseña para ver y cargar precios.</div>" +
+      "<input type='password' id='cz-pin' inputmode='numeric' autocomplete='off' placeholder='Contraseña'>" +
+      "<div id='cz-err' class='acc-err'></div><button class='bs' id='cz-btn' onclick='czUnlock()'>Entrar</button>";
+    c.appendChild(lk);
+    var pin = document.getElementById("cz-pin"); pin.onkeydown = function(e){ if (e.key === "Enter") czUnlock(); };
+    setTimeout(function(){ pin.focus(); }, 50);
+    return;
+  }
+  var root = cgEl("div"); root.id = "cz-root"; c.appendChild(root);
+  var z = czCur();
+  var hdr = cgEl("div", "ch"), left = cgEl("div"); left.style.cssText = "display:flex;align-items:center;gap:8px";
+  left.innerHTML = "<i class='ti ti-lock-dollar' style='font-size:18px;color:#0D1B2A'></i><span style='font-size:17px;font-weight:600;color:#1f2937'>Computo privado</span>";
+  var acts = cgEl("div", "ha");
+  if (z) {
+    var back = cgEl("button", "btn"); back.innerHTML = "<i class='ti ti-arrow-left' style='font-size:12px'></i> Todos";
+    back.onclick = function(){ czCurId = null; renderCotiz(); }; acts.appendChild(back);
+    if (z.compId) { var sy = cgEl("button", "btn"); sy.innerHTML = "<i class='ti ti-refresh' style='font-size:12px'></i> Actualizar desde el computo"; sy.title = "Trae cantidades, especificaciones y luminarias nuevas del computo original, manteniendo los precios"; sy.onclick = function(){ czSincronizar(czCur()); }; acts.appendChild(sy); }
+    var pdf = cgEl("button", "btn"); pdf.innerHTML = "<i class='ti ti-file-type-pdf' style='font-size:12px'></i> Descargar PDF";
+    pdf.onclick = function(){ czPdf(czCur()); }; acts.appendChild(pdf);
+  }
+  var lock = cgEl("button", "btn"); lock.innerHTML = "<i class='ti ti-lock' style='font-size:12px'></i> Bloquear"; lock.onclick = window.czLock; acts.appendChild(lock);
+  hdr.appendChild(left); hdr.appendChild(acts); root.appendChild(hdr);
+  if (z) czRenderSheet(root, z); else czRenderList(root);
+}
+
+function czRenderList(root) {
+  var nb = cgEl("div", "cz-new");
+  nb.appendChild(cgEl("div", "cz-new-t", "Nuevo computo valorizado"));
+  var row = cgEl("div", "cz-new-r");
+  var cerrados = (D.compgen || []).filter(function(x){ return x.estado === "cerrado"; }).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+  var sel = document.createElement("select"); sel.className = "cz-sel";
+  var o0 = document.createElement("option"); o0.value = ""; o0.textContent = cerrados.length ? "Elegir un computo cerrado..." : "No hay computos cerrados todavia"; sel.appendChild(o0);
+  cerrados.forEach(function(x){ var o = document.createElement("option"); o.value = x.id; o.textContent = x.proyecto + " · cerrado el " + fmtFecha(x.cerrado) + " · " + (x.items || []).length + " tipos de luminaria"; if (x.id === czPick) o.selected = true; sel.appendChild(o); });
+  sel.onchange = function(){ czPick = this.value; };
+  var go = cgEl("button", "bs"); go.innerHTML = "Crear planilla";
+  go.onclick = function(){ if (!sel.value) { sel.focus(); return; } czNuevoDesde(sel.value); };
+  row.appendChild(sel); row.appendChild(go); nb.appendChild(row);
+  nb.appendChild(cgEl("div", "cz-hint", "Copia las luminarias con sus especificaciones y cantidades, y la mano de obra y el elevador si el computo los incluye. Despues cargas los precios."));
+  root.appendChild(nb);
+
+  var lt = cgEl("div", "wk-sec"); lt.appendChild(document.createTextNode("Computos valorizados")); lt.appendChild(cgEl("span", "cnt", String(czList.length))); root.appendChild(lt);
+  if (!czList.length) { root.appendChild(cgEl("div", "wk-empty", "Todavia no hay computos valorizados.")); return; }
+  var tb = cgEl("div", "cz-list");
+  czList.forEach(function(z){
+    var r = cgEl("div", "cz-li");
+    var m = cgEl("div", "cz-li-m"); m.appendChild(cgEl("div", "cz-li-t", z.proyecto || "Sin nombre"));
+    m.appendChild(cgEl("div", "cz-hint", "Creado el " + fmtFecha(z.fecha) + (z.creadoPor ? " por " + wkName(z.creadoPor) : "") + " · " + (z.items || []).length + " items"));
+    if (czCompCambio(z)) m.appendChild(cgEl("div", "cz-warn-s", "El computo original cambio: abrila y toca \"Actualizar desde el computo\"."));
+    r.appendChild(m);
+    r.appendChild(cgEl("div", "cz-li-tot", czFmt(czTotal(z), z.moneda)));
+    var op = cgEl("button", "btn", "Abrir / editar"); op.onclick = function(){ czCurId = z.id; czBlank = 3; renderCotiz(); };
+    var pd = cgEl("button", "btn"); pd.innerHTML = "<i class='ti ti-file-type-pdf' style='font-size:12px'></i> PDF"; pd.onclick = function(){ czPdf(z); };
+    var dl = cgEl("button", "btn"); dl.innerHTML = "<i class='ti ti-trash' style='font-size:12px'></i>"; dl.title = "Eliminar";
+    dl.onclick = function(){ if (confirm("Eliminar el computo valorizado de \"" + z.proyecto + "\"?")) { showSyncing(); deleteDoc(doc(db, "cotizaciones", z.id)).then(showSynced); czList = czList.filter(function(x){ return x.id !== z.id; }); renderCotiz(); } };
+    r.appendChild(op); r.appendChild(pd); r.appendChild(dl); tb.appendChild(r);
+  });
+  root.appendChild(tb);
+}
+
+function czRenderSheet(root, z) {
+  // Datos generales
+  var top = cgEl("div", "cz-top");
+  var f1 = cgEl("div", "wk-f"); f1.appendChild(cgEl("label", null, "Proyecto"));
+  var pi = document.createElement("input"); pi.value = z.proyecto || ""; pi.oninput = function(){ z.proyecto = this.value; czSave(); }; f1.appendChild(pi);
+  var f2 = cgEl("div", "wk-f"); f2.appendChild(cgEl("label", null, "Fecha"));
+  var fi = document.createElement("input"); fi.type = "date"; fi.value = z.fecha || ""; fi.onchange = function(){ z.fecha = this.value; czSave(); }; f2.appendChild(fi);
+  var f3 = cgEl("div", "wk-f"); f3.appendChild(cgEl("label", null, "Moneda"));
+  var mon = cgEl("div", "cz-mon");
+  [["USD","Dolares (US$)"],["ARS","Pesos ($)"]].forEach(function(o){
+    var b = cgEl("button", z.moneda === o[0] ? "on" : "", o[1]);
+    b.onclick = function(){ z.moneda = o[0]; czSaveNow(z); renderCotiz(); }; mon.appendChild(b);
+  });
+  f3.appendChild(mon);
+  top.appendChild(f1); top.appendChild(f2); top.appendChild(f3); root.appendChild(top);
+  if (czCompCambio(z)) { var wa = cgEl("div", "cz-warn"); wa.innerHTML = "<i class='ti ti-alert-triangle'></i> El computo original se modifico despues de armar esta planilla. Usa <b>Actualizar desde el computo</b> para traer los cambios (los precios se mantienen)."; root.appendChild(wa); }
+  if (z.compId) root.appendChild(cgEl("div", "cz-hint", "Basado en el computo cerrado de " + z.proyecto + (z.compFecha ? " (" + fmtFecha(z.compFecha) + ")" : "") + ". Los cambios aca no modifican el computo original."));
+
+  // Planilla
+  var wrap = cgEl("div", "cz-wrap"), t = document.createElement("table"); t.className = "cz-t";
+  t.innerHTML = "<colgroup><col style='width:38px'><col style='width:30%'><col><col style='width:80px'><col style='width:140px'><col style='width:150px'><col style='width:34px'></colgroup>" +
+    "<thead><tr><th>#</th><th>Item</th><th>Detalle</th><th class='r'>Cant.</th><th class='r'>Precio unit.</th><th class='r'>Subtotal</th><th></th></tr></thead>";
+  var tb = document.createElement("tbody");
+  var totCell;
+  var upTot = function(){ if (totCell) totCell.textContent = czFmt(czTotal(z), z.moneda); };
+  var mkRow = function(it, idx, blank) {
+    var tr = document.createElement("tr"); if (blank) tr.className = "blank"; if (it && it.tipo === "lum") tr.className = "lum";
+    var n = document.createElement("td"); n.className = "n"; n.textContent = blank ? "" : String(idx + 1); tr.appendChild(n);
+    var data = it || {uid:null, tipo:"extra", desc:"", det:"", cant:"", pu:""};
+    var sub = document.createElement("td"); sub.className = "r sub";
+    var ensure = function(){ if (!data.uid) { data.uid = nid("zi"); z.items.push(data); tr.className = ""; n.textContent = String(z.items.length); } };
+    var refreshSub = function(){ var s = czNum(data.cant) * czNum(data.pu); sub.textContent = String(data.pu || "").trim() ? czFmtN(s) : ""; upTot(); };
+    var cell = function(key, cls, ph, multi) {
+      var td = document.createElement("td"); if (cls) td.className = cls;
+      var inp = document.createElement(multi ? "textarea" : "input"); inp.value = data[key] || ""; if (ph) inp.placeholder = ph;
+      if (multi) { inp.rows = 1; var fit = function(){ inp.style.height = "auto"; inp.style.height = Math.max(26, inp.scrollHeight) + "px"; }; setTimeout(fit, 0); inp.addEventListener("input", fit); }
+      inp.oninput = function(){ ensure(); data[key] = this.value; refreshSub(); czSave(); };
+      if (key === "pu") inp.onblur = function(){ if (this.value.trim()) { this.value = czFmtN(czNum(this.value)); data.pu = this.value; czSave(); } };
+      inp.onkeydown = function(e){ if (e.key === "Enter" && !multi) { e.preventDefault(); var all = Array.prototype.slice.call(t.querySelectorAll("input,textarea")), i = all.indexOf(inp); var nx = all[i + 4] || all[i + 1]; if (nx) nx.focus(); } };
+      td.appendChild(inp); return td;
+    };
+    tr.appendChild(cell("desc", null, blank ? "Agregar item..." : ""));
+    tr.appendChild(cell("det", null, "", true));
+    tr.appendChild(cell("cant", "r", blank ? "" : "0"));
+    tr.appendChild(cell("pu", "r", blank ? "" : "0,00"));
+    tr.appendChild(sub); refreshSub();
+    var dx = document.createElement("td"); dx.className = "x";
+    if (!blank) { var b = cgEl("button", null); b.innerHTML = "<i class='ti ti-x'></i>"; b.title = "Quitar fila"; b.onclick = function(){ z.items = z.items.filter(function(x){ return x.uid !== data.uid; }); czSaveNow(z); renderCotiz(); }; dx.appendChild(b); }
+    tr.appendChild(dx);
+    return tr;
+  };
+  (z.items || []).forEach(function(it, i){ tb.appendChild(mkRow(it, i, false)); });
+  for (var k = 0; k < czBlank; k++) tb.appendChild(mkRow(null, 0, true));
+  t.appendChild(tb);
+  var tf = document.createElement("tfoot"), fr = document.createElement("tr");
+  var fl = document.createElement("td"); fl.colSpan = 5; fl.textContent = "TOTAL" + (z.moneda === "ARS" ? " EN PESOS" : " EN DOLARES");
+  totCell = document.createElement("td"); totCell.className = "r";
+  fr.appendChild(fl); fr.appendChild(totCell); fr.appendChild(document.createElement("td")); tf.appendChild(fr); t.appendChild(tf);
+  upTot();
+  wrap.appendChild(t); root.appendChild(wrap);
+  var add = cgEl("button", "btn"); add.style.marginTop = "8px"; add.innerHTML = "<i class='ti ti-plus' style='font-size:12px'></i> Agregar filas";
+  add.onclick = function(){ czBlank += 3; renderCotiz(); };
+  root.appendChild(add);
+  root.appendChild(cgEl("div", "cz-hint", "Carga el precio por unidad: el subtotal se calcula solo con la cantidad. Las filas vacias de abajo se convierten en items cuando escribis en ellas."));
+
+  var nf = cgEl("div", "wk-f"); nf.style.marginTop = "14px"; nf.appendChild(cgEl("label", null, "Notas / condiciones (salen en el PDF)"));
+  var nt = document.createElement("textarea"); nt.value = z.notas || ""; nt.placeholder = "Validez de la oferta, forma de pago, plazo de entrega, tipo de cambio..."; nt.style.minHeight = "80px";
+  nt.oninput = function(){ z.notas = this.value; czSave(); }; nf.appendChild(nt); root.appendChild(nf);
+}
+
+async function czPdf(z) {
+  if (!z) return;
+  if (!window.jspdf) { alert("No se pudo cargar el generador de PDF. Revisa la conexion."); return; }
+  var J = new window.jspdf.jsPDF({unit:"mm", format:"a4"});
+  var W = 210, H = 297, M = 16, ink = [13,27,42], green = [0,105,92], grey = [107,114,128];
+  var logoEl = document.querySelector('img[alt="ITELSA"]') || document.querySelector('img[alt="ITELSA Lighting"]');
+  var logo = logoEl ? logoEl.src : null, logoSz = logo ? await cgImgSize(logo) : null;
+  var cols = [{k:"n",t:"#",w:8,a:"left"},{k:"d",t:"ITEM / DETALLE",w:92,a:"left"},{k:"c",t:"CANT.",w:16,a:"right"},{k:"p",t:"P. UNITARIO",w:31,a:"right"},{k:"s",t:"SUBTOTAL",w:31,a:"right"}];
+  function header() {
+    if (logo && logoSz) { var lh = 12, lw = lh * logoSz.w / logoSz.h; if (lw > 40) { lw = 40; lh = lw * logoSz.h / logoSz.w; } try { J.addImage(logo, "PNG", M, 10, lw, lh); } catch(e) {} }
+    J.setFont("helvetica", "bold"); J.setFontSize(9); J.setTextColor.apply(J, green); J.text("CÓMPUTO VALORIZADO", W - M, 14, {align:"right"});
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, grey); J.text(J.splitTextToSize(z.proyecto || "", 90)[0], W - M, 19, {align:"right"});
+    J.setDrawColor(209,213,219); J.setLineWidth(0.2); J.line(M, 25, W - M, 25);
+    J.setDrawColor.apply(J, green); J.setLineWidth(0.6); J.line(M, 25, M + 14, 25);
+  }
+  function thead(y) {
+    J.setFillColor.apply(J, ink); J.rect(M, y, W - 2*M, 8, "F");
+    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor(255,255,255);
+    var x = M; cols.forEach(function(c){ J.text(c.t, c.a === "right" ? x + c.w - 2 : x + 2, y + 5.3, {align:c.a}); x += c.w; });
+    return y + 8;
+  }
+  header();
+  var y = 36;
+  J.setFont("helvetica", "bold"); J.setFontSize(8); J.setTextColor.apply(J, green); J.text("CÓMPUTO VALORIZADO", M, y);
+  J.setFontSize(17); J.setTextColor.apply(J, ink); var tl = J.splitTextToSize(z.proyecto || "", W - 2*M); J.text(tl, M, y + 8); y += 8 + tl.length * 7;
+  J.setFont("helvetica", "normal"); J.setFontSize(9); J.setTextColor.apply(J, grey);
+  J.text("Fecha: " + fmtFecha(z.fecha) + "     Moneda: " + (z.moneda === "ARS" ? "Pesos argentinos ($)" : "Dolares estadounidenses (US$)"), M, y + 2); y += 9;
+  y = thead(y);
+  var items = (z.items || []).filter(function(it){ return (it.desc || "").trim() || (it.det || "").trim() || czNum(it.pu); });
+  items.forEach(function(it, i){
+    J.setFont("helvetica", "bold"); J.setFontSize(8.5); var dl = J.splitTextToSize(it.desc || "-", cols[1].w - 4);
+    J.setFont("helvetica", "normal"); J.setFontSize(7.5); var tl2 = it.det ? J.splitTextToSize(it.det, cols[1].w - 4) : [];
+    var rh = Math.max(8, 3.5 + dl.length * 3.8 + tl2.length * 3.3 + 2.5);
+    if (y + rh > H - 40) { J.addPage(); header(); y = thead(32); }
+    if (i % 2) { J.setFillColor(248,250,251); J.rect(M, y, W - 2*M, rh, "F"); }
+    var x = M, ty = y + 5;
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, grey); J.text(String(i + 1), x + 2, ty); x += cols[0].w;
+    J.setFont("helvetica", "bold"); J.setTextColor.apply(J, ink); J.text(dl, x + 2, ty);
+    if (tl2.length) { J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey); J.text(tl2, x + 2, ty + dl.length * 3.8); }
+    x += cols[1].w;
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor.apply(J, ink);
+    J.text(String(it.cant || ""), x + cols[2].w - 2, ty, {align:"right"}); x += cols[2].w;
+    var pu = czNum(it.pu), sub = czNum(it.cant) * pu;
+    J.text(pu ? czFmtN(pu) : "-", x + cols[3].w - 2, ty, {align:"right"}); x += cols[3].w;
+    J.setFont("helvetica", "bold"); J.text(pu ? czFmtN(sub) : "-", x + cols[4].w - 2, ty, {align:"right"});
+    J.setDrawColor(229,231,235); J.setLineWidth(0.15); J.line(M, y + rh, W - M, y + rh);
+    y += rh;
+  });
+  if (y + 14 > H - 30) { J.addPage(); header(); y = 32; }
+  y += 2;
+  J.setFillColor(240,247,246); J.rect(M, y, W - 2*M, 11, "F"); J.setFillColor.apply(J, green); J.rect(M, y, 1, 11, "F");
+  J.setFont("helvetica", "bold"); J.setFontSize(9.5); J.setTextColor.apply(J, ink); J.text("TOTAL", M + 5, y + 7.2);
+  J.setFontSize(12); J.setTextColor.apply(J, green); J.text(czFmt(czTotal(z), z.moneda), W - M - 2, y + 7.5, {align:"right"});
+  y += 18;
+  if ((z.notas || "").trim()) {
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); var nl = J.splitTextToSize(z.notas.trim(), W - 2*M - 8);
+    if (y + 10 + nl.length * 4 > H - 22) { J.addPage(); header(); y = 32; }
+    J.setFont("helvetica", "bold"); J.setFontSize(7.5); J.setTextColor.apply(J, green); J.text("NOTAS Y CONDICIONES", M, y);
+    J.setFont("helvetica", "normal"); J.setFontSize(8.5); J.setTextColor(55,65,81); J.text(nl, M, y + 5.5);
+  }
+  var np = J.getNumberOfPages();
+  for (var p = 1; p <= np; p++) {
+    J.setPage(p); J.setFont("helvetica", "normal"); J.setFontSize(7.5); J.setTextColor.apply(J, grey);
+    J.text("ITELSA S.A.S. - Cómputo valorizado - " + fmtFecha(z.fecha), M, H - 10);
+    J.text("Página " + p + " de " + np, W - M, H - 10, {align:"right"});
+  }
+  J.save("Computo_valorizado_" + (z.proyecto || "").replace(/[^\w\-]+/g, "_") + "_" + (z.fecha || "") + ".pdf");
+}
+
 function renderBoard() {
   if (curDept === "marketing") { renderMarketingBoard(); return; }
   if (curDept === "accesos") { renderAccesosBoard(); return; }
   if (curDept === "computos") { renderComputosGen(); return; }
   if (curDept === "weeklys") { renderWeeklys(); return; }
+  if (curDept === "cotiz") { renderCotiz(); return; }
   var c = document.getElementById("board-inner");
   if (!selProj) { c.innerHTML="<div class='em'><i class='ti ti-layout-board' style='font-size:32px;margin-bottom:10px;display:block'></i>Selecciona un proyecto</div>"; return; }
   var proj = getProj();
